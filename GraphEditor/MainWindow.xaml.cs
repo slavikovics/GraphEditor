@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,37 @@ namespace GraphEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isElementSelected = false;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Ellipse_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isElementSelected = true;           
+        }
+
+        private void Ellipse_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isElementSelected) return;
+
+            Ellipse ellipse = (sender as Ellipse);
+            Point currentMousePosition = e.GetPosition(sender as Ellipse);
+            Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}" );
+            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y);
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X);
+        }
+
+        private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isElementSelected = false;
         }
     }
 }
