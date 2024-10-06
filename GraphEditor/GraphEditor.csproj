@@ -107,7 +107,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Resources\addEdge.png" />
+    <Resource Include="Resources\addNode.png" />
+    <Resource Include="Resources\console.png" />
+    <Resource Include="Resources\magicWond.png" />
+    <Resource Include="Resources\removeNode.png" />
+    <Resource Include="Resources\save.png" />
+    <Resource Include="Resources\select.png" />
+    <Resource Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\actions.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />
