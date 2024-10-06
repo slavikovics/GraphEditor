@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GraphEditor
 {
@@ -40,25 +41,8 @@ namespace GraphEditor
 
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            isElementSelected = true;           
-        }
-
-        private void MouseMoveHandler(object sender, MouseEventArgs e)
-        {
-            if (!isElementSelected) return;
-
-            Point currentMousePosition = e.GetPosition(sender as Canvas);
-            double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
-            double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
-            Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}" );
-            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2);
-        }
-
-        private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-
-                isElementSelected = false;
+            if (!isElementSelected) isElementSelected = true; 
+            else isElementSelected = false;
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -85,6 +69,18 @@ namespace GraphEditor
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isElementSelected) return;
+
+            Point currentMousePosition = e.GetPosition(sender as Canvas);
+            double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
+            double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
+            Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}");
+            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 50);
         }
     }
 }
