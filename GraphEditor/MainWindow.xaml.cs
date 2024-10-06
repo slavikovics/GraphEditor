@@ -22,11 +22,14 @@ namespace GraphEditor
     public partial class MainWindow : Window
     {
         bool isElementSelected = false;
+        bool areActionsDesired = false;
 
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        const int PointDimensions = 10;
 
         private void Ellipse_DragLeave(object sender, DragEventArgs e)
         {
@@ -38,20 +41,44 @@ namespace GraphEditor
             isElementSelected = true;           
         }
 
-        private void Ellipse_MouseMove(object sender, MouseEventArgs e)
+        private void MouseMoveHandler(object sender, MouseEventArgs e)
         {
             if (!isElementSelected) return;
 
             Ellipse ellipse = (sender as Ellipse);
             Point currentMousePosition = e.GetPosition(sender as Ellipse);
+            double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
+            double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
             Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}" );
-            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X);
+            ellipse.SetValue(Canvas.TopProperty, ellipseCanvasTop + currentMousePosition.Y - PointDimensions / 2);
+            ellipse.SetValue(Canvas.LeftProperty, ellipseCanvasLeft + currentMousePosition.X - PointDimensions / 2);
         }
 
         private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            isElementSelected = false;
+
+                isElementSelected = false;
+        }
+
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            areActionsDesired = true;
+        }
+
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            areActionsDesired = false;
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            Canvas canvas = (Canvas)sender;
+            UIElementCollection children = canvas.Children;
+            foreach (UIElement child in children)
+            {
+                
+            }
+
         }
     }
 }
