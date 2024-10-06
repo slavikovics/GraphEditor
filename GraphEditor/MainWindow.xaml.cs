@@ -23,10 +23,12 @@ namespace GraphEditor
     {
         bool isElementSelected = false;
         bool areActionsDesired = false;
+        Ellipse ellipse;
 
         public MainWindow()
         {
             InitializeComponent();
+            ellipse = Ellipse;
         }
 
         const int PointDimensions = 10;
@@ -45,13 +47,12 @@ namespace GraphEditor
         {
             if (!isElementSelected) return;
 
-            Ellipse ellipse = (sender as Ellipse);
-            Point currentMousePosition = e.GetPosition(sender as Ellipse);
+            Point currentMousePosition = e.GetPosition(sender as Canvas);
             double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
             double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
             Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}" );
-            ellipse.SetValue(Canvas.TopProperty, ellipseCanvasTop + currentMousePosition.Y - PointDimensions / 2);
-            ellipse.SetValue(Canvas.LeftProperty, ellipseCanvasLeft + currentMousePosition.X - PointDimensions / 2);
+            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2);
         }
 
         private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)

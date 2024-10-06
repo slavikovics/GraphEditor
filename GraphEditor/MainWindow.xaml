@@ -8,14 +8,15 @@
         Background="Black"
         MinHeight="450"
         MinWidth="800"
-        Title="Graph editor" Height="450" Width="800" WindowStyle="None">
+        Title="Graph editor" Height="480" Width="800" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid Height="400">
+        <Grid Height="450">
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -33,9 +34,10 @@
             <Button Grid.Row="5" Margin="5"></Button>
             <Button Grid.Row="6" Margin="5"></Button>
             <Button Grid.Row="7" Margin="5"></Button>
+            <Button Grid.Row="8" Margin="5"></Button>
         </Grid>
         <Canvas Grid.Column="1" MouseDown="Canvas_MouseDown" MouseMove="MouseMoveHandler" MouseUp="Canvas_MouseUp">
-            <Ellipse Width="20" Height="20" Fill="White" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown" MouseUp="Ellipse_MouseUp"></Ellipse>
+            <Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="White" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown" MouseUp="Ellipse_MouseUp"></Ellipse>
         </Canvas>
     </Grid>
 </Window>
