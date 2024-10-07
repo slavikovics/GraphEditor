@@ -82,7 +82,7 @@ namespace GraphEditor
             double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
             Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}");
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 50);
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 70);
         }
 
         private void ButtonAnimation(object sender, MouseEventArgs e)
