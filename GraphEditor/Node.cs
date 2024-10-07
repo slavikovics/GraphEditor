@@ -20,6 +20,8 @@ namespace GraphEditor
 
         private MainWindow _window;
 
+        private Random random;
+
         public int _id { get; private set; }
 
         private const int EllipseDimensions = 20;
@@ -30,6 +32,7 @@ namespace GraphEditor
 
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
+            random = new Random();
             ellipse = new Ellipse();
             ellipse.Width = EllipseDimensions;
             ellipse.Height = EllipseDimensions;
@@ -73,7 +76,7 @@ namespace GraphEditor
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2);
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize);
         }
-
+        
         private double GetCanvasLeft()
         {
             return (double)ellipse.GetValue(Canvas.LeftProperty);
@@ -86,7 +89,6 @@ namespace GraphEditor
 
         private void OnMagicWondOrder()
         {
-            Random random = new Random();
             double leftTarget = random.Next(100);
             leftTarget -= 50;
             double topTarget = random.Next(100);
@@ -95,10 +97,14 @@ namespace GraphEditor
             DoubleAnimation ellipseAnimationLeft = new DoubleAnimation();
             ellipseAnimationLeft.To = GetCanvasLeft() + leftTarget;
             ellipseAnimationLeft.Duration = new Duration(TimeSpan.FromSeconds(1));
+            ellipseAnimationLeft.AccelerationRatio = 0.3;
+            ellipseAnimationLeft.DecelerationRatio = 0.7;
 
             DoubleAnimation ellipseAnimationTop = new DoubleAnimation();
             ellipseAnimationTop.To = GetCanvasTop() + topTarget;
             ellipseAnimationTop.Duration = new Duration(TimeSpan.FromSeconds(1));
+            ellipseAnimationTop.AccelerationRatio = 0.3;
+            ellipseAnimationTop.DecelerationRatio = 0.7;
 
             DependencyProperty dependencyProperty = Canvas.LeftProperty;
             ellipse.BeginAnimation(dependencyProperty, ellipseAnimationLeft);
