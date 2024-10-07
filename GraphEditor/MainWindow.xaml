@@ -8,7 +8,7 @@
         Background="#FF221B2F"
         MinHeight="1080"
         MinWidth="1920"
-        Title="Graph editor" Height="700" Width="800" MouseMove="Window_MouseMove">
+        Title="Graph editor" Height="700" Width="800" MouseMove="Window_MouseMove" MouseDown="Window_MouseDown">
     <Window.Resources>
 
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
@@ -106,7 +106,7 @@
                 </Image>
 
             </Button>
-            <Button Template="{StaticResource ButtonTemplate}" 
+            <Button Name="ButtonAddNode" Template="{StaticResource ButtonTemplate}" 
                     BorderThickness="0" 
                     Background="Purple" 
                     Grid.Row="1" 
@@ -117,7 +117,7 @@
                     MouseEnter="Button_MouseEnter" 
                     MouseLeave="Button_MouseLeave" 
                     MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonAddNode_Click">
                 <Button.Content>
                     <Image>
                         <Image.Source>
@@ -462,7 +462,7 @@
                 </Image>
                 
             </Button>
-            <Button Template="{StaticResource ButtonTemplate}" 
+            <Button Name="ButtonMagicWond" Template="{StaticResource ButtonTemplate}" 
                     BorderThickness="0" 
                     Background="Purple" 
                     Grid.Row="8" 
@@ -473,7 +473,7 @@
                     MouseEnter="Button_MouseEnter" 
                     MouseLeave="Button_MouseLeave"
                     MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonMagicWond_Click">
 
                 <Image>
                     <Image.Source>
@@ -525,8 +525,8 @@
                 
             </Button>
         </Grid>
-        <Canvas Grid.Column="1" MouseDown="Canvas_MouseDown" MouseUp="Canvas_MouseUp">
-            <Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>
+        <Canvas Name="MainCanvas" Grid.Column="1" MouseDown="Canvas_MouseDown" MouseUp="Canvas_MouseUp">
+            <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
         </Canvas>
     </Grid>
 </Window>

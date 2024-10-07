@@ -26,12 +26,16 @@ namespace GraphEditor
     {
         bool isElementSelected = false;
         bool areActionsDesired = false;
+
+        public event Action KillAllSelections;
+        public event Action MagicWondOrder;
+
+        bool shouldNodeBeAdded = false; 
         Ellipse ellipse;
 
         public MainWindow()
         {
             InitializeComponent();
-            ellipse = Ellipse;
         }
 
         const int PointDimensions = 10;
@@ -49,12 +53,12 @@ namespace GraphEditor
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            areActionsDesired = true;
+            
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            areActionsDesired = false;
+           
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -75,14 +79,14 @@ namespace GraphEditor
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!isElementSelected) return;
+            //if (!isElementSelected) return;
 
-            Point currentMousePosition = e.GetPosition(sender as Canvas);
-            double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
-            double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
-            Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}");
-            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 70);
+            //Point currentMousePosition = e.GetPosition(sender as Window);
+            //double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
+            //double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
+            //Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}");
+            //ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
+            //ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 70);
         }
 
         private void ButtonAnimation(object sender, MouseEventArgs e)
@@ -113,6 +117,25 @@ namespace GraphEditor
         private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             VisualStateManager.GoToState(sender as System.Windows.Controls.Button, "Normal", true);
+        }
+
+        private void ButtonAddNode_Click(object sender, RoutedEventArgs e)
+        {
+            shouldNodeBeAdded = true;
+            KillAllSelections?.Invoke();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!shouldNodeBeAdded) return;
+            Point currentMousePosition = e.GetPosition(sender as Window);
+            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, 1);
+            shouldNodeBeAdded = false;
+        }
+
+        private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
+        {
+            MagicWondOrder?.Invoke();
         }
     }
 }
