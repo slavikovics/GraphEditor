@@ -69,7 +69,17 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Template="{StaticResource ButtonTemplate}" BorderThickness="0" Grid.Row="0" Margin="5" Padding="0" Height="40" Width="40" MouseMove="ButtonAnimation" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp">
+            <Button Template="{StaticResource ButtonTemplate}" 
+                    BorderThickness="0" Grid.Row="0" Margin="5" 
+                    Padding="0" 
+                    Height="40" 
+                    Width="40"
+                    MouseMove="ButtonAnimation" 
+                    MouseEnter="Button_MouseEnter" 
+                    MouseLeave="Button_MouseLeave" 
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown" 
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                
                 <Image Height="32" Width="32" Source="/Resources/select.png" />
             </Button>
             <Button Template="{StaticResource ButtonTemplate}" BorderThickness="0" Background="Purple" Grid.Row="1" Margin="5" Padding="0" Height="40" Width="40" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp">
