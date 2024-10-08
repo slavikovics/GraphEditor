@@ -32,6 +32,10 @@ namespace GraphEditor
 
         private bool isSelected = false;
 
+        private double movementDiffLeft;
+
+        private double movementDiffTop;
+
         private bool testWasMagicWondClicked = false;
 
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
@@ -64,7 +68,7 @@ namespace GraphEditor
             isSelected = false;
         }
 
-        private void OnMouseDown(object sender, EventArgs e)
+        private void OnMouseDown(object sender, MouseEventArgs e)
         {
             if (isSelected)
             {
@@ -73,6 +77,10 @@ namespace GraphEditor
             else
             {
                 isSelected = true;
+                Point currentMousePosition = e.GetPosition(sender as Window);
+
+                movementDiffLeft = currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - (double)ellipse.GetValue(Canvas.LeftProperty);
+                movementDiffTop = currentMousePosition.Y - EllipseDimensions / 2 - (double)ellipse.GetValue(Canvas.TopProperty);
             }
         }
 
@@ -86,8 +94,8 @@ namespace GraphEditor
             ellipse.BeginAnimation(dependencyPropertyT, null);
 
             Point currentMousePosition = e.GetPosition(sender as Window);
-            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize);
+            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - movementDiffTop);
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
         }
         
         private double GetCanvasLeft()
