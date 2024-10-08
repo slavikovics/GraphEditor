@@ -51,6 +51,8 @@
             </Grid>
         </ControlTemplate>
 
+        
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -527,6 +529,32 @@
         </Grid>
         <Canvas Name="MainCanvas" Grid.Column="1" MouseDown="Canvas_MouseDown" MouseUp="Canvas_MouseUp">
             <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
+
+            <Button x:Name="EllipseExample" Template="{StaticResource ButtonTemplate}"  Width="30" Height="30" Canvas.Top="100" Canvas.Left="100" Visibility="Hidden">
+                <Image>
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup>
+                                    <DrawingGroup>
+                                        <DrawingGroup.ClipGeometry>
+                                            <RectangleGeometry Rect="0,0,56,56" />
+                                        </DrawingGroup.ClipGeometry>
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#FFAEA3D8" Thickness="10" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                            </GeometryDrawing.Pen>
+                                            <GeometryDrawing.Geometry>
+                                                <EllipseGeometry RadiusX="23" RadiusY="23" Center="28,28" />
+                                            </GeometryDrawing.Geometry>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+            </Button>
         </Canvas>
     </Grid>
 </Window>

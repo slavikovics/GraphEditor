@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphEditor.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace GraphEditor
 {
     internal class Node
     {
-        public Ellipse ellipse { get; private set; }
+        public Button ellipse { get; private set; }
 
         private Canvas _canvas;
 
@@ -24,7 +25,7 @@ namespace GraphEditor
 
         public int _id { get; private set; }
 
-        private const int EllipseDimensions = 20;
+        private const int EllipseDimensions = 40;
 
         private const int UILeftSize = 70;
 
@@ -33,10 +34,14 @@ namespace GraphEditor
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
             random = new Random();
-            ellipse = new Ellipse();
+            ellipse = new Button();
             ellipse.Width = EllipseDimensions;
             ellipse.Height = EllipseDimensions;
-            ellipse.Fill = new SolidColorBrush(Colors.MediumPurple);
+            ellipse.Template = window.ButtonMagicWond.Template;
+            ellipse.Content = new Image();
+            (ellipse.Content as Image).Source = ((Image)window.EllipseExample.Content).Source;
+
+
             ellipse.SetValue(Canvas.LeftProperty, CanvasLeft - UILeftSize);
             ellipse.SetValue(Canvas.TopProperty, CanvasTop);
             parent.Children.Add(ellipse);
