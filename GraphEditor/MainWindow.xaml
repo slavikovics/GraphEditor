@@ -51,7 +51,7 @@
             </Grid>
         </ControlTemplate>
 
-        
+
 
     </Window.Resources>
     <Grid>
@@ -305,7 +305,7 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
-                
+
             </Button>
             <Button Template="{StaticResource ButtonTemplate}"
                     BorderThickness="0" 
@@ -353,7 +353,7 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
-                
+
             </Button>
             <Button Template="{StaticResource ButtonTemplate}" 
                     BorderThickness="0" 
@@ -405,7 +405,7 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
-                
+
             </Button>
             <Button Template="{StaticResource ButtonTemplate}" 
                     BorderThickness="0" 
@@ -462,7 +462,7 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
-                
+
             </Button>
             <Button Name="ButtonMagicWond" Template="{StaticResource ButtonTemplate}" 
                     BorderThickness="0" 
@@ -524,7 +524,7 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
-                
+
             </Button>
         </Grid>
         <Canvas Name="MainCanvas" Grid.Column="1" MouseDown="Canvas_MouseDown" MouseUp="Canvas_MouseUp">
@@ -555,6 +555,37 @@
                     </Image.Source>
                 </Image>
             </Button>
+            <Image Width="110" Height="14" Canvas.Top="100" Canvas.Left="100" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <DrawingGroup>
+                                <DrawingGroup>
+                                    <DrawingGroup.ClipGeometry>
+                                        <RectangleGeometry Rect="0,0,422.84,58.52" />
+                                    </DrawingGroup.ClipGeometry>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFAEA3D8" Thickness="10" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry FillRule="Nonzero" Figures="M17.5,16.76L365,16.76 365,41.76 17.5,41.76C10.6,41.76,5,36.16,5,29.26L5,29.26C5,22.36,10.6,16.76,17.5,16.76z" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFAEA3D8" Thickness="10" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry FillRule="Nonzero" Figures="M368.17,5.2L416.53,27.22C418.28,28.02,418.28,30.5,416.53,31.29L368.17,53.31C366.69,53.98,365,52.9,365,51.27L365,7.24C365,5.61,366.68,4.53,368.17,5.2z" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+            </Image>
         </Canvas>
     </Grid>
 </Window>
