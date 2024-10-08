@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup.Localizer;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -31,6 +32,8 @@ namespace GraphEditor
 
         private bool isSelected = false;
 
+        private bool testWasMagicWondClicked = false;
+
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
             random = new Random();
@@ -50,7 +53,7 @@ namespace GraphEditor
             _canvas = parent;
             _window = window;
 
-            ellipse.MouseDown += OnMouseDown;
+            (ellipse.Content as Image).MouseDown += OnMouseDown;
             window.MouseMove += OnMouseMove;
             window.KillAllSelections += Unselect;
             window.MagicWondOrder += OnMagicWondOrder;
@@ -77,6 +80,11 @@ namespace GraphEditor
         {
             if (!isSelected) return;
 
+            DependencyProperty dependencyPropertyL = Canvas.LeftProperty;
+            DependencyProperty dependencyPropertyT = Canvas.TopProperty;
+            ellipse.BeginAnimation(dependencyPropertyL, null);
+            ellipse.BeginAnimation(dependencyPropertyT, null);
+
             Point currentMousePosition = e.GetPosition(sender as Window);
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2);
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize);
@@ -99,14 +107,18 @@ namespace GraphEditor
             double topTarget = random.Next(100);
             topTarget -= 50;
 
+            double toLeft = GetCanvasLeft() + leftTarget;
+
             DoubleAnimation ellipseAnimationLeft = new DoubleAnimation();
-            ellipseAnimationLeft.To = GetCanvasLeft() + leftTarget;
+            ellipseAnimationLeft.To = toLeft;
             ellipseAnimationLeft.Duration = new Duration(TimeSpan.FromSeconds(1));
             ellipseAnimationLeft.AccelerationRatio = 0.3;
             ellipseAnimationLeft.DecelerationRatio = 0.7;
 
+            double toTop = GetCanvasTop() + topTarget;
+
             DoubleAnimation ellipseAnimationTop = new DoubleAnimation();
-            ellipseAnimationTop.To = GetCanvasTop() + topTarget;
+            ellipseAnimationTop.To = toTop;
             ellipseAnimationTop.Duration = new Duration(TimeSpan.FromSeconds(1));
             ellipseAnimationTop.AccelerationRatio = 0.3;
             ellipseAnimationTop.DecelerationRatio = 0.7;
@@ -116,6 +128,8 @@ namespace GraphEditor
 
             dependencyProperty = Canvas.TopProperty;
             ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
+
+            testWasMagicWondClicked = true;
         }
 
     }
