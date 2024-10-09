@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:GraphEditor"
         mc:Ignorable="d"
         Background="#FF221B2F"
-        MinHeight="1080"
-        MinWidth="1920"
+        MinHeight="800"
+        MinWidth="1280"
         Title="Graph editor" Height="700" Width="800" MouseMove="Window_MouseMove" MouseDown="Window_MouseDown">
     <Window.Resources>
 
