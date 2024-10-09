@@ -8,7 +8,11 @@
         Background="#FF221B2F"
         MinHeight="800"
         MinWidth="1280"
+        WindowStyle="None"
         Title="Graph editor" Height="700" Width="800" MouseMove="Window_MouseMove" MouseDown="Window_MouseDown">
+    
+    
+    
     <Window.Resources>
 
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
