@@ -27,15 +27,38 @@ namespace GraphEditor
         bool isElementSelected = false;
         bool areActionsDesired = false;
 
+        int nodeId = 1;
+
         public event Action KillAllSelections;
         public event Action MagicWondOrder;
 
-        bool shouldNodeBeAdded = false; 
+        public bool shouldNodeBeAdded = false; 
         Ellipse ellipse;
 
         public MainWindow()
         {
             InitializeComponent();
+            EdgeDemoAnimation();
+        }
+
+        public void EdgeDemoAnimation()
+        {
+
+            DoubleAnimation edgeAnimationBackWidth = new DoubleAnimation();
+            edgeAnimationBackWidth.To = 100;
+            edgeAnimationBackWidth.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            edgeAnimationBackWidth.AccelerationRatio = 1;
+
+            DoubleAnimation edgeAnimationFrontLeft = new DoubleAnimation();
+            edgeAnimationFrontLeft.To = 667;
+            edgeAnimationFrontLeft.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            edgeAnimationFrontLeft.AccelerationRatio = 1;
+
+            DependencyProperty dependencyProperty = Canvas.LeftProperty;
+            DemoRect.BeginAnimation(WidthProperty, edgeAnimationBackWidth);
+
+            //dependencyProperty = Canvas.LeftProperty;
+            //DemoTriang.BeginAnimation(dependencyProperty, edgeAnimationFrontLeft);
         }
 
         const int PointDimensions = 10;
@@ -79,6 +102,7 @@ namespace GraphEditor
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+
             //if (!isElementSelected) return;
 
             //Point currentMousePosition = e.GetPosition(sender as Window);
@@ -129,13 +153,18 @@ namespace GraphEditor
         {
             if (!shouldNodeBeAdded) return;
             Point currentMousePosition = e.GetPosition(sender as Window);
-            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, 1);
-            shouldNodeBeAdded = false;
+            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
+            nodeId++;
         }
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
         {
             MagicWondOrder?.Invoke();
+        }
+
+        private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
