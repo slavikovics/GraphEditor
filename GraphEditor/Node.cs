@@ -38,6 +38,8 @@ namespace GraphEditor
 
         private bool testWasMagicWondClicked = false;
 
+        public event EventHandler buttonSelected;
+
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
             random = new Random();
@@ -77,6 +79,8 @@ namespace GraphEditor
             else
             {
                 isSelected = true;
+
+                buttonSelected?.Invoke(this, new EventArgs());
 
                 _window.shouldNodeBeAdded = false;
                 Point currentMousePosition = e.GetPosition(sender as Window);

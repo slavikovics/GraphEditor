@@ -35,6 +35,9 @@ namespace GraphEditor
         public bool shouldNodeBeAdded = false; 
         Ellipse ellipse;
 
+        private Node _firstSelected;
+        private Node _secondSelected;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -59,68 +62,6 @@ namespace GraphEditor
 
             //dependencyProperty = Canvas.LeftProperty;
             //DemoTriang.BeginAnimation(dependencyProperty, edgeAnimationFrontLeft);
-        }
-
-        const int PointDimensions = 10;
-
-        private void Ellipse_DragLeave(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (!isElementSelected) isElementSelected = true; 
-            else isElementSelected = false;
-        }
-
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
-        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-           
-        }
-
-        private void Canvas_MouseMove(object sender, MouseEventArgs e)
-        {
-            Canvas canvas = (Canvas)sender;
-            UIElementCollection children = canvas.Children;
-            foreach (UIElement child in children)
-            {
-                
-            }
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-
-            //if (!isElementSelected) return;
-
-            //Point currentMousePosition = e.GetPosition(sender as Window);
-            //double ellipseCanvasTop = (double)ellipse.GetValue(Canvas.TopProperty);
-            //double ellipseCanvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
-            //Console.WriteLine($"MousePosition: {currentMousePosition.X}, {currentMousePosition.Y}; Canvas.TopProperty: {ellipse.GetValue(Canvas.TopProperty)}");
-            //ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - PointDimensions / 2);
-            //ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - PointDimensions / 2 - 70);
-        }
-
-        private void ButtonAnimation(object sender, MouseEventArgs e)
-        {
-            //Button button = sender as Button;
-            //ColorAnimation buttonAnimation = new ColorAnimation();
-            //buttonAnimation.From = Colors.MediumPurple;
-            //buttonAnimation.To = Colors.Purple;
-            //buttonAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-            //button.BeginAnimation(new PropertyPath(Button.BorderBrushProperty), buttonAnimation);
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)

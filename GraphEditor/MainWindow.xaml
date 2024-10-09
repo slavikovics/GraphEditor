@@ -9,7 +9,7 @@
         MinHeight="800"
         MinWidth="1280"
         WindowStyle="None"
-        Title="Graph editor" Height="700" Width="800" MouseMove="Window_MouseMove" MouseDown="Window_MouseDown">
+        Title="Graph editor" Height="700" Width="800" MouseDown="Window_MouseDown">
 
     <Window.Resources>
 
@@ -77,8 +77,7 @@
                     BorderThickness="0" Grid.Row="0" Margin="5" 
                     Padding="0" 
                     Height="60" 
-                    Width="60"
-                    MouseMove="ButtonAnimation" 
+                    Width="60" 
                     MouseEnter="Button_MouseEnter" 
                     MouseLeave="Button_MouseLeave" 
                     MouseLeftButtonDown="Button_MouseLeftButtonDown" 
@@ -529,7 +528,7 @@
 
             </Button>
         </Grid>
-        <Canvas Name="MainCanvas" Grid.Column="1" MouseDown="Canvas_MouseDown" MouseUp="Canvas_MouseUp">
+        <Canvas Name="MainCanvas" Grid.Column="1">
             <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
 
             <Button x:Name="EllipseExample" Template="{StaticResource ButtonTemplate}"  Width="30" Height="30" Canvas.Top="100" Canvas.Left="100" Visibility="Hidden">
