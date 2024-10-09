@@ -77,6 +77,8 @@ namespace GraphEditor
             else
             {
                 isSelected = true;
+
+                _window.shouldNodeBeAdded = false;
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
                 movementDiffLeft = currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - (double)ellipse.GetValue(Canvas.LeftProperty);

@@ -32,7 +32,7 @@ namespace GraphEditor
         public event Action KillAllSelections;
         public event Action MagicWondOrder;
 
-        bool shouldNodeBeAdded = false; 
+        public bool shouldNodeBeAdded = false; 
         Ellipse ellipse;
 
         public MainWindow()
@@ -155,7 +155,6 @@ namespace GraphEditor
             Point currentMousePosition = e.GetPosition(sender as Window);
             Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
             nodeId++;
-            shouldNodeBeAdded = false;
         }
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
