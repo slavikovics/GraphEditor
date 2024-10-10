@@ -65,6 +65,11 @@ namespace GraphEditor
             window.MagicWondOrder += OnMagicWondOrder;
         }
 
+        public int GetEllipseDimensions()
+        {
+            return EllipseDimensions;
+        }
+
         private void Unselect()
         {
             isSelected = false;
