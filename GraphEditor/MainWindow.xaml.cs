@@ -33,6 +33,8 @@ namespace GraphEditor
         public event Action MagicWondOrder;
 
         public bool shouldNodeBeAdded = false; 
+        public bool shouldEdgeBeAdded = false;
+
         Ellipse ellipse;
 
         private Node _firstSelected;
@@ -90,11 +92,28 @@ namespace GraphEditor
             KillAllSelections?.Invoke();
         }
 
+        private void OnNodeSelected(object sender, EventArgs e)
+        {
+            if (!shouldEdgeBeAdded) return;
+
+            Node node = sender as Node;
+
+            if (_firstSelected == null)
+            {
+                _firstSelected = node;
+            }
+            else
+            {
+                _secondSelected = node;
+            }
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (!shouldNodeBeAdded) return;
             Point currentMousePosition = e.GetPosition(sender as Window);
             Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
+            node.buttonSelected += OnNodeSelected;
             nodeId++;
         }
 
@@ -105,7 +124,10 @@ namespace GraphEditor
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
         {
-            
+
+
+            _firstSelected = null;
+            _secondSelected = null;
         }
     }
 }
