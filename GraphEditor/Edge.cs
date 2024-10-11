@@ -63,6 +63,32 @@ namespace GraphEditor
             return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2 - Height;
         }
 
+        private double CalculateFinalWidth(Node node1, Node node2)
+        {
+            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * Margin;
+        }
 
+        private double CalculateAngle(Node node1, Node node2)
+        {
+            return 360 - Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2));
+        }
+
+        private double CalculateLengthBetweenNodes(Node node1, Node node2)
+        {
+            double deltaX = CalculateDeltaX(node1, node2);
+            double deltaY = CalculateDeltaY(node1, node2);
+
+            return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+        }
+
+        private double CalculateDeltaX(Node node1, Node node2)
+        {
+            return (double)node2.GetPosLeft() - (double)node1.GetPosLeft();
+        }
+
+        private double CalculateDeltaY(Node node1, Node node2)
+        {
+            return (double)node2.GetPosTop() - (double)node1.GetPosTop();
+        }
     }
 }

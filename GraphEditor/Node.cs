@@ -109,12 +109,12 @@ namespace GraphEditor
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
         }
         
-        private double GetCanvasLeft()
+        public double GetPosLeft()
         {
             return (double)ellipse.GetValue(Canvas.LeftProperty);
         }
 
-        private double GetCanvasTop()
+        public double GetPosTop()
         {
             return (double)ellipse.GetValue(Canvas.TopProperty);
         }
@@ -126,7 +126,7 @@ namespace GraphEditor
             double topTarget = random.Next(100);
             topTarget -= 50;
 
-            double toLeft = GetCanvasLeft() + leftTarget;
+            double toLeft = GetPosLeft() + leftTarget;
 
             DoubleAnimation ellipseAnimationLeft = new DoubleAnimation();
             ellipseAnimationLeft.To = toLeft;
@@ -134,7 +134,7 @@ namespace GraphEditor
             ellipseAnimationLeft.AccelerationRatio = 0.3;
             ellipseAnimationLeft.DecelerationRatio = 0.7;
 
-            double toTop = GetCanvasTop() + topTarget;
+            double toTop = GetPosTop() + topTarget;
 
             DoubleAnimation ellipseAnimationTop = new DoubleAnimation();
             ellipseAnimationTop.To = toTop;
