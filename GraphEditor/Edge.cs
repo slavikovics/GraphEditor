@@ -52,11 +52,16 @@ namespace GraphEditor
             edgeVisualRepresentation.Stroke = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
+            // TODO call width animation
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionLeft(firstNode));
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionTop(firstNode));
 
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
+
+            mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
         private double GetEdgePositionLeft(Node node)
@@ -76,7 +81,7 @@ namespace GraphEditor
 
         private double CalculateAngle(Node node1, Node node2)
         {
-            return 360 - Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2));
+            return Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2)) / Math.PI * 180;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)

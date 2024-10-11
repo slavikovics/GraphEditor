@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,6 +35,7 @@ namespace GraphEditor
 
         public bool shouldNodeBeAdded = false; 
         public bool shouldEdgeBeAdded = false;
+        public bool shouldNodeBeMoved = true;
 
         Ellipse ellipse;
 
@@ -105,6 +107,7 @@ namespace GraphEditor
             else
             {
                 _secondSelected = node;
+                CreateEdge();
             }
         }
 
@@ -117,6 +120,11 @@ namespace GraphEditor
             nodeId++;
         }
 
+        private void CreateEdge()
+        {
+            Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
+        }
+
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
         {
             MagicWondOrder?.Invoke();
@@ -124,10 +132,15 @@ namespace GraphEditor
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
         {
-
-
+            shouldEdgeBeAdded = true;
+            shouldNodeBeMoved = false;
             _firstSelected = null;
             _secondSelected = null;
+        }
+
+        private void ButtonSelect_Click(object sender, RoutedEventArgs e)
+        {
+            shouldNodeBeMoved = true;
         }
     }
 }

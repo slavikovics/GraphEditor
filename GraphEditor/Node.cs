@@ -98,6 +98,7 @@ namespace GraphEditor
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!isSelected) return;
+            if (!_window.shouldNodeBeMoved) return;
 
             DependencyProperty dependencyPropertyL = Canvas.LeftProperty;
             DependencyProperty dependencyPropertyT = Canvas.TopProperty;
