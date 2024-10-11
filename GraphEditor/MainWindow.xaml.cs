@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,7 +46,6 @@ namespace GraphEditor
         public MainWindow()
         {
             InitializeComponent();
-            EdgeDemoAnimation();
         }
 
         public void EdgeDemoAnimation()
@@ -120,6 +120,21 @@ namespace GraphEditor
             nodeId++;
         }
 
+        private void AutoGenerateNodes(int numberOfNodes)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < numberOfNodes; i++)
+            {
+                double X = random.Next((int)this.ActualWidth - 100) + 80;
+                double Y = random.Next((int)this.ActualWidth - 100) + 50;
+                Node node = new Node(X, Y, MainCanvas, this, nodeId);
+                node.buttonSelected += OnNodeSelected;
+                nodeId++;
+                Thread.Sleep(10);
+            }
+        }
+
         private void CreateEdge()
         {
             Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
@@ -141,6 +156,12 @@ namespace GraphEditor
         private void ButtonSelect_Click(object sender, RoutedEventArgs e)
         {
             shouldNodeBeMoved = true;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            EdgeDemoAnimation();
+            AutoGenerateNodes(300);
         }
     }
 }
