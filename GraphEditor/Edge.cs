@@ -51,6 +51,12 @@ namespace GraphEditor
             edgeVisualRepresentation.RadiusY = RadiusY;
             edgeVisualRepresentation.Stroke = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
+
+            edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
+
+            RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
+
+            edgeVisualRepresentation.RenderTransform = rotateTransform;
         }
 
         private double GetEdgePositionLeft(Node node)
