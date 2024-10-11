@@ -53,6 +53,8 @@ namespace GraphEditor
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
             // TODO call width animation
+            double angle = CalculateAngle(firstNode, secondNode);
+
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionLeft(firstNode));
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionTop(firstNode));
@@ -81,7 +83,7 @@ namespace GraphEditor
 
         private double CalculateAngle(Node node1, Node node2)
         {
-            return Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2)) / Math.PI * 180;
+            return (Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2))) / Math.PI * 180 + 270;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)
