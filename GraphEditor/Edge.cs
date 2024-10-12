@@ -67,10 +67,39 @@ namespace GraphEditor
             mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
-        private double GetEdgePositionLeft(Node node)
+        private double GetEdgePositionLeft(Node node1, Node node2)
         {
             // return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
-            return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
+
+            double basePointLeft = (double)node1.ellipse.GetValue(Canvas.LeftProperty) + node1.GetEllipseDimensions() / 2;
+            
+            // with knowing angle and Rectangle height we can find another angle and two carets of triangle and then by deviding them by 2 we can find offset 
+            if (node1.GetPosLeft())
+            {
+                if (node1.GetPosLeft() <= node2.GetPosLeft())
+                {
+                    if (node1.GetPosTop() <= node2.GetPosTop())
+                    {
+                        return 
+                    }
+                    else
+                    {
+                        return 
+                    }
+                }
+                else
+                {
+                    if (node1.GetPosTop() <= node2.GetPosTop())
+                    {
+                        return 
+                    }
+                    else
+                    {
+                        return 
+                    }
+                }
+            }
+            return basePointLeft;
         }
 
         private double GetEdgePositionTop(Node node)
@@ -112,8 +141,6 @@ namespace GraphEditor
                     return 180 - AngleDegrees;
                 }
             }
-           
-            return AngleDegrees;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)

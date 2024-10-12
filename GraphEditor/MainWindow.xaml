@@ -564,6 +564,7 @@
                         <SkewTransform/>
                         <RotateTransform Angle="20"/>
                         <TranslateTransform/>
+                        <SkewTransform/>
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
