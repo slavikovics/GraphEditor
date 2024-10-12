@@ -161,7 +161,7 @@ namespace GraphEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             EdgeDemoAnimation();
-            AutoGenerateNodes(300);
+            //AutoGenerateNodes(300);
         }
     }
 }

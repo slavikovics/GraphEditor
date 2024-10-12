@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace GraphEditor
 {
@@ -68,22 +69,51 @@ namespace GraphEditor
 
         private double GetEdgePositionLeft(Node node)
         {
-           return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
+            // return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
+            return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
         }
 
         private double GetEdgePositionTop(Node node)
         {
-            return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2 - Height;
+            // return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2 - Height;
+            return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2;
         }
 
         private double CalculateFinalWidth(Node node1, Node node2)
         {
-            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * Margin;
+            // return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * Margin;
+            return CalculateLengthBetweenNodes(node1, node2);
         }
 
         private double CalculateAngle(Node node1, Node node2)
         {
-            return (Math.Atan(CalculateDeltaX(node1, node2) / CalculateDeltaY(node1, node2))) / Math.PI * 180 + 270;
+            double AngleRadians = Math.Atan(CalculateDeltaY(node1, node2) / CalculateDeltaX(node1, node2));
+            double AngleDegrees = AngleRadians / Math.PI * 180 * -1;
+
+            if (node1.GetPosLeft() <= node2.GetPosLeft())
+            {
+                if (node1.GetPosTop() <= node2.GetPosTop())
+                {
+                    return 360 - AngleDegrees;
+                }
+                else
+                {
+                    return -1 * AngleDegrees; 
+                }
+            }
+            else
+            {
+                if (node1.GetPosTop() <= node2.GetPosTop())
+                {
+                    return 180 + (-1) * AngleDegrees;
+                }
+                else
+                {
+                    return 180 - AngleDegrees;
+                }
+            }
+           
+            return AngleDegrees;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)
