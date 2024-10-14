@@ -58,8 +58,12 @@ namespace GraphEditor
             double angle = CalculateAngle(firstNode, secondNode);
 
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionLeft(firstNode));
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionTop(firstNode));
+
+            double offsetLeft = GetSignedOffsetLeft(firstNode, secondNode);
+            double offsetTop = GetSignedOffsetTop(firstNode, secondNode);
+
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode) + offsetLeft);
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) + offsetTop);
 
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
 
@@ -68,17 +72,17 @@ namespace GraphEditor
             mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
-        private double GetEdgePositionBaseLeft(Node node1, Node node2)
+        private double GetEdgePositionBaseLeft(Node node)
         {
-            double basePointLeft = (double)node1.ellipse.GetValue(Canvas.LeftProperty) + node1.GetEllipseDimensions() / 2;
+            double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
             return basePointLeft;
         }
 
-        private double GetEdgePositionOffsetLeft(Node node1, Node node2)
+        private double GetEdgePositionOffsetLeft(Node firstNode)
         {
             // return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
 
-            double basePointLeft = GetEdgePositionBaseLeft(node1, node2);
+            double basePointLeft = GetEdgePositionBaseLeft(firstNode);
             double otherAngle = _transformRotateAngleCalculationResult - 270;
             double offsetPointLeft = Math.Cos(otherAngle) * Width / 2;
             
@@ -86,39 +90,33 @@ namespace GraphEditor
             return Math.Abs(offsetPointLeft);
         }
 
-        private double GetSignedOffsetLeft(Node node1, Node node2)
+        private double GetSignedOffsetLeft(Node firstNode, Node secondNode)
         {
-            if (node1.GetEdgePositionBaseLeft(node1, node2) <= node2.)
-            if (node1.GetPosLeft())
+            if (GetEdgePositionBaseLeft(firstNode) <= GetEdgePositionBaseLeft(secondNode))
             {
-                if (node1.GetPosLeft() <= node2.GetPosLeft())
-                {
-                    if (node1.GetPosTop() <= node2.GetPosTop())
-                    {
-                        return
-                    }
-                    else
-                    {
-                        return
-                    }
-                }
-                else
-                {
-                    if (node1.GetPosTop() <= node2.GetPosTop())
-                    {
-                        return
-                    }
-                    else
-                    {
-                        return
-                    }
-                }
+                return -1 * GetEdgePositionOffsetLeft(firstNode);
+            }
+            else
+            {
+                return GetEdgePositionOffsetLeft(firstNode);
             }
         }
 
-        private double GetEdgePositionOffsetTop(Node node1, Node node2)
+        private double GetSignedOffsetTop(Node firstNode, Node secondNode)
         {
-            double basePointTop = GetEdgePositionBaseTop(node1);
+            if (GetEdgePositionBaseTop(firstNode) <= GetEdgePositionBaseTop(secondNode))
+            {
+                return -1 * GetEdgePositionOffsetTop(firstNode);
+            }
+            else
+            {
+                return GetEdgePositionOffsetTop(firstNode);
+            }
+        }
+
+        private double GetEdgePositionOffsetTop(Node node)
+        {
+            double basePointTop = GetEdgePositionBaseTop(node);
             double otherAngle = _transformRotateAngleCalculationResult - 270;
             double offsetPointTop = Math.Cos(otherAngle) * Width / 2;
 
