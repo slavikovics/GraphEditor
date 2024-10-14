@@ -32,6 +32,7 @@ namespace GraphEditor
         public Color StrokeColor = Colors.MediumPurple;
         public const int StrokeThickness = 3;
 
+        private double _transformRotateAngleCalculationResult;
         private Node _firstNode;
         private Node _secondNode;
         private MainWindow _mainWindow;
@@ -67,42 +68,64 @@ namespace GraphEditor
             mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
-        private double GetEdgePositionLeft(Node node1, Node node2)
+        private double GetEdgePositionBaseLeft(Node node1, Node node2)
+        {
+            double basePointLeft = (double)node1.ellipse.GetValue(Canvas.LeftProperty) + node1.GetEllipseDimensions() / 2;
+            return basePointLeft;
+        }
+
+        private double GetEdgePositionOffsetLeft(Node node1, Node node2)
         {
             // return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
 
-            double basePointLeft = (double)node1.ellipse.GetValue(Canvas.LeftProperty) + node1.GetEllipseDimensions() / 2;
+            double basePointLeft = GetEdgePositionBaseLeft(node1, node2);
+            double otherAngle = _transformRotateAngleCalculationResult - 270;
+            double offsetPointLeft = Math.Cos(otherAngle) * Width / 2;
             
             // with knowing angle and Rectangle height we can find another angle and two carets of triangle and then by deviding them by 2 we can find offset 
+            return Math.Abs(offsetPointLeft);
+        }
+
+        private double GetSignedOffsetLeft(Node node1, Node node2)
+        {
+            if (node1.GetEdgePositionBaseLeft(node1, node2) <= node2.)
             if (node1.GetPosLeft())
             {
                 if (node1.GetPosLeft() <= node2.GetPosLeft())
                 {
                     if (node1.GetPosTop() <= node2.GetPosTop())
                     {
-                        return 
+                        return
                     }
                     else
                     {
-                        return 
+                        return
                     }
                 }
                 else
                 {
                     if (node1.GetPosTop() <= node2.GetPosTop())
                     {
-                        return 
+                        return
                     }
                     else
                     {
-                        return 
+                        return
                     }
                 }
             }
-            return basePointLeft;
         }
 
-        private double GetEdgePositionTop(Node node)
+        private double GetEdgePositionOffsetTop(Node node1, Node node2)
+        {
+            double basePointTop = GetEdgePositionBaseTop(node1);
+            double otherAngle = _transformRotateAngleCalculationResult - 270;
+            double offsetPointTop = Math.Cos(otherAngle) * Width / 2;
+
+            return Math.Abs(offsetPointTop);
+        }
+
+        private double GetEdgePositionBaseTop(Node node)
         {
             // return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2 - Height;
             return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2;
@@ -123,10 +146,12 @@ namespace GraphEditor
             {
                 if (node1.GetPosTop() <= node2.GetPosTop())
                 {
+                    _transformRotateAngleCalculationResult = 360 - AngleDegrees;
                     return 360 - AngleDegrees;
                 }
                 else
                 {
+                    _transformRotateAngleCalculationResult = -1 * AngleDegrees;
                     return -1 * AngleDegrees; 
                 }
             }
@@ -134,10 +159,12 @@ namespace GraphEditor
             {
                 if (node1.GetPosTop() <= node2.GetPosTop())
                 {
+                    _transformRotateAngleCalculationResult = 180 + (-1) * AngleDegrees;
                     return 180 + (-1) * AngleDegrees;
                 }
                 else
                 {
+                    _transformRotateAngleCalculationResult = 180 - AngleDegrees;
                     return 180 - AngleDegrees;
                 }
             }
