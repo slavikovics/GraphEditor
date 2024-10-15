@@ -183,17 +183,18 @@ namespace GraphEditor
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.WindowState = WindowState.Minimized;
         }
 
         private void MaximizeWindowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
+            else this.WindowState = WindowState.Normal;
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }
