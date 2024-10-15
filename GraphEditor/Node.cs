@@ -42,6 +42,8 @@ namespace GraphEditor
 
         public event EventHandler buttonSelected;
 
+        public event Action OnNodeMoved;
+
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
             random = new Random();
@@ -65,6 +67,7 @@ namespace GraphEditor
             window.MouseMove += OnMouseMove;
             window.KillAllSelections += Unselect;
             window.MagicWondOrder += OnMagicWondOrder;
+            ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
         }
 
         public int GetEllipseDimensions()
@@ -109,7 +112,8 @@ namespace GraphEditor
 
             Point currentMousePosition = e.GetPosition(sender as Window);
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - movementDiffTop);
-            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft); 
+            ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
+            OnNodeMoved?.Invoke();
         }
         
         public double GetPosLeft()
@@ -149,10 +153,14 @@ namespace GraphEditor
                 DependencyProperty dependencyProperty = Canvas.LeftProperty;
                 ellipse.BeginAnimation(dependencyProperty, ellipseAnimationLeft);
                 dependencyProperty = Canvas.TopProperty;
-                ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);       
+                ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
 
                 testWasMagicWondClicked = true;
         }
 
+        private void Ellipse_LayoutUpdated(object sender, EventArgs e)
+        {
+            OnNodeMoved?.Invoke();
+        }
     }
 }

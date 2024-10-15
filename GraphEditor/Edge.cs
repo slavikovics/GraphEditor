@@ -56,21 +56,30 @@ namespace GraphEditor
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
             // TODO call width animation
-            double angle = CalculateAngle(firstNode, secondNode);
 
-            edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
+            edgePositioning();
+
+            _firstNode.OnNodeMoved += edgePositioning;
+            _secondNode.OnNodeMoved += edgePositioning;
+
+            mainCanvas.Children.Add(edgeVisualRepresentation);
+        }
+
+        private void edgePositioning()
+        {
+            double angle = CalculateAngle(_firstNode, _secondNode);
+
+            edgeVisualRepresentation.Width = CalculateFinalWidth(_firstNode, _secondNode);
 
             _offsetTop = Height / 2;
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode));
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) - _offsetTop);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(_firstNode));
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(_firstNode) - _offsetTop);
             edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(0, 0.5);
 
-            RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
+            RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
-
-            mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
         private double GetEdgePositionBaseLeft(Node node)
