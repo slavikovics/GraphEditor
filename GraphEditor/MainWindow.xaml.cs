@@ -91,6 +91,7 @@ namespace GraphEditor
         private void ButtonAddNode_Click(object sender, RoutedEventArgs e)
         {
             shouldNodeBeAdded = true;
+            shouldEdgeBeAdded = false;
             KillAllSelections?.Invoke();
         }
 
@@ -108,6 +109,8 @@ namespace GraphEditor
             {
                 _secondSelected = node;
                 CreateEdge();
+                _firstSelected = null;
+                _secondSelected = null;
             }
         }
 
@@ -143,6 +146,7 @@ namespace GraphEditor
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
         {
             MagicWondOrder?.Invoke();
+            shouldEdgeBeAdded = false;
         }
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
@@ -156,6 +160,7 @@ namespace GraphEditor
         private void ButtonSelect_Click(object sender, RoutedEventArgs e)
         {
             shouldNodeBeMoved = true;
+            shouldEdgeBeAdded = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -88,7 +88,7 @@ namespace GraphEditor
                 isSelected = true;
 
                 buttonSelected?.Invoke(this, new EventArgs());
-
+                if (!_window.shouldNodeBeMoved) return;
                 _window.shouldNodeBeAdded = false;
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
