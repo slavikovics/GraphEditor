@@ -44,6 +44,8 @@ namespace GraphEditor
 
         public event EventHandler OnNodeMoved;
 
+        public event Action OnNodesAnimated;
+
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
             random = new Random();
@@ -67,7 +69,7 @@ namespace GraphEditor
             window.MouseMove += OnMouseMove;
             window.KillAllSelections += Unselect;
             window.MagicWondOrder += OnMagicWondOrder;
-            //ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
+            ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
         }
 
         public int GetEllipseDimensions()
@@ -87,11 +89,11 @@ namespace GraphEditor
                 isSelected = false;
             }
             else
-            {
-                isSelected = true;
-
+            {            
                 buttonSelected?.Invoke(this, new EventArgs());
                 if (!_window.shouldNodeBeMoved) return;
+
+                isSelected = true;
                 _window.shouldNodeBeAdded = false;
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
@@ -113,6 +115,7 @@ namespace GraphEditor
             Point currentMousePosition = e.GetPosition(sender as Window);
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - movementDiffTop);
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
+
             OnNodeMoved?.Invoke(this, e);
         }
         
@@ -126,7 +129,7 @@ namespace GraphEditor
             return (double)ellipse.GetValue(Canvas.TopProperty);
         }
 
-        private void OnMagicWondOrder()
+        private async void OnMagicWondOrder()
         {
 
                 double leftTarget = random.Next(100);
@@ -156,11 +159,12 @@ namespace GraphEditor
                 ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
 
                 testWasMagicWondClicked = true;
+
         }
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)
         {
-            OnNodeMoved?.Invoke(this, e);
+            OnNodesAnimated?.Invoke();
         }
     }
 }

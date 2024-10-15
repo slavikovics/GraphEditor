@@ -38,14 +38,17 @@ namespace GraphEditor
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
 
+        List<Edge> edges = new List<Edge>();
+
         Ellipse ellipse;
 
         private Node _firstSelected;
         private Node _secondSelected;
+        private EdgeAnimationController edgeAnimationController;
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         public void EdgeDemoAnimation()
@@ -105,10 +108,13 @@ namespace GraphEditor
             {
                 _firstSelected = node;
             }
-            else
+            else if (_secondSelected == null)
             {
-                _secondSelected = node;
-                CreateEdge();
+                if (_secondSelected == null)
+                {
+                    _secondSelected = node;
+                    CreateEdge();  
+                }
                 _firstSelected = null;
                 _secondSelected = null;
             }
@@ -120,6 +126,10 @@ namespace GraphEditor
             Point currentMousePosition = e.GetPosition(sender as Window);
             Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
             node.buttonSelected += OnNodeSelected;
+            if (edgeAnimationController == null)
+            {
+                edgeAnimationController = new EdgeAnimationController(node);
+            }
             nodeId++;
         }
 
@@ -141,6 +151,7 @@ namespace GraphEditor
         private void CreateEdge()
         {
             Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
+            edgeAnimationController.AddEdge(edge);
         }
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
@@ -153,6 +164,7 @@ namespace GraphEditor
         {
             shouldEdgeBeAdded = true;
             shouldNodeBeMoved = false;
+            shouldNodeBeAdded = false;
             _firstSelected = null;
             _secondSelected = null;
         }

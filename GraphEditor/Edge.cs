@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -59,22 +60,18 @@ namespace GraphEditor
 
             EdgePositioning();
 
-            _mainWindow.LayoutUpdated += OnNodePositionChanged;
-
-            //_firstNode.ellipse.LayoutUpdated += OnNodePositionChanged;
-            //_secondNode.ellipse.LayoutUpdated += OnNodePositionChanged;
-            //_firstNode.OnNodeMoved +=  OnNodePositionChanged;
-            //_secondNode.OnNodeMoved += OnNodePositionChanged;
+            _firstNode.OnNodeMoved += OnNodePositionChanged;
+            _secondNode.OnNodeMoved += OnNodePositionChanged;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
-        private void OnNodePositionChanged(object sender, EventArgs e)
+        public void OnNodePositionChanged(object sender, EventArgs e)
         {
             EdgePositioning();
         }
 
-        private void EdgePositioning()
+        public void EdgePositioning()
         {
             double angle = CalculateAngle(_firstNode, _secondNode);
 
@@ -158,6 +155,11 @@ namespace GraphEditor
         private double CalculateDeltaY(Node node1, Node node2)
         {
             return (double)node2.GetPosTop() - (double)node1.GetPosTop();
+        }
+
+        public override string ToString()
+        {
+            return  _firstNode._id + " - " + _secondNode._id;
         }
     }
 }
