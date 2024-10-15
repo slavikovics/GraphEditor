@@ -32,6 +32,8 @@ namespace GraphEditor
         public Color StrokeColor = Colors.MediumPurple;
         public const int StrokeThickness = 3;
 
+        private double _offsetTop;
+        private double _offsetLeft;
         private double _transformRotateAngleCalculationResult;
         private Node _firstNode;
         private Node _secondNode;
@@ -45,6 +47,8 @@ namespace GraphEditor
             _secondNode = secondNode;
             _mainWindow = window;
             _mainCanvas = mainCanvas;
+            _offsetLeft = 0;
+            _offsetTop = 0;
 
             edgeVisualRepresentation = new Rectangle();
             edgeVisualRepresentation.Height = Height;
@@ -59,17 +63,20 @@ namespace GraphEditor
 
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
 
-            double offsetLeft = GetSignedOffsetLeft(firstNode, secondNode);
-            double offsetTop = GetSignedOffsetTop(firstNode, secondNode);
+            _offsetLeft = GetSignedOffsetLeft(firstNode, secondNode);
+            _offsetTop = GetSignedOffsetTop(firstNode, secondNode);
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode) + offsetLeft);
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) + offsetTop);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode) + _offsetLeft);
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) + _offsetTop);
 
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
+
+           
+            
         }
 
         private double GetEdgePositionBaseLeft(Node node)
@@ -94,23 +101,30 @@ namespace GraphEditor
         {
             if (GetEdgePositionBaseLeft(firstNode) <= GetEdgePositionBaseLeft(secondNode))
             {
-                return -1 * GetEdgePositionOffsetLeft(firstNode);
+                return GetEdgePositionOffsetLeft(firstNode);
             }
             else
             {
-                return GetEdgePositionOffsetLeft(firstNode);
+                return -1 * GetEdgePositionOffsetLeft(firstNode);
             }
         }
 
         private double GetSignedOffsetTop(Node firstNode, Node secondNode)
         {
-            if (GetEdgePositionBaseTop(firstNode) <= GetEdgePositionBaseTop(secondNode))
+            if (GetEdgePositionBaseLeft(firstNode) <= GetEdgePositionBaseLeft(secondNode))
             {
-                return -1 * GetEdgePositionOffsetTop(firstNode);
+                if (GetEdgePositionBaseTop(firstNode) <= GetEdgePositionBaseTop(secondNode))
+                {
+                    return -1 * GetEdgePositionOffsetTop(firstNode);
+                }
+                else
+                {
+                    return GetEdgePositionOffsetTop(firstNode);
+                }
             }
             else
             {
-                return GetEdgePositionOffsetTop(firstNode);
+                return -1 * GetEdgePositionOffsetTop(firstNode);
             }
         }
 
