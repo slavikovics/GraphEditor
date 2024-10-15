@@ -59,8 +59,10 @@ namespace GraphEditor
 
             EdgePositioning();
 
-            _firstNode.ellipse.LayoutUpdated += OnNodePositionChanged;
-            _secondNode.ellipse.LayoutUpdated += OnNodePositionChanged;
+            _mainWindow.LayoutUpdated += OnNodePositionChanged;
+
+            //_firstNode.ellipse.LayoutUpdated += OnNodePositionChanged;
+            //_secondNode.ellipse.LayoutUpdated += OnNodePositionChanged;
             //_firstNode.OnNodeMoved +=  OnNodePositionChanged;
             //_secondNode.OnNodeMoved += OnNodePositionChanged;
 
