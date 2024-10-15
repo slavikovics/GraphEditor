@@ -33,7 +33,6 @@ namespace GraphEditor
         public const int StrokeThickness = 3;
 
         private double _offsetTop;
-        private double _offsetLeft;
         private double _transformRotateAngleCalculationResult;
         private Node _firstNode;
         private Node _secondNode;
@@ -47,8 +46,6 @@ namespace GraphEditor
             _secondNode = secondNode;
             _mainWindow = window;
             _mainCanvas = mainCanvas;
-            _offsetLeft = 0;
-            _offsetTop = 0;
 
             edgeVisualRepresentation = new Rectangle();
             edgeVisualRepresentation.Height = Height;
@@ -63,7 +60,6 @@ namespace GraphEditor
 
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
 
-            _offsetLeft = GetSignedOffsetLeft(firstNode, secondNode);
             _offsetTop = Height / 2;
 
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode));
@@ -81,58 +77,6 @@ namespace GraphEditor
         {
             double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
             return basePointLeft;
-        }
-
-        private double GetEdgePositionOffsetLeft(Node firstNode)
-        {
-            // return (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() + Margin;
-
-            double basePointLeft = GetEdgePositionBaseLeft(firstNode);
-            double otherAngle = _transformRotateAngleCalculationResult - 270;
-            double offsetPointLeft = Math.Cos(otherAngle) * Width / 2;
-            
-            // with knowing angle and Rectangle height we can find another angle and two carets of triangle and then by deviding them by 2 we can find offset 
-            return Math.Abs(offsetPointLeft);
-        }
-
-        private double GetSignedOffsetLeft(Node firstNode, Node secondNode)
-        {
-            if (GetEdgePositionBaseLeft(firstNode) <= GetEdgePositionBaseLeft(secondNode))
-            {
-                return GetEdgePositionOffsetLeft(firstNode);
-            }
-            else
-            {
-                return -1 * GetEdgePositionOffsetLeft(firstNode);
-            }
-        }
-
-        private double GetSignedOffsetTop(Node firstNode, Node secondNode)
-        {
-            if (GetEdgePositionBaseLeft(firstNode) <= GetEdgePositionBaseLeft(secondNode))
-            {
-                if (GetEdgePositionBaseTop(firstNode) <= GetEdgePositionBaseTop(secondNode))
-                {
-                    return -1 * GetEdgePositionOffsetTop(firstNode);
-                }
-                else
-                {
-                    return GetEdgePositionOffsetTop(firstNode);
-                }
-            }
-            else
-            {
-                return -1 * GetEdgePositionOffsetTop(firstNode);
-            }
-        }
-
-        private double GetEdgePositionOffsetTop(Node node)
-        {
-            double basePointTop = GetEdgePositionBaseTop(node);
-            double otherAngle = _transformRotateAngleCalculationResult - 270;
-            double offsetPointTop = Math.Cos(otherAngle) * Width / 2;
-
-            return Math.Abs(offsetPointTop);
         }
 
         private double GetEdgePositionBaseTop(Node node)
