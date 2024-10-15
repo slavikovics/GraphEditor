@@ -57,15 +57,20 @@ namespace GraphEditor
 
             // TODO call width animation
 
-            edgePositioning();
+            EdgePositioning();
 
-            _firstNode.OnNodeMoved += edgePositioning;
-            _secondNode.OnNodeMoved += edgePositioning;
+            _firstNode.OnNodeMoved +=  OnNodePositionChanged;
+            _secondNode.OnNodeMoved += OnNodePositionChanged;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
         }
 
-        private void edgePositioning()
+        private void OnNodePositionChanged(object sender, EventArgs e)
+        {
+            EdgePositioning();
+        }
+
+        private void EdgePositioning()
         {
             double angle = CalculateAngle(_firstNode, _secondNode);
 

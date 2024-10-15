@@ -42,7 +42,7 @@ namespace GraphEditor
 
         public event EventHandler buttonSelected;
 
-        public event Action OnNodeMoved;
+        public event EventHandler OnNodeMoved;
 
         public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
         {
@@ -113,7 +113,7 @@ namespace GraphEditor
             Point currentMousePosition = e.GetPosition(sender as Window);
             ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - movementDiffTop);
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
-            OnNodeMoved?.Invoke();
+            OnNodeMoved?.Invoke(this, e);
         }
         
         public double GetPosLeft()
@@ -160,7 +160,7 @@ namespace GraphEditor
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)
         {
-            OnNodeMoved?.Invoke();
+            OnNodeMoved?.Invoke(this, e);
         }
     }
 }
