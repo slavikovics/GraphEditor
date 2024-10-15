@@ -67,7 +67,7 @@ namespace GraphEditor
             window.MouseMove += OnMouseMove;
             window.KillAllSelections += Unselect;
             window.MagicWondOrder += OnMagicWondOrder;
-            ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
+            //ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
         }
 
         public int GetEllipseDimensions()
