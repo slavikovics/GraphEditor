@@ -64,19 +64,17 @@ namespace GraphEditor
             edgeVisualRepresentation.Width = CalculateFinalWidth(firstNode, secondNode);
 
             _offsetLeft = GetSignedOffsetLeft(firstNode, secondNode);
-            _offsetTop = GetSignedOffsetTop(firstNode, secondNode);
+            _offsetTop = Height / 2;
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode) + _offsetLeft);
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) + _offsetTop);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(firstNode));
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(firstNode) - _offsetTop);
+            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(0, 0.5);
 
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(firstNode, secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
-
-           
-            
         }
 
         private double GetEdgePositionBaseLeft(Node node)
