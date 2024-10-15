@@ -180,5 +180,20 @@ namespace GraphEditor
             //EdgeDemoAnimation();
             //AutoGenerateNodes(300);
         }
+
+        private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MaximizeWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

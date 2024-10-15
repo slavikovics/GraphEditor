@@ -32,6 +32,8 @@ namespace GraphEditor
 
         private const int UILeftSize = 70;
 
+        private const int UITopSize = 24;
+
         private bool isSelected = false;
 
         private double movementDiffLeft;
@@ -58,7 +60,7 @@ namespace GraphEditor
 
 
             ellipse.SetValue(Canvas.LeftProperty, CanvasLeft - UILeftSize);
-            ellipse.SetValue(Canvas.TopProperty, CanvasTop);
+            ellipse.SetValue(Canvas.TopProperty, CanvasTop - UITopSize);
             parent.Children.Add(ellipse);
 
             _id = id;
@@ -98,7 +100,7 @@ namespace GraphEditor
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
                 movementDiffLeft = currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - (double)ellipse.GetValue(Canvas.LeftProperty);
-                movementDiffTop = currentMousePosition.Y - EllipseDimensions / 2 - (double)ellipse.GetValue(Canvas.TopProperty);
+                movementDiffTop = currentMousePosition.Y - EllipseDimensions / 2 - UITopSize - (double)ellipse.GetValue(Canvas.TopProperty);
             }
         }
 
@@ -113,7 +115,7 @@ namespace GraphEditor
             ellipse.BeginAnimation(dependencyPropertyT, null);
 
             Point currentMousePosition = e.GetPosition(sender as Window);
-            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - movementDiffTop);
+            ellipse.SetValue(Canvas.TopProperty, currentMousePosition.Y - EllipseDimensions / 2 - UITopSize - movementDiffTop);
             ellipse.SetValue(Canvas.LeftProperty, currentMousePosition.X - EllipseDimensions / 2 - UILeftSize - movementDiffLeft);
 
             OnNodeMoved?.Invoke(this, e);
