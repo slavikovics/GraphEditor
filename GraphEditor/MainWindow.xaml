@@ -8,8 +8,8 @@
         Background="#FF221B2F"
         MinHeight="800"
         MinWidth="1280" 
-        Title="Graph editor" Height="700" Width="800" MouseDown="Window_MouseDown" Loaded="Window_Loaded"
-        MouseLeftButtonDown="Grid_MouseLeftButtonDown" >
+        Title="Graph editor" Height="700" Width="800" Loaded="Window_Loaded"
+        MouseDown="Canvas_MouseDown" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove">
 
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
@@ -76,7 +76,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="24"/>

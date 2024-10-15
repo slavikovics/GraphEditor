@@ -37,11 +37,13 @@ namespace GraphEditor
         public bool shouldNodeBeAdded = false;
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
+        private bool shouldBeDraged = false;
 
         List<Edge> edges = new List<Edge>();
 
         Ellipse ellipse;
 
+        private Point pointerPosition;
         private Node _firstSelected;
         private Node _secondSelected;
         private EdgeAnimationController edgeAnimationController;
@@ -120,17 +122,24 @@ namespace GraphEditor
             }
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!shouldNodeBeAdded) return;
-            Point currentMousePosition = e.GetPosition(sender as Window);
-            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
-            node.buttonSelected += OnNodeSelected;
-            if (edgeAnimationController == null)
+            if (shouldNodeBeAdded)
             {
-                edgeAnimationController = new EdgeAnimationController(node);
+                Point currentMousePosition = e.GetPosition(sender as Window);
+                Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
+                node.buttonSelected += OnNodeSelected;
+                if (edgeAnimationController == null)
+                {
+                    edgeAnimationController = new EdgeAnimationController(node);
+                }
+                nodeId++;
             }
-            nodeId++;
+            else
+            {
+                shouldBeDraged = true;
+                pointerPosition = e.GetPosition(sender as Window);
+            }    
         }
 
         private void AutoGenerateNodes(int numberOfNodes)
@@ -200,7 +209,20 @@ namespace GraphEditor
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-                this.DragMove();
+            this.DragMove();
+        }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            shouldBeDraged = false;
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!shouldBeDraged) return;
+            Point newPosition = e.GetPosition(sender as Window);
+            double deltaX = newPosition.X - pointerPosition.X;
+            double deltaY = newPosition.Y - pointerPosition.Y;
         }
     }
 }
