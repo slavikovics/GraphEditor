@@ -4,8 +4,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
@@ -29,11 +31,12 @@ namespace GraphEditor
         public const int Height = 10;
         public const int RadiusX = 4;
         public const int RadiusY = 4;
-        public const int Width = 10;
+        public double Width = 10;
         public Color StrokeColor = Colors.MediumPurple;
         public const int StrokeThickness = 3;
 
         private double _offsetTop;
+        private double Angle;
         private double _transformRotateAngleCalculationResult;
         private Node _firstNode;
         private Node _secondNode;
@@ -58,24 +61,40 @@ namespace GraphEditor
 
             // TODO call width animation
 
-            EdgePositioning();
+            EdgePositioning(false);
+
 
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
+            AnimateEdgeCreation();
         }
 
         public void OnNodePositionChanged(object sender, EventArgs e)
         {
-            EdgePositioning();
+            EdgePositioning(true);
         }
 
-        public void EdgePositioning()
+        public void EdgePositioning(bool isInGraph)
         {
+            
             double angle = CalculateAngle(_firstNode, _secondNode);
+            if (Angle == angle) return;
+            Angle = angle;
 
-            edgeVisualRepresentation.Width = CalculateFinalWidth(_firstNode, _secondNode);
+            if (isInGraph)
+            {
+                double width = CalculateFinalWidth(_firstNode, _secondNode);
+                if (width == Width) return;
+                edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
+                edgeVisualRepresentation.Width = width;
+                Width = width;
+            }
+            else
+            {
+                Width = CalculateFinalWidth(_firstNode, _secondNode);
+            }
 
             _offsetTop = Height / 2;
 
@@ -86,6 +105,17 @@ namespace GraphEditor
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
+        }
+
+        private void AnimateEdgeCreation()
+        {
+            DoubleAnimation edgeWidthAnimation = new DoubleAnimation();
+            edgeWidthAnimation.From = Height;
+            edgeWidthAnimation.To = Width;
+            edgeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+            edgeWidthAnimation.AccelerationRatio = 0.5;
+            edgeWidthAnimation.DecelerationRatio = 0.5;
+            edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
         }
 
         private double GetEdgePositionBaseLeft(Node node)

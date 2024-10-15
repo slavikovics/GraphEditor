@@ -22,7 +22,7 @@ namespace GraphEditor
         {
             foreach (Edge edge in edges)
             {
-                edge.EdgePositioning();
+                edge.EdgePositioning(true);
             }
         }
 

@@ -557,7 +557,7 @@
                 </Image>
             </Button>
             
-            <Rectangle x:Name="DemoRect" Height="10" RadiusX="4" RadiusY="4" Canvas.Left="575" Canvas.Top="464" Width="10" Stroke="#FFAEA3D8" FlowDirection="RightToLeft" StrokeThickness="3" RenderTransformOrigin="0.5,0.5">
+            <!--<Rectangle x:Name="DemoRect" Height="10" RadiusX="4" RadiusY="4" Canvas.Left="575" Canvas.Top="464" Width="10" Stroke="#FFAEA3D8" FlowDirection="RightToLeft" StrokeThickness="3" RenderTransformOrigin="0.5,0.5">
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -567,7 +567,7 @@
                         <SkewTransform/>
                     </TransformGroup>
                 </Rectangle.RenderTransform>
-            </Rectangle>
+            </Rectangle>-->
             <!--<Image x:Name="DemoTriang" Width="16" Height="16" Canvas.Top="462" Canvas.Left="577" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.55,1.054">
                 <Image.Source>
                     <DrawingImage>

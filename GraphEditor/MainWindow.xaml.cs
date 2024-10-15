@@ -51,25 +51,25 @@ namespace GraphEditor
             InitializeComponent();            
         }
 
-        public void EdgeDemoAnimation()
-        {
+        //public void EdgeDemoAnimation()
+        //{
 
-            DoubleAnimation edgeAnimationBackWidth = new DoubleAnimation();
-            edgeAnimationBackWidth.To = 100;
-            edgeAnimationBackWidth.Duration = new Duration(TimeSpan.FromSeconds(0.5));
-            edgeAnimationBackWidth.AccelerationRatio = 1;
+        //    DoubleAnimation edgeAnimationBackWidth = new DoubleAnimation();
+        //    edgeAnimationBackWidth.To = 100;
+        //    edgeAnimationBackWidth.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+        //    edgeAnimationBackWidth.AccelerationRatio = 1;
 
-            DoubleAnimation edgeAnimationFrontLeft = new DoubleAnimation();
-            edgeAnimationFrontLeft.To = 667;
-            edgeAnimationFrontLeft.Duration = new Duration(TimeSpan.FromSeconds(0.5));
-            edgeAnimationFrontLeft.AccelerationRatio = 1;
+        //    DoubleAnimation edgeAnimationFrontLeft = new DoubleAnimation();
+        //    edgeAnimationFrontLeft.To = 667;
+        //    edgeAnimationFrontLeft.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+        //    edgeAnimationFrontLeft.AccelerationRatio = 1;
 
-            DependencyProperty dependencyProperty = Canvas.LeftProperty;
-            DemoRect.BeginAnimation(WidthProperty, edgeAnimationBackWidth);
+        //    DependencyProperty dependencyProperty = Canvas.LeftProperty;
+        //    DemoRect.BeginAnimation(WidthProperty, edgeAnimationBackWidth);
 
-            //dependencyProperty = Canvas.LeftProperty;
-            //DemoTriang.BeginAnimation(dependencyProperty, edgeAnimationFrontLeft);
-        }
+        //    //dependencyProperty = Canvas.LeftProperty;
+        //    //DemoTriang.BeginAnimation(dependencyProperty, edgeAnimationFrontLeft);
+        //}
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -177,7 +177,7 @@ namespace GraphEditor
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            EdgeDemoAnimation();
+            //EdgeDemoAnimation();
             //AutoGenerateNodes(300);
         }
     }

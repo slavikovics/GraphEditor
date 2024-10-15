@@ -155,6 +155,7 @@ namespace GraphEditor
 
                 DependencyProperty dependencyProperty = Canvas.LeftProperty;
                 ellipse.BeginAnimation(dependencyProperty, ellipseAnimationLeft);
+
                 dependencyProperty = Canvas.TopProperty;
                 ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
 
