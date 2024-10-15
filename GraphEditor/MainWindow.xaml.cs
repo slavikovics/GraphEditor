@@ -34,7 +34,7 @@ namespace GraphEditor
         public event Action KillAllSelections;
         public event Action MagicWondOrder;
 
-        public bool shouldNodeBeAdded = false; 
+        public bool shouldNodeBeAdded = false;
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
 
@@ -48,7 +48,7 @@ namespace GraphEditor
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         //public void EdgeDemoAnimation()
@@ -113,7 +113,7 @@ namespace GraphEditor
                 if (_secondSelected == null)
                 {
                     _secondSelected = node;
-                    CreateEdge();  
+                    CreateEdge();
                 }
                 _firstSelected = null;
                 _secondSelected = null;
@@ -195,6 +195,12 @@ namespace GraphEditor
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+                this.DragMove();
         }
     }
 }
