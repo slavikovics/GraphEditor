@@ -30,9 +30,9 @@ namespace GraphEditor
 
         private const int EllipseDimensions = 40;
 
-        private const int UILeftSize = 70;
+        private const int UILeftSize = 80;
 
-        private const int UITopSize = 24;
+        private const int UITopSize = 35;
 
         private bool isSelected = false;
 
@@ -59,8 +59,8 @@ namespace GraphEditor
             (ellipse.Content as Image).Source = ((Image)window.EllipseExample.Content).Source;
 
 
-            ellipse.SetValue(Canvas.LeftProperty, CanvasLeft - UILeftSize);
-            ellipse.SetValue(Canvas.TopProperty, CanvasTop - UITopSize);
+            ellipse.SetValue(Canvas.LeftProperty, CanvasLeft - UILeftSize - EllipseDimensions / 2);
+            ellipse.SetValue(Canvas.TopProperty, CanvasTop - UITopSize - EllipseDimensions / 2);
             parent.Children.Add(ellipse);
 
             _id = id;
