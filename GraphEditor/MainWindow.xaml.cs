@@ -157,6 +157,8 @@ namespace GraphEditor
         private void AutoGenerateNodes(int numberOfNodes)
         {
             Random random = new Random();
+            List <Node> nodes = new List<Node>();
+            List <Edge> edges = new List<Edge>();   
 
             for (int i = 0; i < numberOfNodes; i++)
             {
@@ -164,15 +166,37 @@ namespace GraphEditor
                 double Y = random.Next((int)this.ActualWidth - 100) + 50;
                 Node node = new Node(X, Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
+                if (edgeAnimationController == null)
+                {
+                    edgeAnimationController = new EdgeAnimationController(node);
+                }
+                if (nodeAnimationController == null)
+                {
+                    nodeAnimationController = new NodeAnimationController();
+                }
+                nodeAnimationController.AddNode(node);
+                nodes.Add(node);
                 nodeId++;
                 Thread.Sleep(10);
             }
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
+                for (int j = i + 1; j < nodes.Count; j++)
+                {
+                    _firstSelected = nodes[i];
+                    _secondSelected = nodes[j];
+                    edges.Add(CreateEdge());
+                }
+            }
+            Console.WriteLine("Nodes: " + nodes.Count);
+            Console.WriteLine("Edges: " + edges.Count);
         }
 
-        private void CreateEdge()
+        private Edge CreateEdge()
         {
             Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
             edgeAnimationController.AddEdge(edge);
+            return edge;
         }
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
@@ -206,7 +230,7 @@ namespace GraphEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //EdgeDemoAnimation();
-            //AutoGenerateNodes(300);
+            AutoGenerateNodes(20);
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
