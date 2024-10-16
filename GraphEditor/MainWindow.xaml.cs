@@ -125,9 +125,14 @@ namespace GraphEditor
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            Point currentMousePosition = e.GetPosition(sender as Window);
+            if (currentMousePosition.Y <= 10)
+            {
+                this.DragMove();
+                return;
+            }
             if (shouldNodeBeAdded)
             {
-                Point currentMousePosition = e.GetPosition(sender as Window);
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
                 if (edgeAnimationController == null)
@@ -150,7 +155,7 @@ namespace GraphEditor
                 }
                 
                 shouldBeDraged = true;
-                pointerPosition = e.GetPosition(sender as Window);
+                pointerPosition = currentMousePosition;
             }    
         }
 
