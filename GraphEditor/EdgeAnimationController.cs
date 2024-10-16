@@ -8,8 +8,8 @@ namespace GraphEditor
 {
     internal class EdgeAnimationController
     {
-        List<Edge> edges;
-        Node _controlNode;
+        private List<Edge> edges;
+        private Node _controlNode;
 
         public EdgeAnimationController(Node controlNode)
         {
@@ -29,6 +29,14 @@ namespace GraphEditor
         public void AddEdge(Edge edge)
         {
             edges.Add(edge);
+        }
+
+        public void EdgesDraged(double dragDeltaX, double dragDeltaY)
+        {
+            foreach (Edge edge in edges)
+            {
+                edge.EdgeDraged(dragDeltaX, dragDeltaY);
+            }
         }
     }
 }

@@ -104,6 +104,16 @@ namespace GraphEditor
             }
         }
 
+        public void EndMovementAnimations()
+        {
+            double canvasLeft = (double)ellipse.GetValue(Canvas.LeftProperty);
+            double canvasTop = (double)ellipse.GetValue(Canvas.TopProperty);    
+            ellipse.BeginAnimation(Canvas.LeftProperty, null);
+            ellipse.BeginAnimation(Canvas.TopProperty, null);
+            ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
+            ellipse.SetValue (Canvas.TopProperty, canvasTop);
+        }
+
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!isSelected) return;

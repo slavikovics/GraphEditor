@@ -107,6 +107,12 @@ namespace GraphEditor
             edgeVisualRepresentation.RenderTransform = rotateTransform;
         }
 
+        public void EdgeDraged(double dragDeltaX, double dragDeltaY)
+        {
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, (double)edgeVisualRepresentation.GetValue(Canvas.LeftProperty) + dragDeltaX);
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, (double)edgeVisualRepresentation.GetValue(Canvas.TopProperty) + dragDeltaY);
+        }
+
         private void AnimateEdgeCreation()
         {
             DoubleAnimation edgeWidthAnimation = new DoubleAnimation();

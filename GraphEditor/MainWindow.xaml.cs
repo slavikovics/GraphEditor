@@ -47,6 +47,7 @@ namespace GraphEditor
         private Node _firstSelected;
         private Node _secondSelected;
         private EdgeAnimationController edgeAnimationController;
+        private NodeAnimationController nodeAnimationController;
 
         public MainWindow()
         {
@@ -133,10 +134,21 @@ namespace GraphEditor
                 {
                     edgeAnimationController = new EdgeAnimationController(node);
                 }
+                if (nodeAnimationController == null)
+                {
+                    nodeAnimationController = new NodeAnimationController();
+                }
+                nodeAnimationController.AddNode(node);
                 nodeId++;
             }
             else
             {
+                if (!shouldNodeBeMoved)
+                {
+                    shouldNodeBeAdded = false;
+                    return;
+                }
+                
                 shouldBeDraged = true;
                 pointerPosition = e.GetPosition(sender as Window);
             }    
@@ -167,6 +179,8 @@ namespace GraphEditor
         {
             MagicWondOrder?.Invoke();
             shouldEdgeBeAdded = false;
+            shouldNodeBeAdded = false;
+            shouldNodeBeMoved = false;
         }
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
@@ -181,7 +195,12 @@ namespace GraphEditor
         private void ButtonSelect_Click(object sender, RoutedEventArgs e)
         {
             shouldNodeBeMoved = true;
+            shouldNodeBeAdded = false;
             shouldEdgeBeAdded = false;
+            if (nodeAnimationController != null)
+            {
+                nodeAnimationController.EndMovementAnimations();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -208,7 +227,6 @@ namespace GraphEditor
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             this.DragMove();
         }
 
@@ -221,8 +239,24 @@ namespace GraphEditor
         {
             if (!shouldBeDraged) return;
             Point newPosition = e.GetPosition(sender as Window);
-            double deltaX = newPosition.X - pointerPosition.X;
-            double deltaY = newPosition.Y - pointerPosition.Y;
+            double dragDeltaX = newPosition.X - pointerPosition.X;
+            double dragDeltaY = newPosition.Y - pointerPosition.Y;
+
+            dragDeltaX /= 2;
+
+            pointerPosition = newPosition;
+
+            if (nodeAnimationController != null)
+            {
+                nodeAnimationController.SetDragParameters(dragDeltaX, dragDeltaY);
+                nodeAnimationController.Drag();
+
+                if (edgeAnimationController != null)
+                {
+                    edgeAnimationController.EdgesDraged(dragDeltaX, dragDeltaY);
+                }
+            }
+
         }
     }
 }
