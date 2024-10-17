@@ -235,7 +235,7 @@ namespace GraphEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //EdgeDemoAnimation();
-            AutoGenerateNodes(20);
+            //AutoGenerateNodes(50);
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
