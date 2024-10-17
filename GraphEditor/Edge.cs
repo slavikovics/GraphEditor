@@ -62,14 +62,13 @@ namespace GraphEditor
 
             // TODO call width animation
 
-            EdgePositioning(false);
-
-
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
 
             mainCanvas.Children.Add(edgeVisualRepresentation);
-            AnimateEdgeCreation();
+            EdgePositioning(false);
+            
+            //AnimateEdgeCreation();
         }
 
         public void OnNodePositionChanged(object sender, EventArgs e)
@@ -88,13 +87,15 @@ namespace GraphEditor
                 if (Angle == angle) return;
                 if (Width == width) return;
                 edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
-                if (width >= EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
-                else
-                {
-                    edgeVisualRepresentation.Width = 0;
-                    return;
-                }
             }
+
+            if (width >= EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
+            else
+            {
+                edgeVisualRepresentation.Width = 0;
+                return;
+            }
+
             Width = width;
             Angle = angle;
             
