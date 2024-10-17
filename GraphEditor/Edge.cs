@@ -39,6 +39,7 @@ namespace GraphEditor
         private double _offsetTop;
         private double Angle;
         private double _transformRotateAngleCalculationResult;
+        private double desiredWidth;
         private Node _firstNode;
         private Node _secondNode;
         private MainWindow _mainWindow;
@@ -60,6 +61,8 @@ namespace GraphEditor
             edgeVisualRepresentation.Stroke = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
+            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(CalculateRenderTransformOriginLeft(), 0.5);
+
             // TODO call width animation
 
             _firstNode.OnNodeMoved += OnNodePositionChanged;
@@ -68,7 +71,7 @@ namespace GraphEditor
             mainCanvas.Children.Add(edgeVisualRepresentation);
             EdgePositioning(false);
             
-            //AnimateEdgeCreation();
+            AnimateEdgeCreation();
         }
 
         public void OnNodePositionChanged(object sender, EventArgs e)
@@ -90,7 +93,7 @@ namespace GraphEditor
             }
 
             if (width >= EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
-            else
+            else if (isInGraph)
             {
                 edgeVisualRepresentation.Width = 0;
                 return;
@@ -101,22 +104,14 @@ namespace GraphEditor
             
             _offsetTop = Height / 2;
 
-            double originLeft = 0;
-            if (Width != 0)
-            {
-                originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / Width;
-                if (!isInGraph)
-                {
-                    Console.WriteLine("FirstNode dimensions: " + _firstNode.GetEllipseDimensions());
-                    Console.WriteLine("OriginLeft: " + originLeft);
-                }
-            }
+            double originLeft = CalculateRenderTransformOriginLeft();
 
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(_firstNode) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(_firstNode) - _offsetTop);
-            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(originLeft, 0.5);
+
 
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
+            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(originLeft, 0.5);
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
         }
@@ -187,6 +182,12 @@ namespace GraphEditor
                     return 180 - AngleDegrees;
                 }
             }
+        }
+
+        private double CalculateRenderTransformOriginLeft()
+        {
+            if (Width == 0) return 0;
+            return -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / Width;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)
