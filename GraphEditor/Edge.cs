@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace GraphEditor
@@ -45,15 +47,18 @@ namespace GraphEditor
         private MainWindow _mainWindow;
         private Canvas _mainCanvas;
         private Rectangle edgeVisualRepresentation;
+        private bool isAnimated = false;
 
         public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {
+            //isAnimated = true;
             _firstNode = firstNode;
             _secondNode = secondNode;
             _mainWindow = window;
             _mainCanvas = mainCanvas;
 
             edgeVisualRepresentation = new Rectangle();
+            _mainCanvas.Children.Add(edgeVisualRepresentation);
             edgeVisualRepresentation.Height = Height;
             edgeVisualRepresentation.Width = Width;
             edgeVisualRepresentation.RadiusX = RadiusX;
@@ -61,16 +66,21 @@ namespace GraphEditor
             edgeVisualRepresentation.Stroke = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
-            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(CalculateRenderTransformOriginLeft(), 0.5);
-
             // TODO call width animation
 
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
+            //EdgePositioning(true);
 
-            mainCanvas.Children.Add(edgeVisualRepresentation);
-            EdgePositioning(false);
+            edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
             
+        }
+
+        private void EdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
+        {
+            EdgePositioning(false);
+            _mainWindow.UpdateLayout();
+           
             AnimateEdgeCreation();
         }
 
@@ -81,7 +91,8 @@ namespace GraphEditor
 
         public void EdgePositioning(bool isInGraph)
         {
-            
+            Console.WriteLine("EdgePositioning called");
+
             double angle = CalculateAngle(_firstNode, _secondNode);
             double width = CalculateFinalWidth(_firstNode, _secondNode);
 
@@ -89,8 +100,9 @@ namespace GraphEditor
             {
                 if (Angle == angle) return;
                 if (Width == width) return;
-                edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
             }
+
+            edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
 
             if (width >= EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
             else if (isInGraph)
@@ -109,28 +121,40 @@ namespace GraphEditor
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(_firstNode) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(_firstNode) - _offsetTop);
 
-
+            Console.WriteLine(CalculateAngle(_firstNode, _secondNode));
+            edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
-            edgeVisualRepresentation.RenderTransformOrigin = new System.Windows.Point(originLeft, 0.5);
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
+
         }
 
         public void EdgeDraged(double dragDeltaX, double dragDeltaY)
         {
+            Console.WriteLine("EdgeDraged called");
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, (double)edgeVisualRepresentation.GetValue(Canvas.LeftProperty) + dragDeltaX);
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, (double)edgeVisualRepresentation.GetValue(Canvas.TopProperty) + dragDeltaY);
         }
 
         private void AnimateEdgeCreation()
         {
+            Console.WriteLine("AnimateEdgeCreation called");
             DoubleAnimation edgeWidthAnimation = new DoubleAnimation();
-            edgeWidthAnimation.From = Height;
+            edgeWidthAnimation.From = 0;
             edgeWidthAnimation.To = Width;
             edgeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
             edgeWidthAnimation.AccelerationRatio = 0.5;
             edgeWidthAnimation.DecelerationRatio = 0.5;
+            edgeWidthAnimation.Completed += EdgeWidthAnimationCompleted;
+            edgeWidthAnimation.FillBehavior = FillBehavior.Stop;
             edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
+        }
+
+        private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
+        {
+            Console.WriteLine("EdgeAnimationCompleted called");
+            isAnimated = false;
+            Console.WriteLine(CalculateAngle(_firstNode, _secondNode));
         }
 
         private double GetEdgePositionBaseLeft(Node node)
