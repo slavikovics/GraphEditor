@@ -126,7 +126,7 @@ namespace GraphEditor
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point currentMousePosition = e.GetPosition(sender as Window);
-            if (currentMousePosition.Y <= 10)
+            if (currentMousePosition.Y <= 20)
             {
                 this.DragMove();
                 return;
