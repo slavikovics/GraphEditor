@@ -31,11 +31,11 @@ namespace GraphEditor
             edges.Add(edge);
         }
 
-        public void EdgesDraged(double dragDeltaX, double dragDeltaY)
+        public void EdgesDragged(double dragDeltaX, double dragDeltaY)
         {
             foreach (Edge edge in edges)
             {
-                edge.EdgeDraged(dragDeltaX, dragDeltaY);
+                edge.EdgeDragged(dragDeltaX, dragDeltaY);
             }
         }
     }

@@ -282,7 +282,7 @@ namespace GraphEditor
 
                 if (edgeAnimationController != null)
                 {
-                    edgeAnimationController.EdgesDraged(dragDeltaX, dragDeltaY);
+                    edgeAnimationController.EdgesDragged(dragDeltaX, dragDeltaY);
                 }
             }
 

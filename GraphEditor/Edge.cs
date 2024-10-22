@@ -70,10 +70,18 @@ namespace GraphEditor
 
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
+            edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
             //EdgePositioning(true);
 
             edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
             
+        }
+
+        private void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
+        {
+            double originLeft = CalculateRenderTransformOriginLeft();
+            
+            edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
         }
 
         private void EdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
@@ -91,8 +99,6 @@ namespace GraphEditor
 
         public void EdgePositioning(bool isInGraph)
         {
-            Console.WriteLine("EdgePositioning called");
-
             double angle = CalculateAngle(_firstNode, _secondNode);
             double width = CalculateFinalWidth(_firstNode, _secondNode);
 
@@ -129,32 +135,28 @@ namespace GraphEditor
 
         }
 
-        public void EdgeDraged(double dragDeltaX, double dragDeltaY)
+        public void EdgeDragged(double dragDeltaX, double dragDeltaY)
         {
-            Console.WriteLine("EdgeDraged called");
             edgeVisualRepresentation.SetValue(Canvas.LeftProperty, (double)edgeVisualRepresentation.GetValue(Canvas.LeftProperty) + dragDeltaX);
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, (double)edgeVisualRepresentation.GetValue(Canvas.TopProperty) + dragDeltaY);
         }
 
         private void AnimateEdgeCreation()
         {
-            Console.WriteLine("AnimateEdgeCreation called");
             DoubleAnimation edgeWidthAnimation = new DoubleAnimation();
-            edgeWidthAnimation.From = 0;
+            edgeWidthAnimation.From = Height;
             edgeWidthAnimation.To = Width;
             edgeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
             edgeWidthAnimation.AccelerationRatio = 0.5;
             edgeWidthAnimation.DecelerationRatio = 0.5;
             edgeWidthAnimation.Completed += EdgeWidthAnimationCompleted;
-            edgeWidthAnimation.FillBehavior = FillBehavior.Stop;
             edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
+
         }
 
         private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
-            Console.WriteLine("EdgeAnimationCompleted called");
-            isAnimated = false;
-            Console.WriteLine(CalculateAngle(_firstNode, _secondNode));
+            edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
         }
 
         private double GetEdgePositionBaseLeft(Node node)
@@ -211,7 +213,12 @@ namespace GraphEditor
         private double CalculateRenderTransformOriginLeft()
         {
             if (Width == 0) return 0;
-            return -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / Width;
+
+            double originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / edgeVisualRepresentation.Width;
+
+            if (originLeft > 100 || originLeft < -100) return 0;
+
+            return originLeft;
         }
 
         private double CalculateLengthBetweenNodes(Node node1, Node node2)
