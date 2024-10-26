@@ -81,6 +81,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Canvas Name="MainCanvas" Grid.Column="1">
                 <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
@@ -443,7 +444,7 @@
                     </Image>
 
                 </Button>
-                <Button Template="{StaticResource ButtonTemplate}" 
+                <Button x:Name="ButtonGraph"  Template="{StaticResource ButtonTemplate}" 
                 BorderThickness="0" 
                 Background="Purple" 
                 Grid.Row="6" 
@@ -456,7 +457,7 @@
                 MouseLeftButtonDown="Button_MouseLeftButtonDown"
                 MouseLeftButtonUp="Button_MouseLeftButtonUp">
 
-                    <Image>
+                    <Image x:Name="ButtonGraphImage">
                         <Image.Source>
                             <DrawingImage>
                                 <DrawingImage.Drawing>
@@ -615,8 +616,23 @@
 
                 </Button>
             </Grid>
-            
+            <Grid Margin="0 50 20 50" Height="70" VerticalAlignment="Top"  Grid.Column="2">
+                <Border Background="MediumPurple" CornerRadius="10">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <StackPanel>
+                            <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                            <Border Height="30" Margin="4" Background="#998fc7" CornerRadius="10">
+                                <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
+                                    <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
+                                    <Label Content="Graph1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
         </Grid>
+        
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

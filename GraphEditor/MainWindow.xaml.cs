@@ -236,6 +236,7 @@ namespace GraphEditor
         {
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
+            ButtonGraphMangerGraphSettings.Content = ButtonGraphImage;
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
