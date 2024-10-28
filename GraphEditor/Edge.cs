@@ -154,6 +154,11 @@ namespace GraphEditor
 
         }
 
+        public int GetFirstNodeId()
+        {
+            return _firstNode._id;
+        }
+
         private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;

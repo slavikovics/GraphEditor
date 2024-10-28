@@ -138,7 +138,7 @@ namespace GraphEditor
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
                 AnimateGraphsManagerGridExpansion();
-                GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder(node.ToString(), "node"));
+                GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("node" + node._id.ToString(), node.ToString(), "node"));
 
                 if (edgeAnimationController == null)
                 {
@@ -206,7 +206,8 @@ namespace GraphEditor
         {
             Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
             AnimateGraphsManagerGridExpansion();
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder(edge.ToString(), "edge"));
+            InsertEdgeBorder(edge);
+            //GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", edge.ToString(), "edge"));
             edgeAnimationController.AddEdge(edge);
             return edge;
         }
@@ -243,9 +244,25 @@ namespace GraphEditor
         {
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", "Graph", "graph"));
+        }
 
+        private void InsertEdgeBorder(Edge edge)
+        {
+            Border edgeBorder = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge");
+            edgeBorder.Margin = new Thickness(40, 4, 4, 4);
+            int firstNodeId = edge.GetFirstNodeId();
+            int i = 0;
+            foreach(UIElement uIElement in GraphVisualTreeStackPanel.Children)
+            {
+                i++;
+                if ((uIElement as Border)?.Name == "node" + firstNodeId.ToString())
+                {
+                    break;
+                }
+            }
 
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Graph", "graph"));
+            GraphVisualTreeStackPanel.Children.Insert(i, edgeBorder);
         }
 
 
@@ -255,9 +272,10 @@ namespace GraphEditor
         //          <Label Content = "Graph 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
         //     </StackPanel>
         //</Border>
-        private Border GenerateGraphManagerGraphBorder (string borderName, string borderType)
+        private Border GenerateGraphManagerGraphBorder (string borderName, string borderString, string borderType)
         {
             Border graphBorder = new Border();
+            graphBorder.Name = borderName;
             graphBorder.Height = 30;
             graphBorder.Margin = new Thickness(4);
             graphBorder.Background = new SolidColorBrush(Color.FromArgb(255, 153, 143, 199));
@@ -290,7 +308,7 @@ namespace GraphEditor
             }
 
             Label graphNameLabel = new Label();
-            graphNameLabel.Content = borderName;
+            graphNameLabel.Content = borderString;
             graphNameLabel.FontWeight = FontWeights.Bold;
             graphNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
             graphNameLabel.Foreground = new SolidColorBrush(Color.FromArgb(230, 34, 27, 47));

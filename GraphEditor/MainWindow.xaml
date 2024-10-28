@@ -116,7 +116,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Canvas Name="MainCanvas" Grid.Column="1">
                 <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
@@ -612,8 +612,8 @@
 
                 </Button>
             </Grid>
-            <Grid Name="GraphsManagerGrid"  Margin="0 50 20 0" Height="80" VerticalAlignment="Top"  Grid.Column="2">
-                <Border Background="MediumPurple" CornerRadius="10">
+            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="80" VerticalAlignment="Top"  Grid.Column="2">
+                <Border Background="#E59370DB" CornerRadius="20">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
                         <StackPanel x:Name="GraphVisualTreeStackPanel">
                             <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" FontSize="15" Foreground="#E5221B2F"/>
