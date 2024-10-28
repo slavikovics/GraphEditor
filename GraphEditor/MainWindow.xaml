@@ -111,7 +111,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
@@ -491,7 +491,7 @@
                 MouseLeave="Button_MouseLeave" 
                 MouseLeftButtonDown="Button_MouseLeftButtonDown"
                 MouseLeftButtonUp="Button_MouseLeftButtonUp" Content="{DynamicResource ButtonGraphImage}"/>
-                
+
                 <Button Template="{StaticResource ButtonTemplate}" 
                 BorderThickness="0" 
                 Background="Purple" 
@@ -616,19 +616,14 @@
                 <Border Background="MediumPurple" CornerRadius="10">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
                         <StackPanel x:Name="GraphVisualTreeStackPanel">
-                            <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#F8221B2F" FontSize="15"></Label>
-                            <Border Height="30" Margin="4" Background="#998fc7" CornerRadius="10">
-                                <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
-                                    <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
-                                    <Label Content="Graph 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
-                                </StackPanel>
-                            </Border>
+                            <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" FontSize="15" Foreground="#E5221B2F"/>
+
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
             </Grid>
         </Grid>
-        
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -790,5 +785,5 @@
             </Button>
         </Grid>
     </Grid>
-    
+
 </Window>

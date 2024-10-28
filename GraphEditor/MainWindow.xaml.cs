@@ -244,7 +244,8 @@ namespace GraphEditor
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
 
-            GenerateGraphButtonContent(ButtonGraphMangerGraphSettings);
+
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Graph", "graph"));
         }
 
 
@@ -292,7 +293,7 @@ namespace GraphEditor
             graphNameLabel.Content = borderName;
             graphNameLabel.FontWeight = FontWeights.Bold;
             graphNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            graphNameLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 34, 27, 47));
+            graphNameLabel.Foreground = new SolidColorBrush(Color.FromArgb(230, 34, 27, 47));
             graphNameLabel.FontSize = 15;
 
             graphBorderInnerStackPanel.Children.Add(graphSettingsButton);
