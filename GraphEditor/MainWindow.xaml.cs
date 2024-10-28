@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using static MaterialDesignThemes.Wpf.Theme;
+using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
 {
@@ -236,7 +237,15 @@ namespace GraphEditor
         {
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
-            ButtonGraphMangerGraphSettings.Content = (Image)FindResource("ButtonGraphImage");
+            GenerateGraphButtonContent(ButtonGraphMangerGraphSettings);
+        }
+
+        private void GenerateGraphButtonContent(Button graphButton)
+        {
+            Image graphButtonContentImage = new Image();
+            graphButtonContentImage.Source = (FindResource("ButtonGraphImage") as Image).Source;
+
+            graphButton.Content = graphButtonContentImage;
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
