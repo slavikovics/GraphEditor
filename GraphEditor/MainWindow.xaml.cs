@@ -241,6 +241,65 @@ namespace GraphEditor
             GenerateGraphButtonContent(ButtonGraphMangerGraphSettings);
             GenerateNodeButtonContent(ButtonGraphMangerGraphSettings2);
             GenerateEdgeButtonContent(ButtonGraphMangerGraphSettings3);
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My graph", "graph"));
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another graph", "graph"));
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My node", "node"));
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another node", "node"));
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My edge", "edge"));
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another edge", "edge"));
+        }
+
+
+        // <Border Height = "30" Margin="4" Background="#998fc7" CornerRadius="10">
+        //     <StackPanel Margin = "4 0 4 0" Orientation="Horizontal">
+        //          <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
+        //          <Label Content = "Graph 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+        //     </StackPanel>
+        //</Border>
+        private Border GenerateGraphManagerGraphBorder (string borderName, string borderType)
+        {
+            Border graphBorder = new Border();
+            graphBorder.Height = 30;
+            graphBorder.Margin = new Thickness(4);
+            graphBorder.Background = new SolidColorBrush(Color.FromArgb(255, 153, 143, 199));
+            graphBorder.CornerRadius = new CornerRadius(10);
+
+            StackPanel graphBorderInnerStackPanel = new StackPanel();
+
+            switch(borderType)
+            {
+                case "graph": graphBorderInnerStackPanel.Margin = new Thickness(4, 0, 4, 0); break;
+                default: graphBorderInnerStackPanel.Margin = new Thickness(20, 0, 4, 0); break;
+            }
+
+            graphBorderInnerStackPanel.Orientation = Orientation.Horizontal;
+
+            Button graphSettingsButton = new Button();
+            graphSettingsButton.Height = 20;
+            graphSettingsButton.Width = 20;
+            graphSettingsButton.VerticalAlignment = VerticalAlignment.Center;
+            graphSettingsButton.Template = (ControlTemplate)FindResource("ButtonTemplate");
+
+            switch(borderType)
+            {
+                case "graph": GenerateGraphButtonContent(graphSettingsButton); break;
+                case "node": GenerateNodeButtonContent(graphSettingsButton); break;
+                case "edge": GenerateEdgeButtonContent(graphSettingsButton); break;
+            }
+
+            Label graphNameLabel = new Label();
+            graphNameLabel.Content = borderName;
+            graphNameLabel.FontWeight = FontWeights.Bold;
+            graphNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            graphNameLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 34, 27, 47));
+            graphNameLabel.FontSize = 15;
+
+            graphBorderInnerStackPanel.Children.Add(graphSettingsButton);
+            graphBorderInnerStackPanel.Children.Add(graphNameLabel);
+            
+            graphBorder.Child = graphBorderInnerStackPanel;
+
+            return graphBorder;
         }
 
         private void GenerateGraphButtonContent(Button graphButton)

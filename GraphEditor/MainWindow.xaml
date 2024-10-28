@@ -612,11 +612,11 @@
 
                 </Button>
             </Grid>
-            <Grid Margin="0 50 20 50" Height="150" VerticalAlignment="Top"  Grid.Column="2">
+            <Grid Margin="0 50 20 50" Height="200" VerticalAlignment="Top"  Grid.Column="2">
                 <Border Background="MediumPurple" CornerRadius="10">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                        <StackPanel>
-                            <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                        <StackPanel x:Name="GraphVisualTreeStackPanel">
+                            <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#F8221B2F" FontSize="15"></Label>
                             <Border Height="30" Margin="4" Background="#998fc7" CornerRadius="10">
                                 <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
                                     <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
