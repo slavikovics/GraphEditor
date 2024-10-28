@@ -620,13 +620,19 @@
                             <Border Height="30" Margin="4" Background="#998fc7" CornerRadius="10">
                                 <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
                                     <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
-                                    <Label Content="Graph1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                                    <Label Content="Graph 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
                                 </StackPanel>
                             </Border>
-                            <Border Height="30" Margin="4" Background="#998fc7" CornerRadius="10">
+                            <Border Height="30" Margin="20 4 4 4" Background="#998fc7" CornerRadius="10">
                                 <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
                                     <Button x:Name="ButtonGraphMangerGraphSettings2" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
-                                    <Label Content="Graph1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                                    <Label Content="Node 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
+                                </StackPanel>
+                            </Border>
+                            <Border Height="30" Margin="20 4 4 4" Background="#998fc7" CornerRadius="10">
+                                <StackPanel Margin="4 0 4 0" Orientation="Horizontal">
+                                    <Button x:Name="ButtonGraphMangerGraphSettings3" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
+                                    <Label Content="Edge 1-2" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
                                 </StackPanel>
                             </Border>
                         </StackPanel>
