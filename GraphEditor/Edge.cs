@@ -241,7 +241,7 @@ namespace GraphEditor
 
         public override string ToString()
         {
-            return  _firstNode._id + " - " + _secondNode._id;
+            return  "Edge " + _firstNode._id + " - " + _secondNode._id;
         }
     }
 }

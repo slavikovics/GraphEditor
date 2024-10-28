@@ -179,5 +179,10 @@ namespace GraphEditor
         {
             OnNodesAnimated?.Invoke();
         }
+
+        public override string ToString()
+        {
+            return "Node " + _id;
+        }
     }
 }

@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Linq;
 using static MaterialDesignThemes.Wpf.Theme;
 using Button = System.Windows.Controls.Button;
 
@@ -136,6 +137,9 @@ namespace GraphEditor
             {
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
+                AnimateGraphsManagerGridExpansion();
+                GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder(node.ToString(), "node"));
+
                 if (edgeAnimationController == null)
                 {
                     edgeAnimationController = new EdgeAnimationController(node);
@@ -201,6 +205,8 @@ namespace GraphEditor
         private Edge CreateEdge()
         {
             Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
+            AnimateGraphsManagerGridExpansion();
+            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder(edge.ToString(), "edge"));
             edgeAnimationController.AddEdge(edge);
             return edge;
         }
@@ -239,14 +245,6 @@ namespace GraphEditor
             //AutoGenerateNodes(50);
 
             GenerateGraphButtonContent(ButtonGraphMangerGraphSettings);
-            GenerateNodeButtonContent(ButtonGraphMangerGraphSettings2);
-            GenerateEdgeButtonContent(ButtonGraphMangerGraphSettings3);
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My graph", "graph"));
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another graph", "graph"));
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My node", "node"));
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another node", "node"));
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("My edge", "edge"));
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("Another edge", "edge"));
         }
 
 
@@ -269,7 +267,10 @@ namespace GraphEditor
             switch(borderType)
             {
                 case "graph": graphBorderInnerStackPanel.Margin = new Thickness(4, 0, 4, 0); break;
-                default: graphBorderInnerStackPanel.Margin = new Thickness(20, 0, 4, 0); break;
+                default: 
+                    graphBorder.Margin = new Thickness(20, 4, 4, 4);
+                    graphBorderInnerStackPanel.Margin = new Thickness(4, 0, 4, 0);
+                    break;
             }
 
             graphBorderInnerStackPanel.Orientation = Orientation.Horizontal;
@@ -321,6 +322,15 @@ namespace GraphEditor
             Image edgeContentImage = new Image();
             edgeContentImage.Source = ((Image)ButtonAddEdge.Content).Source;
             edgeButton.Content = edgeContentImage;
+        }
+
+        private void AnimateGraphsManagerGridExpansion()
+        {
+            if (GraphsManagerGrid.ActualHeight >= 600) return;
+            DoubleAnimation gridAnimation = new DoubleAnimation();
+            gridAnimation.To = GraphsManagerGrid.ActualHeight + 38;
+            gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+            GraphsManagerGrid.BeginAnimation(HeightProperty, gridAnimation);
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
