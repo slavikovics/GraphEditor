@@ -237,15 +237,31 @@ namespace GraphEditor
         {
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
+
             GenerateGraphButtonContent(ButtonGraphMangerGraphSettings);
+            GenerateNodeButtonContent(ButtonGraphMangerGraphSettings2);
+            GenerateEdgeButtonContent(ButtonGraphMangerGraphSettings3);
         }
 
         private void GenerateGraphButtonContent(Button graphButton)
         {
             Image graphButtonContentImage = new Image();
             graphButtonContentImage.Source = (FindResource("ButtonGraphImage") as Image).Source;
-
             graphButton.Content = graphButtonContentImage;
+        }
+
+        private void GenerateNodeButtonContent(Button nodeButton)
+        {
+            Image nodeContentImage = new Image();
+            nodeContentImage.Source = ((Image)ButtonAddNode.Content).Source;
+            nodeButton.Content = nodeContentImage;
+        }
+
+        private void GenerateEdgeButtonContent(Button edgeButton)
+        {
+            Image edgeContentImage = new Image();
+            edgeContentImage.Source = ((Image)ButtonAddEdge.Content).Source;
+            edgeButton.Content = edgeContentImage;
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
