@@ -245,7 +245,22 @@ namespace GraphEditor
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
             GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", "Graph", "graph"));
+            GraphsManagerScrollViewer.ScrollChanged += GraphsManagerScrollViewerScrollChanged;
         }
+
+        private void GraphsManagerScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            throw new NotImplementedException(); 
+            if (e.VerticalChange != 0)
+            {
+                DoubleAnimation animation = new DoubleAnimation() 
+                { 
+                    From = GraphsManagerScrollViewer.VerticalOffset, 
+                    To = e.VerticalOffset,
+                    Duration = TimeSpan.FromMilliseconds(300)
+                }; 
+                GraphsManagerScrollViewer.BeginAnimation(ScrollViewer.VerticalOffsetProperty, animation);
+            }
 
         private void InsertEdgeBorder(Edge edge)
         {
