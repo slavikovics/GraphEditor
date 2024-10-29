@@ -491,7 +491,7 @@
                 MouseEnter="Button_MouseEnter"
                 MouseLeave="Button_MouseLeave" 
                 MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Content="{DynamicResource ButtonGraphImage}"/>
+                MouseLeftButtonUp="Button_MouseLeftButtonUp" Content="{DynamicResource ButtonGraphImage}" Click="ButtonGraph_Click"/>
 
                 <Button Template="{StaticResource ButtonTemplate}" 
                 BorderThickness="0" 

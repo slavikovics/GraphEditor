@@ -381,5 +381,11 @@ namespace GraphEditor
             }
 
         }
+
+        private void ButtonGraph_Click(object sender, RoutedEventArgs e)
+        {
+            InformationWindow informationWindow = new InformationWindow();
+            informationWindow.Show();
+        }
     }
 }
