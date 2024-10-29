@@ -47,6 +47,7 @@ namespace GraphEditor
         private MainWindow _mainWindow;
         private Canvas _mainCanvas;
         private Rectangle edgeVisualRepresentation;
+        private Brush edgeBrush;
         private bool isAnimated = false;
 
         public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
@@ -63,7 +64,8 @@ namespace GraphEditor
             edgeVisualRepresentation.Width = Width;
             edgeVisualRepresentation.RadiusX = RadiusX;
             edgeVisualRepresentation.RadiusY = RadiusY;
-            edgeVisualRepresentation.Stroke = new SolidColorBrush(StrokeColor);
+            edgeBrush = new SolidColorBrush(StrokeColor);
+            edgeVisualRepresentation.Stroke = edgeBrush;
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
             // TODO call width animation
@@ -71,10 +73,28 @@ namespace GraphEditor
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
+            edgeVisualRepresentation.MouseEnter += EdgeVisualRepresentationMouseEnter;
+            edgeVisualRepresentation.MouseLeave += EdgeVisualRepresentationMouseLeave;
             //EdgePositioning(true);
 
             edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
             
+        }
+
+        private void EdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ColorAnimation edgeHoverAnimation = new ColorAnimation();
+            edgeHoverAnimation.To = StrokeColor;
+            edgeHoverAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
+        }
+
+        private void EdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ColorAnimation edgeHoverAnimation = new ColorAnimation();
+            edgeHoverAnimation.To = Color.FromArgb(255, 153, 143, 199);
+            edgeHoverAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
 
         private void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)

@@ -613,8 +613,8 @@
 
                 </Button>
             </Grid>
-            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="80" VerticalAlignment="Top"  Grid.Column="2">
-                <Border Background="#E59370DB" CornerRadius="20">
+            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="100" VerticalAlignment="Top"  Grid.Column="2">
+                <Border Background="#E59370DB" CornerRadius="20" BorderThickness="4" BorderBrush="#FFAEA3D8">
                     <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
                         
                         <StackPanel x:Name="GraphVisualTreeStackPanel">
