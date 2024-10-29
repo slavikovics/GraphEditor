@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphEditor"
+        xmlns:GraphEditor="clr-namespace:GraphEditor"
         mc:Ignorable="d"
         Background="#FF221B2F"
         MinHeight="700"
@@ -614,7 +615,8 @@
             </Grid>
             <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="80" VerticalAlignment="Top"  Grid.Column="2">
                 <Border Background="#E59370DB" CornerRadius="20">
-                    <ScrollViewer Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
+                    <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
+                        
                         <StackPanel x:Name="GraphVisualTreeStackPanel">
                             <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" FontSize="15" Foreground="#E5221B2F"/>
 

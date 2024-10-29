@@ -13,5 +13,6 @@ namespace GraphEditor
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

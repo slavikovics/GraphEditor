@@ -70,7 +70,7 @@ namespace GraphEditor
             (ellipse.Content as Image).MouseDown += OnMouseDown;
             window.MouseMove += OnMouseMove;
             window.KillAllSelections += Unselect;
-            window.MagicWondOrder += OnMagicWondOrder;
+            window.MagicWandOrder += OnMagicWondOrder;
             ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
         }
 
@@ -143,36 +143,34 @@ namespace GraphEditor
 
         private async void OnMagicWondOrder()
         {
+            double leftTarget = random.Next(100);
+            leftTarget -= 50;
+            double topTarget = random.Next(100);
+            topTarget -= 50;
 
-                double leftTarget = random.Next(100);
-                leftTarget -= 50;
-                double topTarget = random.Next(100);
-                topTarget -= 50;
+            double toLeft = GetPosLeft() + leftTarget;
 
-                double toLeft = GetPosLeft() + leftTarget;
+            DoubleAnimation ellipseAnimationLeft = new DoubleAnimation();
+            ellipseAnimationLeft.To = toLeft;
+            ellipseAnimationLeft.Duration = new Duration(TimeSpan.FromSeconds(1));
+            ellipseAnimationLeft.AccelerationRatio = 0.3;
+            ellipseAnimationLeft.DecelerationRatio = 0.7;
 
-                DoubleAnimation ellipseAnimationLeft = new DoubleAnimation();
-                ellipseAnimationLeft.To = toLeft;
-                ellipseAnimationLeft.Duration = new Duration(TimeSpan.FromSeconds(1));
-                ellipseAnimationLeft.AccelerationRatio = 0.3;
-                ellipseAnimationLeft.DecelerationRatio = 0.7;
+            double toTop = GetPosTop() + topTarget;
 
-                double toTop = GetPosTop() + topTarget;
+            DoubleAnimation ellipseAnimationTop = new DoubleAnimation();
+            ellipseAnimationTop.To = toTop;
+            ellipseAnimationTop.Duration = new Duration(TimeSpan.FromSeconds(1));
+            ellipseAnimationTop.AccelerationRatio = 0.3;
+            ellipseAnimationTop.DecelerationRatio = 0.7;
 
-                DoubleAnimation ellipseAnimationTop = new DoubleAnimation();
-                ellipseAnimationTop.To = toTop;
-                ellipseAnimationTop.Duration = new Duration(TimeSpan.FromSeconds(1));
-                ellipseAnimationTop.AccelerationRatio = 0.3;
-                ellipseAnimationTop.DecelerationRatio = 0.7;
+            DependencyProperty dependencyProperty = Canvas.LeftProperty;
+            ellipse.BeginAnimation(dependencyProperty, ellipseAnimationLeft);
 
-                DependencyProperty dependencyProperty = Canvas.LeftProperty;
-                ellipse.BeginAnimation(dependencyProperty, ellipseAnimationLeft);
+            dependencyProperty = Canvas.TopProperty;
+            ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
 
-                dependencyProperty = Canvas.TopProperty;
-                ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
-
-                testWasMagicWondClicked = true;
-
+            testWasMagicWondClicked = true;
         }
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)

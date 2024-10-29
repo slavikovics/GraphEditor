@@ -34,12 +34,12 @@ namespace GraphEditor
         int nodeId = 1;
 
         public event Action KillAllSelections;
-        public event Action MagicWondOrder;
+        public event Action MagicWandOrder;
 
         public bool shouldNodeBeAdded = false;
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
-        private bool shouldBeDraged = false;
+        private bool shouldBeDragged = false;
 
         List<Edge> edges = new List<Edge>();
 
@@ -55,26 +55,6 @@ namespace GraphEditor
         {
             InitializeComponent();
         }
-
-        //public void EdgeDemoAnimation()
-        //{
-
-        //    DoubleAnimation edgeAnimationBackWidth = new DoubleAnimation();
-        //    edgeAnimationBackWidth.To = 100;
-        //    edgeAnimationBackWidth.Duration = new Duration(TimeSpan.FromSeconds(0.5));
-        //    edgeAnimationBackWidth.AccelerationRatio = 1;
-
-        //    DoubleAnimation edgeAnimationFrontLeft = new DoubleAnimation();
-        //    edgeAnimationFrontLeft.To = 667;
-        //    edgeAnimationFrontLeft.Duration = new Duration(TimeSpan.FromSeconds(0.5));
-        //    edgeAnimationFrontLeft.AccelerationRatio = 1;
-
-        //    DependencyProperty dependencyProperty = Canvas.LeftProperty;
-        //    DemoRect.BeginAnimation(WidthProperty, edgeAnimationBackWidth);
-
-        //    //dependencyProperty = Canvas.LeftProperty;
-        //    //DemoTriang.BeginAnimation(dependencyProperty, edgeAnimationFrontLeft);
-        //}
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -159,7 +139,7 @@ namespace GraphEditor
                     return;
                 }
                 
-                shouldBeDraged = true;
+                shouldBeDragged = true;
                 pointerPosition = currentMousePosition;
             }    
         }
@@ -214,7 +194,7 @@ namespace GraphEditor
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
         {
-            MagicWondOrder?.Invoke();
+            MagicWandOrder?.Invoke();
             shouldEdgeBeAdded = false;
             shouldNodeBeAdded = false;
             shouldNodeBeMoved = false;
@@ -245,22 +225,7 @@ namespace GraphEditor
             //EdgeDemoAnimation();
             //AutoGenerateNodes(50);
             GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", "Graph", "graph"));
-            GraphsManagerScrollViewer.ScrollChanged += GraphsManagerScrollViewerScrollChanged;
         }
-
-        private void GraphsManagerScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            throw new NotImplementedException(); 
-            if (e.VerticalChange != 0)
-            {
-                DoubleAnimation animation = new DoubleAnimation() 
-                { 
-                    From = GraphsManagerScrollViewer.VerticalOffset, 
-                    To = e.VerticalOffset,
-                    Duration = TimeSpan.FromMilliseconds(300)
-                }; 
-                GraphsManagerScrollViewer.BeginAnimation(ScrollViewer.VerticalOffsetProperty, animation);
-            }
 
         private void InsertEdgeBorder(Edge edge)
         {
@@ -390,12 +355,12 @@ namespace GraphEditor
 
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            shouldBeDraged = false;
+            shouldBeDragged = false;
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!shouldBeDraged) return;
+            if (!shouldBeDragged) return;
             Point newPosition = e.GetPosition(sender as Window);
             double dragDeltaX = newPosition.X - pointerPosition.X;
             double dragDeltaY = newPosition.Y - pointerPosition.Y;
