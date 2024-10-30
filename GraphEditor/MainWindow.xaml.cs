@@ -110,7 +110,10 @@ namespace GraphEditor
             Point currentMousePosition = e.GetPosition(sender as Window);
             if (currentMousePosition.Y <= 20)
             {
-                this.DragMove();
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    this.DragMove();
+                }
                 return;
             }
             if (shouldNodeBeAdded)
