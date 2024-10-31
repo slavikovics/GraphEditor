@@ -22,6 +22,8 @@ namespace GraphEditor
 
         private Canvas _canvas;
 
+        private TextBlock _textBlock;
+
         private MainWindow _window;
 
         private Random random;
@@ -73,11 +75,40 @@ namespace GraphEditor
             window.MagicWandOrder += OnMagicWondOrder;
             ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
             NodeAddingAnimation();
+
+            _textBlock = new TextBlock();
+            _textBlock.TextAlignment = TextAlignment.Center;
+            _textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 174, 163, 216));
+            _textBlock.Text = $"Node {_id}";
+            _textBlock.FontSize = 14;
+            _textBlock.FontWeight = FontWeights.Bold;
+            _textBlock.Height = 30;
+            _textBlock.Width = 100;
+
+            MoveTextBlock();
+
+            _canvas.Children.Add(_textBlock);
         }
 
         public int GetEllipseDimensions()
         {
             return EllipseDimensions;
+        }
+
+        private double CalculateTextBlockCanvasLeft()
+        {
+            return GetPosLeft() - (_textBlock.Width - EllipseDimensions) / 2;        
+        }
+
+        private double CalculateTextBlockCanvasTop()
+        {
+            return GetPosTop() + EllipseDimensions + 8;
+        }
+
+        private void MoveTextBlock()
+        {
+            _textBlock.SetValue(Canvas.LeftProperty, CalculateTextBlockCanvasLeft());
+            _textBlock.SetValue(Canvas.TopProperty, CalculateTextBlockCanvasTop());
         }
 
         private void Unselect()
@@ -152,7 +183,7 @@ namespace GraphEditor
             return (double)ellipse.GetValue(Canvas.TopProperty);
         }
 
-        private async void OnMagicWondOrder()
+        private void OnMagicWondOrder()
         {
             double leftTarget = random.Next(100);
             leftTarget -= 50;
@@ -213,6 +244,7 @@ namespace GraphEditor
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)
         {
+            MoveTextBlock();
             OnNodesAnimated?.Invoke();
         }
 

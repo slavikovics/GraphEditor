@@ -18,7 +18,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using static MaterialDesignThemes.Wpf.Theme;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
