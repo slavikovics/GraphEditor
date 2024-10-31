@@ -21,38 +21,74 @@
             </Setter>
         </Style>
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
-            <Grid>
-                <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="50" Background="MediumPurple">
-                    <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Border>
 
+            <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="50" Background="MediumPurple">
+                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
                             <Storyboard>
                                 <ColorAnimation 
-                            Storyboard.TargetName="BorderTemplate" 
-                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                            To="MediumPurple" 
-                            Duration="0:0:0.2" />
+            Storyboard.TargetName="BorderTemplate" 
+            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+            To="MediumPurple" 
+            Duration="0:0:0.2" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="MouseOver">
                             <Storyboard>
                                 <ColorAnimation 
-                            Storyboard.TargetName="BorderTemplate" 
-                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                            To="DarkOrchid" 
-                            Duration="0:0:0.3" />
+            Storyboard.TargetName="BorderTemplate" 
+            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+            To="DarkOrchid" 
+            Duration="0:0:0.3" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
                                 <ColorAnimation 
-                            Storyboard.TargetName="BorderTemplate" 
-                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                            To="Purple" 
-                            Duration="0:0:0.1" />
+            Storyboard.TargetName="BorderTemplate" 
+            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+            To="Purple" 
+            Duration="0:0:0.1" />
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="DialogButtonTemplate" TargetType="Button">
+            <Grid>
+                <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="10" Background="MediumPurple"/>
+                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation 
+Storyboard.TargetName="BorderTemplate" 
+Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+To="MediumPurple" 
+Duration="0:0:0.2" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation 
+Storyboard.TargetName="BorderTemplate" 
+Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+To="DarkOrchid" 
+Duration="0:0:0.3" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation 
+Storyboard.TargetName="BorderTemplate" 
+Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+To="Purple" 
+Duration="0:0:0.1" />
                             </Storyboard>
                         </VisualState>
                     </VisualStateGroup>
@@ -69,6 +105,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -230,5 +267,14 @@
                 </Image>
             </Button>
         </Grid>
+        <StackPanel Grid.Row="1">
+            <Label Content="Are you sure?" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
+            <Label Content="Your actions can lead to programm shutdown if the garaph is large!" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="15" Foreground="MediumPurple"/>
+        </StackPanel>
+        <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
+            <Button Template="{StaticResource DialogButtonTemplate}" Content="Yes" FontWeight="Bold" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp" Margin="30 30 0 30" Height="30" Width="80">
+            </Button>
+            <Button Template="{StaticResource DialogButtonTemplate}" Content="No" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80"></Button>
+        </StackPanel>
     </Grid>
 </Window>

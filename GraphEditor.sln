@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphEditor", "GraphEditor\GraphEditor.csproj", "{1DF31B99-05F6-410A-9472-99E876E0F7CB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GraphsEditorInstaller", "GraphsEditorInstaller\GraphsEditorInstaller.vdproj", "{40831D3B-91C9-401D-9D00-117209338BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{1DF31B99-05F6-410A-9472-99E876E0F7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DF31B99-05F6-410A-9472-99E876E0F7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DF31B99-05F6-410A-9472-99E876E0F7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40831D3B-91C9-401D-9D00-117209338BF1}.Debug|Any CPU.ActiveCfg = Debug
+		{40831D3B-91C9-401D-9D00-117209338BF1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
