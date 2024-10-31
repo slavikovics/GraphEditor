@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphEditor.GraphsManagerControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -15,7 +16,7 @@ using System.Xml.Linq;
 
 namespace GraphEditor
 {
-    internal class Edge
+    internal class Edge : IRenamable
     {
 
         // Height="10"
@@ -267,6 +268,11 @@ namespace GraphEditor
         public override string ToString()
         {
             return  "Edge " + _firstNode._id + " - " + _secondNode._id;
+        }
+
+        public void Rename(string newName)
+        {
+
         }
     }
 }

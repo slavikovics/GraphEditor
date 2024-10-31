@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GraphEditor.GraphsManagerControls;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -22,8 +23,10 @@ namespace GraphEditor
 
         public Image _buttonGraphImageContent;
 
+        private IRenamable _renamable;
+
         public GraphItemBorder(string borderName, string borderString, string borderType, 
-            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent)
+            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable)
         {
             Name = borderName;
             _borderType = borderType;
@@ -32,6 +35,7 @@ namespace GraphEditor
             _buttonAddNodeContent = buttonAddNodeContent;
             _buttonAddEdgeContent = buttonAddEdgeContent;
             _buttonGraphImageContent = buttonGraphImageContent;
+            _renamable = renamable;
 
             Height = 30;
             Margin = new Thickness(4);
@@ -109,6 +113,7 @@ namespace GraphEditor
             if (e._wasRenamed == true)
             {
                 _graphItemNameLabel.Content = e._newName;
+                _renamable?.Rename(e._newName);
             }
         }
     }

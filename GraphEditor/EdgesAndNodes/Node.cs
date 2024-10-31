@@ -1,4 +1,5 @@
-﻿using GraphEditor.Properties;
+﻿using GraphEditor.GraphsManagerControls;
+using GraphEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ using System.Windows.Threading;
 
 namespace GraphEditor
 {
-    internal class Node
+    internal class Node : IRenamable
     {
         public Button ellipse { get; private set; }
 
@@ -251,6 +252,12 @@ namespace GraphEditor
         public override string ToString()
         {
             return "Node " + _id;
+        }
+
+        public void Rename(string newName)
+        {
+            _textBlock.Text = newName;
+            MoveTextBlock();
         }
     }
 }

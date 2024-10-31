@@ -81,10 +81,12 @@
     </Compile>
     <Compile Include="EdgesAndNodes\Edge.cs" />
     <Compile Include="AnimationControllers\EdgeAnimationController.cs" />
-    <Compile Include="GraphsManager\GraphItemBorder.cs" />
-    <Compile Include="GraphsManager\GraphItemNameLabel.cs" />
-    <Compile Include="GraphsManager\RenamingButton.cs" />
-    <Compile Include="GraphsManager\RenamingEventArgs.cs" />
+    <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
+    <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
+    <Compile Include="GraphsManagerControls\GraphManager.cs" />
+    <Compile Include="GraphsManagerControls\IRenamable.cs" />
+    <Compile Include="GraphsManagerControls\RenamingButton.cs" />
+    <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
     <Compile Include="Windows\RenamingWindow.xaml.cs">
       <DependentUpon>RenamingWindow.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GraphEditor.GraphsManager;
+using GraphEditor.GraphsManagerControls;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +36,7 @@ namespace GraphEditor
         private Node _secondSelected;
         private EdgeAnimationController edgeAnimationController;
         private NodeAnimationController nodeAnimationController;
+        private GraphManager graphsManager;
 
         public MainWindow()
         {
@@ -109,8 +112,8 @@ namespace GraphEditor
             {
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
-                AnimateGraphsManagerGridExpansion();
-                GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("node" + node._id.ToString(), node.ToString(), "node"));
+                AnimateGraphsManagerGridExpansion();   
+                InsertNodeBorder(node);
 
                 if (edgeAnimationController == null)
                 {
@@ -216,16 +219,23 @@ namespace GraphEditor
         {
             //EdgeDemoAnimation();
             //AutoGenerateNodes(5);
-            GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", "Graph", "graph"));
+            graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
+            InsertGraphBorder();
+            
+        }
+
+        private void InsertGraphBorder()
+        {
+            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddGraph("Graph"));
         }
 
         private void InsertEdgeBorder(Edge edge)
         {
-            Border edgeBorder = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge");
+            Border edgeBorder = graphsManager.AddEdge(edge);
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
             int firstNodeId = edge.GetFirstNodeId();
             int i = 0;
-            foreach(UIElement uIElement in GraphVisualTreeStackPanel.Children)
+            foreach (UIElement uIElement in GraphVisualTreeStackPanel.Children)
             {
                 i++;
                 if ((uIElement as Border)?.Name == "node" + firstNodeId.ToString())
@@ -237,12 +247,9 @@ namespace GraphEditor
             GraphVisualTreeStackPanel.Children.Insert(i, edgeBorder);
         }
 
-        private Border GenerateGraphManagerGraphBorder (string borderName, string borderString, string borderType)
+        private void InsertNodeBorder(Node node)
         {
-            GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType, 
-                (ControlTemplate) FindResource("ButtonTemplate"), (Image) ButtonAddNode.Content, (Image) ButtonAddEdge.Content, (Image) ButtonGraph.Content);       
-
-            return graphItemBorder;
+            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddNode(node));
         }
 
         private void AnimateGraphsManagerGridExpansion()
