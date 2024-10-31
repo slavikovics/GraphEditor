@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Edge.cs" />
     <Compile Include="EdgeAnimationController.cs" />
+    <Compile Include="RenamingEventArgs.cs" />
     <Compile Include="RenamingWindow.xaml.cs">
       <DependentUpon>RenamingWindow.xaml</DependentUpon>
     </Compile>

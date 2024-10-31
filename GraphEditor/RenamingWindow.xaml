@@ -8,10 +8,9 @@
         Background="#FF221B2F"
         Title="Graph Editor Information" Height="300" Width="500"
         ResizeMode="NoResize"
-        MouseDown="Grid_MouseDown" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+        MouseDown="Grid_MouseDown" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
-
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
                     <WindowChrome GlassFrameThickness="1" 
@@ -21,7 +20,6 @@
             </Setter>
         </Style>
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
-
             <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="50" Background="MediumPurple">
                 <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <VisualStateManager.VisualStateGroups>
@@ -29,28 +27,28 @@
                         <VisualState x:Name="Normal">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="MediumPurple" 
-            Duration="0:0:0.2" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="MediumPurple" 
+                                        Duration="0:0:0.2" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="MouseOver">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="DarkOrchid" 
-            Duration="0:0:0.3" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="DarkOrchid" 
+                                        Duration="0:0:0.3" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="Purple" 
-            Duration="0:0:0.1" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="Purple" 
+                                        Duration="0:0:0.1" />
                             </Storyboard>
                         </VisualState>
                     </VisualStateGroup>
@@ -67,41 +65,38 @@
                         <VisualState x:Name="Normal">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="MediumPurple" 
-Duration="0:0:0.2" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="MediumPurple" 
+                                        Duration="0:0:0.2" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="MouseOver">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="DarkOrchid" 
-Duration="0:0:0.3" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="DarkOrchid" 
+                                        Duration="0:0:0.3" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="Purple" 
-Duration="0:0:0.1" />
+                                        Storyboard.TargetName="BorderTemplate" 
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                        To="Purple" 
+                                        Duration="0:0:0.1" />
                             </Storyboard>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
             </Grid>
         </ControlTemplate>
-
     </Window.Resources>
-
     <Window.Style>
         <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -116,19 +111,19 @@ Duration="0:0:0.1" />
                 <ColumnDefinition Width="24"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CollapseWindowButton" Template="{StaticResource ButtonTemplate}" 
-        BorderThickness="0" Background="Purple" 
-        Grid.Column="1"
-        Margin="2 11 2 2" 
-        Padding="0" 
-        Height="20" 
-        Width="20" 
-        Click="CollapseWindowButton_Click"
-        MouseEnter="Button_MouseEnter"
-        MouseLeave="Button_MouseLeave"
-        MouseLeftButtonDown="Button_MouseLeftButtonDown"
-        MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+            <Button x:Name="CollapseWindowButton" 
+                            Template="{StaticResource ButtonTemplate}" 
+                            BorderThickness="0" Background="Purple" 
+                            Grid.Column="1"
+                            Margin="2 11 2 2" 
+                            Padding="0" 
+                            Height="20" 
+                            Width="20" 
+                            Click="CollapseWindowButton_Click"
+                            MouseEnter="Button_MouseEnter"
+                            MouseLeave="Button_MouseLeave"
+                            MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                            MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -157,19 +152,18 @@ Duration="0:0:0.1" />
                     </Image.Source>
                 </Image>
             </Button>
-            <Button x:Name="MaximizeWindowButton" Template="{StaticResource ButtonTemplate}" 
-            BorderThickness="0" Background="Purple" 
-            Grid.Column="2"
-            Margin="2 11 2 2"  
-            Padding="0" 
-            Height="20" 
-            Width="20" 
-            Click="MaximizeWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+            <Button x:Name="MaximizeWindowButton" 
+                    Template="{StaticResource ButtonTemplate}" 
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="2"
+                    Margin="2 11 2 2"  
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -219,19 +213,19 @@ Duration="0:0:0.1" />
                     </Image.Source>
                 </Image>
             </Button>
-            <Button x:Name="CloseWindowButton" Template="{StaticResource ButtonTemplate}" 
-            BorderThickness="0" Background="Purple" 
-            Grid.Column="3"
-            Margin="2 11 2 2" 
-            Padding="0" 
-            Height="20" 
-            Width="20" 
-            Click="CloseWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+            <Button x:Name="CloseWindowButton" 
+                    Template="{StaticResource ButtonTemplate}" 
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="3"
+                    Margin="2 11 2 2" 
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="CloseWindowButton_Click"
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -270,49 +264,26 @@ Duration="0:0:0.1" />
         </Grid>
         <StackPanel Grid.Row="1">
             <Label Content="Renaming" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
-            <!--<Border x:Name="RenamingBorder" Height="30" Margin="10 20 10 0" BorderThickness="2" BorderBrush="#FFAEA3D8" CornerRadius="10" Background="MediumPurple" MouseEnter="BorderTemplate_MouseEnter" MouseLeave="BorderTemplate_MouseLeave" MouseLeftButtonDown="BorderTemplate_MouseLeftButtonDown" MouseLeftButtonUp="BorderTemplate_MouseLeftButtonUp">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Text="Hello"/>
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <Storyboard>
-                                <ColorAnimation 
-                                    Storyboard.TargetName="RenamingBorder" 
-                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                    To="MediumPurple" 
-                                    Duration="0:0:0.2" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="MouseOver">
-                            <Storyboard>
-                                <ColorAnimation 
-                                    Storyboard.TargetName="RenamingBorder" 
-                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                    To="DarkOrchid" 
-                                    Duration="0:0:0.3" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <Storyboard>
-                                <ColorAnimation 
-                                    Storyboard.TargetName="RenamingBorder" 
-                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                    To="Purple" 
-                                    Duration="0:0:0.1" />
-                            </Storyboard>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Border>-->
-            <Button Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold" Click="Button_Click">
+            <Button Name="TextInput" Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold" Click="TextInputClick">
                 <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="Bold" Text="Hello|"/>
             </Button>
-            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" TextChanged="HiddenTextBox_TextChanged" Opacity="0"/>
+            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" TextChanged="HiddenTextBoxTextChanged" Opacity="0"/>
         </StackPanel>
         <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
-            <Button Template="{StaticResource DialogButtonTemplate}" Content="Apply" FontWeight="Bold" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp" Margin="30 30 0 30" Height="30" Width="80">
+            <Button Name="ApplyButton" 
+                    Template="{StaticResource DialogButtonTemplate}" 
+                    Content="Apply" 
+                    FontWeight="Bold" 
+                    MouseEnter="Button_MouseEnter" 
+                    MouseLeave="Button_MouseLeave" 
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown" 
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp" 
+                    Margin="30 30 0 30" 
+                    Height="30" 
+                    Width="80" 
+                    Click="ApplyButtonClick">
             </Button>
-            <Button Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80"></Button>
+            <Button Name="CancelButton" Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80" Click="CancelButtonClick"></Button>
         </StackPanel>
     </Grid>
 </Window>
