@@ -97,6 +97,11 @@ namespace GraphEditor
                 if (_secondSelected == null)
                 {
                     _secondSelected = node;
+                    if (_firstSelected == _secondSelected)
+                    {
+                        _secondSelected = null;
+                        return;
+                    } // edge can e only between two different nodes
                     CreateEdge();
                 }
                 _firstSelected = null;
