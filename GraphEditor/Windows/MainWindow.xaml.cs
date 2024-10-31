@@ -1,30 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using System.Xml.Linq;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor 
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         bool isElementSelected = false;
@@ -151,43 +136,43 @@ namespace GraphEditor
             }    
         }
 
-        private void AutoGenerateNodes(int numberOfNodes)
-        {
-            Random random = new Random();
-            List <Node> nodes = new List<Node>();
-            List <Edge> edges = new List<Edge>();   
+        //private void AutoGenerateNodes(int numberOfNodes)
+        //{
+        //    Random random = new Random();
+        //    List <Node> nodes = new List<Node>();
+        //    List <Edge> edges = new List<Edge>();   
 
-            for (int i = 0; i < numberOfNodes; i++)
-            {
-                double X = random.Next((int)this.ActualWidth - 100) + 80;
-                double Y = random.Next((int)this.ActualWidth - 100) + 50;
-                Node node = new Node(X, Y, MainCanvas, this, nodeId);
-                node.buttonSelected += OnNodeSelected;
-                if (edgeAnimationController == null)
-                {
-                    edgeAnimationController = new EdgeAnimationController(node);
-                }
-                if (nodeAnimationController == null)
-                {
-                    nodeAnimationController = new NodeAnimationController();
-                }
-                nodeAnimationController.AddNode(node);
-                nodes.Add(node);
-                nodeId++;
-                //Thread.Sleep(10);
-            }
-            for (int i = 0; i < nodes.Count - 1; i++)
-            {
-                for (int j = i + 1; j < nodes.Count; j++)
-                {
-                    _firstSelected = nodes[i];
-                    _secondSelected = nodes[j];
-                    edges.Add(CreateEdge());
-                }
-            }
-            Console.WriteLine("Nodes: " + nodes.Count);
-            Console.WriteLine("Edges: " + edges.Count);
-        }
+        //    for (int i = 0; i < numberOfNodes; i++)
+        //    {
+        //        double X = random.Next((int)this.ActualWidth - 100) + 80;
+        //        double Y = random.Next((int)this.ActualWidth - 100) + 50;
+        //        Node node = new Node(X, Y, MainCanvas, this, nodeId);
+        //        node.buttonSelected += OnNodeSelected;
+        //        if (edgeAnimationController == null)
+        //        {
+        //            edgeAnimationController = new EdgeAnimationController(node);
+        //        }
+        //        if (nodeAnimationController == null)
+        //        {
+        //            nodeAnimationController = new NodeAnimationController();
+        //        }
+        //        nodeAnimationController.AddNode(node);
+        //        nodes.Add(node);
+        //        nodeId++;
+        //        //Thread.Sleep(10);
+        //    }
+        //    for (int i = 0; i < nodes.Count - 1; i++)
+        //    {
+        //        for (int j = i + 1; j < nodes.Count; j++)
+        //        {
+        //            _firstSelected = nodes[i];
+        //            _secondSelected = nodes[j];
+        //            edges.Add(CreateEdge());
+        //        }
+        //    }
+        //    Console.WriteLine("Nodes: " + nodes.Count);
+        //    Console.WriteLine("Edges: " + edges.Count);
+        //}
 
         private Edge CreateEdge()
         {
@@ -252,89 +237,12 @@ namespace GraphEditor
             GraphVisualTreeStackPanel.Children.Insert(i, edgeBorder);
         }
 
-
-        // <Border Height = "30" Margin="4" Background="#998fc7" CornerRadius="10">
-        //     <StackPanel Margin = "4 0 4 0" Orientation="Horizontal">
-        //          <Button x:Name="ButtonGraphMangerGraphSettings" Height="20" Width="20" VerticalAlignment="Center" Template="{StaticResource ButtonTemplate}"/>
-        //          <Label Content = "Graph 1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF221B2F" FontSize="15"></Label>
-        //     </StackPanel>
-        //</Border>
         private Border GenerateGraphManagerGraphBorder (string borderName, string borderString, string borderType)
         {
-            Border graphBorder = new Border();
-            graphBorder.Name = borderName;
-            graphBorder.Height = 30;
-            graphBorder.Margin = new Thickness(4);
-            graphBorder.Background = new SolidColorBrush(Color.FromArgb(255, 153, 143, 199));
-            graphBorder.CornerRadius = new CornerRadius(10);
+            GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType, 
+                (ControlTemplate) FindResource("ButtonTemplate"), (Image) ButtonAddNode.Content, (Image) ButtonAddEdge.Content, (Image) ButtonGraph.Content);       
 
-            StackPanel graphBorderInnerStackPanel = new StackPanel();
-
-            switch(borderType)
-            {
-                case "graph": graphBorderInnerStackPanel.Margin = new Thickness(4, 0, 4, 0); break;
-                default: 
-                    graphBorder.Margin = new Thickness(20, 4, 4, 4);
-                    graphBorderInnerStackPanel.Margin = new Thickness(4, 0, 4, 0);
-                    break;
-            }
-
-            graphBorderInnerStackPanel.Orientation = Orientation.Horizontal;
-
-            Button graphSettingsButton = new Button();
-            graphSettingsButton.Height = 20;
-            graphSettingsButton.Width = 20;
-            graphSettingsButton.VerticalAlignment = VerticalAlignment.Center;
-            graphSettingsButton.Template = (ControlTemplate)FindResource("ButtonTemplate");
-            graphSettingsButton.Click += GraphSettingsButtonClick;
-
-            switch(borderType)
-            {
-                case "graph": GenerateGraphButtonContent(graphSettingsButton); break;
-                case "node": GenerateNodeButtonContent(graphSettingsButton); break;
-                case "edge": GenerateEdgeButtonContent(graphSettingsButton); break;
-            }
-
-            Label graphNameLabel = new Label();
-            graphNameLabel.Content = borderString;
-            graphNameLabel.FontWeight = FontWeights.Bold;
-            graphNameLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            graphNameLabel.Foreground = new SolidColorBrush(Color.FromArgb(230, 34, 27, 47));
-            graphNameLabel.FontSize = 15;
-
-            graphBorderInnerStackPanel.Children.Add(graphSettingsButton);
-            graphBorderInnerStackPanel.Children.Add(graphNameLabel);
-            
-            graphBorder.Child = graphBorderInnerStackPanel;
-
-            return graphBorder;
-        }
-
-        private void GraphSettingsButtonClick(object sender, RoutedEventArgs e)
-        {
-            RenamingWindow renamingWindow = new RenamingWindow();
-            renamingWindow.Show();
-        }
-
-        private void GenerateGraphButtonContent(Button graphButton)
-        {
-            Image graphButtonContentImage = new Image();
-            graphButtonContentImage.Source = (FindResource("ButtonGraphImage") as Image).Source;
-            graphButton.Content = graphButtonContentImage;
-        }
-
-        private void GenerateNodeButtonContent(Button nodeButton)
-        {
-            Image nodeContentImage = new Image();
-            nodeContentImage.Source = ((Image)ButtonAddNode.Content).Source;
-            nodeButton.Content = nodeContentImage;
-        }
-
-        private void GenerateEdgeButtonContent(Button edgeButton)
-        {
-            Image edgeContentImage = new Image();
-            edgeContentImage.Source = ((Image)ButtonAddEdge.Content).Source;
-            edgeButton.Content = edgeContentImage;
+            return graphItemBorder;
         }
 
         private void AnimateGraphsManagerGridExpansion()

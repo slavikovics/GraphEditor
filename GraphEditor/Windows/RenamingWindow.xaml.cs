@@ -12,9 +12,12 @@ namespace GraphEditor
 
         private DispatcherTimer timer;
 
-        public RenamingWindow()
+        string _textToEdit;
+
+        public RenamingWindow(string textToEdit)
         {
             InitializeComponent();
+            _textToEdit = textToEdit;
         }
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
@@ -66,6 +69,7 @@ namespace GraphEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HiddenTextBox.Focus();
+            RenamedName.Text = _textToEdit + "|";
             HiddenTextBox.Text = GetTextInput();
             HiddenTextBox.CaretIndex = HiddenTextBox.Text.Length;
             timer = new DispatcherTimer();
@@ -97,6 +101,7 @@ namespace GraphEditor
         {
             RenamingEventArgs renamingEventArgs = new RenamingEventArgs(true, GetTextInput());
             RenamingResult?.Invoke(this, renamingEventArgs);
+            this.Close();
         }
 
         private void HiddenTextBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -113,6 +118,7 @@ namespace GraphEditor
         {
             RenamingEventArgs renamingEventArgs = new RenamingEventArgs(false, "");
             RenamingResult?.Invoke(this, renamingEventArgs);
+            this.Close();
         }
     }
 }
