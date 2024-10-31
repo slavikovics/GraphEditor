@@ -20,7 +20,7 @@ using System.Windows.Threading;
 using System.Xml.Linq;
 using Button = System.Windows.Controls.Button;
 
-namespace GraphEditor
+namespace GraphEditor 
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -174,7 +174,7 @@ namespace GraphEditor
                 nodeAnimationController.AddNode(node);
                 nodes.Add(node);
                 nodeId++;
-                Thread.Sleep(10);
+                //Thread.Sleep(10);
             }
             for (int i = 0; i < nodes.Count - 1; i++)
             {
@@ -230,7 +230,7 @@ namespace GraphEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //EdgeDemoAnimation();
-            //AutoGenerateNodes(50);
+            //AutoGenerateNodes(5);
             GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", "Graph", "graph"));
         }
 
@@ -286,6 +286,7 @@ namespace GraphEditor
             graphSettingsButton.Width = 20;
             graphSettingsButton.VerticalAlignment = VerticalAlignment.Center;
             graphSettingsButton.Template = (ControlTemplate)FindResource("ButtonTemplate");
+            graphSettingsButton.Click += GraphSettingsButtonClick;
 
             switch(borderType)
             {
@@ -307,6 +308,12 @@ namespace GraphEditor
             graphBorder.Child = graphBorderInnerStackPanel;
 
             return graphBorder;
+        }
+
+        private void GraphSettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            RenamingWindow renamingWindow = new RenamingWindow();
+            renamingWindow.Show();
         }
 
         private void GenerateGraphButtonContent(Button graphButton)

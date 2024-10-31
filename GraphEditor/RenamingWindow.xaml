@@ -1,4 +1,4 @@
-﻿<Window x:Class="GraphEditor.InformationWindow"
+﻿<Window x:Class="GraphEditor.RenamingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,7 @@
         Background="#FF221B2F"
         Title="Graph Editor Information" Height="300" Width="500"
         ResizeMode="NoResize"
-        MouseDown="Grid_MouseDown">
+        MouseDown="Grid_MouseDown" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
 
@@ -95,6 +95,7 @@ Duration="0:0:0.1" />
                 </VisualStateManager.VisualStateGroups>
             </Grid>
         </ControlTemplate>
+
     </Window.Resources>
 
     <Window.Style>
@@ -268,13 +269,50 @@ Duration="0:0:0.1" />
             </Button>
         </Grid>
         <StackPanel Grid.Row="1">
-            <Label Content="Are you sure?" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
-            <Label Content="Your actions can lead to programm shutdown if the garaph is large!" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="15" Foreground="MediumPurple"/>
+            <Label Content="Renaming" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
+            <!--<Border x:Name="RenamingBorder" Height="30" Margin="10 20 10 0" BorderThickness="2" BorderBrush="#FFAEA3D8" CornerRadius="10" Background="MediumPurple" MouseEnter="BorderTemplate_MouseEnter" MouseLeave="BorderTemplate_MouseLeave" MouseLeftButtonDown="BorderTemplate_MouseLeftButtonDown" MouseLeftButtonUp="BorderTemplate_MouseLeftButtonUp">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Text="Hello"/>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation 
+                                    Storyboard.TargetName="RenamingBorder" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="MediumPurple" 
+                                    Duration="0:0:0.2" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation 
+                                    Storyboard.TargetName="RenamingBorder" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="DarkOrchid" 
+                                    Duration="0:0:0.3" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation 
+                                    Storyboard.TargetName="RenamingBorder" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="Purple" 
+                                    Duration="0:0:0.1" />
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>-->
+            <Button Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold" Click="Button_Click">
+                <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="Bold" Text="Hello|"/>
+            </Button>
+            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" TextChanged="HiddenTextBox_TextChanged" Opacity="0"/>
         </StackPanel>
         <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
-            <Button Template="{StaticResource DialogButtonTemplate}" Content="Yes" FontWeight="Bold" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp" Margin="30 30 0 30" Height="30" Width="80">
+            <Button Template="{StaticResource DialogButtonTemplate}" Content="Apply" FontWeight="Bold" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp" Margin="30 30 0 30" Height="30" Width="80">
             </Button>
-            <Button Template="{StaticResource DialogButtonTemplate}" Content="No" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80"></Button>
+            <Button Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80"></Button>
         </StackPanel>
     </Grid>
 </Window>

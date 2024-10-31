@@ -69,6 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="RenamingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="InformationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,6 +87,9 @@
     </Compile>
     <Compile Include="Edge.cs" />
     <Compile Include="EdgeAnimationController.cs" />
+    <Compile Include="RenamingWindow.xaml.cs">
+      <DependentUpon>RenamingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InformationWindow.xaml.cs">
       <DependentUpon>InformationWindow.xaml</DependentUpon>
     </Compile>
