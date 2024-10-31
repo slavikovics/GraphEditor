@@ -59,8 +59,8 @@ namespace GraphEditor
             (ellipse.Content as Image).Source = ((Image)window.EllipseExample.Content).Source;
 
 
-            ellipse.SetValue(Canvas.LeftProperty, CanvasLeft - UILeftSize - EllipseDimensions / 2);
-            ellipse.SetValue(Canvas.TopProperty, CanvasTop - UITopSize - EllipseDimensions / 2);
+            ellipse.SetValue(Canvas.LeftProperty, CalculateEllipsePositionLeft(CanvasLeft));
+            ellipse.SetValue(Canvas.TopProperty, CalculateEllipsePositionTop(CanvasTop));
             parent.Children.Add(ellipse);
 
             _id = id;
@@ -72,6 +72,7 @@ namespace GraphEditor
             window.KillAllSelections += Unselect;
             window.MagicWandOrder += OnMagicWondOrder;
             ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
+            NodeAddingAnimation();
         }
 
         public int GetEllipseDimensions()
@@ -82,6 +83,16 @@ namespace GraphEditor
         private void Unselect()
         {
             isSelected = false;
+        }
+
+        private double CalculateEllipsePositionLeft(double CanvasLeft)
+        {
+            return CanvasLeft - UILeftSize - EllipseDimensions / 2;
+        }
+
+        private double CalculateEllipsePositionTop(double CanvasTop)
+        {
+            return CanvasTop - UITopSize - EllipseDimensions / 2;
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -171,6 +182,33 @@ namespace GraphEditor
             ellipse.BeginAnimation(dependencyProperty, ellipseAnimationTop);
 
             testWasMagicWondClicked = true;
+        }
+
+        private void NodeAddingAnimation()
+        {
+            DoubleAnimation nodeWidthAnimation = new DoubleAnimation();
+            nodeWidthAnimation.From = 5;
+            nodeWidthAnimation.To = EllipseDimensions;
+            nodeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+            ellipse.BeginAnimation(Button.WidthProperty, nodeWidthAnimation);
+
+            DoubleAnimation nodeMovingLeftAnimation = new DoubleAnimation();
+            nodeMovingLeftAnimation.From = GetPosLeft() + EllipseDimensions / 2;
+            nodeMovingLeftAnimation.To = GetPosLeft();
+            nodeMovingLeftAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+            ellipse.BeginAnimation(Canvas.LeftProperty, nodeMovingLeftAnimation);
+
+            DoubleAnimation nodeMovingTopAnimation = new DoubleAnimation();
+            nodeMovingTopAnimation.From = GetPosTop() + EllipseDimensions / 2;
+            nodeMovingTopAnimation.To = GetPosTop();
+            nodeMovingTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+            ellipse.BeginAnimation(Canvas.TopProperty, nodeMovingTopAnimation);
+
+            DoubleAnimation nodeHeightAnimation = new DoubleAnimation();
+            nodeHeightAnimation.From = 5;
+            nodeHeightAnimation.To = EllipseDimensions;
+            nodeHeightAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+            ellipse.BeginAnimation(Button.HeightProperty, nodeHeightAnimation);
         }
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)
