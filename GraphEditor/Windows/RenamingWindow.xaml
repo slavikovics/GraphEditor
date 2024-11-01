@@ -264,10 +264,10 @@
         </Grid>
         <StackPanel Grid.Row="1">
             <Label Content="Renaming" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
-            <Button Name="TextInput" Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold" Click="TextInputClick">
-                <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="Bold" Text="Hello|"/>
+            <Button Name="TextInput" Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold">
+                <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="35" FontWeight="Bold" Text="Hello|"/>
             </Button>
-            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" TextChanged="HiddenTextBoxTextChanged" Opacity="0"/>
+            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" Opacity="0" LayoutUpdated="HiddenTextBox_LayoutUpdated"/>
         </StackPanel>
         <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
             <Button Name="ApplyButton" 

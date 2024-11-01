@@ -60,58 +60,69 @@ namespace GraphEditor
 
         bool renamingButtonIsSelected = false;
         bool wasTextDeleted = false;
+        string renameNamePureText = "";
+        int renameNamePureCaretIndex = -1;
+        bool tick = true;
 
         private void UpdateRenamedName()
         {
-            RenamedName.Text = HiddenTextBox.Text + "|";
+            int carretIndex = HiddenTextBox.CaretIndex;
+
+            if (renameNamePureText != HiddenTextBox.Text)
+            {
+                Console.WriteLine(carretIndex);
+                RenamedName.Text = HiddenTextBox.Text;
+                renameNamePureText = HiddenTextBox.Text;
+                MoveCarret();
+            }
+            if (carretIndex != renameNamePureCaretIndex)
+            {
+                MoveCarret();
+                renameNamePureCaretIndex = carretIndex;
+            }
+        }
+
+        private void MoveCarret()
+        {
+            int carretIndex = HiddenTextBox.CaretIndex;
+            RenamedName.Text = HiddenTextBox.Text.Insert(carretIndex, "|");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HiddenTextBox.Focus();
-            RenamedName.Text = _textToEdit + "|";
-            HiddenTextBox.Text = GetTextInput();
+            RenamedName.Text = _textToEdit;
+            HiddenTextBox.Text = _textToEdit;
             HiddenTextBox.CaretIndex = HiddenTextBox.Text.Length;
+            MoveCarret();
+            UpdateRenamedName();
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(800);
+            timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += TimerTick;
             timer.Start();
         }
 
-        private string GetTextInput()
-        {
-            return RenamedName.Text.Substring(0, RenamedName.Text.Length - 1);
-        }
-
         private void TimerTick(object sender, EventArgs e)
         {
-            string newText = "";
-            if (RenamedName.Text[RenamedName.Text.Length - 1] == '|')
+            if (tick == true)
             {
-                newText = GetTextInput() + " ";
+                RenamedName.Text = RenamedName.Text.Remove(HiddenTextBox.CaretIndex, 1);
+                RenamedName.Text = RenamedName.Text.Insert(HiddenTextBox.CaretIndex, "|");
+                tick = false;
             }
             else
             {
-                newText = GetTextInput() + "|";
+                RenamedName.Text = RenamedName.Text.Remove(HiddenTextBox.CaretIndex, 1);
+                RenamedName.Text = RenamedName.Text.Insert(HiddenTextBox.CaretIndex, " ");
+                tick = true;
             }
-            RenamedName.Text = newText;
         }
 
         private void ApplyButtonClick(object sender, RoutedEventArgs e)
         {
-            RenamingEventArgs renamingEventArgs = new RenamingEventArgs(true, GetTextInput());
+            RenamingEventArgs renamingEventArgs = new RenamingEventArgs(true, HiddenTextBox.Text);
             RenamingResult?.Invoke(this, renamingEventArgs);
             this.Close();
-        }
-
-        private void HiddenTextBoxTextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateRenamedName();
-        }
-
-        private void TextInputClick(object sender, RoutedEventArgs e)
-        {
-            HiddenTextBox.Focus();
         }
 
         private void CancelButtonClick(object sender, RoutedEventArgs e)
@@ -119,6 +130,11 @@ namespace GraphEditor
             RenamingEventArgs renamingEventArgs = new RenamingEventArgs(false, "");
             RenamingResult?.Invoke(this, renamingEventArgs);
             this.Close();
+        }
+
+        private void HiddenTextBox_LayoutUpdated(object sender, EventArgs e)
+        {
+            UpdateRenamedName();
         }
     }
 }
