@@ -79,8 +79,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EdgesAndNodes\EdgeOriented.cs" />
     <Compile Include="EdgesAndNodes\Edge.cs" />
     <Compile Include="AnimationControllers\EdgeAnimationController.cs" />
+    <Compile Include="EdgesAndNodes\IEdgeable.cs" />
     <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
     <Compile Include="GraphsManagerControls\GraphManager.cs" />

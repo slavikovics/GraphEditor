@@ -1,4 +1,5 @@
-﻿using GraphEditor.GraphsManager;
+﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.GraphsManager;
 using GraphEditor.GraphsManagerControls;
 using System;
 using System.Collections.Generic;
@@ -177,9 +178,10 @@ namespace GraphEditor
         //    Console.WriteLine("Edges: " + edges.Count);
         //}
 
-        private Edge CreateEdge()
+        private IEdgeable CreateEdge()
         {
-            Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
+            //Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
+            EdgeOriented edge = new EdgeOriented(_firstSelected, _secondSelected, this, MainCanvas, EdgeOrientedArrow);
             AnimateGraphsManagerGridExpansion();
             InsertEdgeBorder(edge);
             //GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", edge.ToString(), "edge"));
@@ -221,7 +223,6 @@ namespace GraphEditor
             //AutoGenerateNodes(5);
             graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
             InsertGraphBorder();
-            
         }
 
         private void InsertGraphBorder()
@@ -229,7 +230,7 @@ namespace GraphEditor
             GraphVisualTreeStackPanel.Children.Add(graphsManager.AddGraph("Graph"));
         }
 
-        private void InsertEdgeBorder(Edge edge)
+        private void InsertEdgeBorder(IEdgeable edge)
         {
             Border edgeBorder = graphsManager.AddEdge(edge);
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);

@@ -1,4 +1,5 @@
-﻿using GraphEditor.GraphsManagerControls;
+﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.GraphsManagerControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace GraphEditor.GraphsManager
     {
         private List<Node> _nodes;
 
-        private List<Edge> _edges;
+        private List<IEdgeable> _edges;
 
         public ControlTemplate _buttonTemplate;
 
@@ -29,7 +30,7 @@ namespace GraphEditor.GraphsManager
             _buttonAddEdgeContent = buttonAddEdgeContent;
             _buttonAddGraphContent = buttonAddGraphContent;
             _nodes = new List<Node>();
-            _edges = new List<Edge>();
+            _edges = new List<IEdgeable>();
         }
 
         public Border AddNode(Node node)
@@ -44,7 +45,7 @@ namespace GraphEditor.GraphsManager
             return GenerateGraphManagerGraphBorder("", "Graph", "graph", null);
         }
 
-        public Border AddEdge(Edge edge)
+        public Border AddEdge(IEdgeable edge)
         {
             Border border = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge", edge);
             _edges.Add(edge);

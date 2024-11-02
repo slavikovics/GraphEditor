@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphEditor.EdgesAndNodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,32 +9,32 @@ namespace GraphEditor
 {
     internal class EdgeAnimationController
     {
-        private List<Edge> edges;
+        private List<IEdgeable> edges;
         private Node _controlNode;
 
         public EdgeAnimationController(Node controlNode)
         {
-            edges = new List<Edge>();
+            edges = new List<IEdgeable>();
             _controlNode = controlNode;
             _controlNode.OnNodesAnimated += OnNodesAnimated;
         }
 
         private void OnNodesAnimated()
         {
-            foreach (Edge edge in edges)
+            foreach (IEdgeable edge in edges)
             {
                 edge.EdgePositioning(true);
             }
         }
 
-        public void AddEdge(Edge edge)
+        public void AddEdge(IEdgeable edge)
         {
             edges.Add(edge);
         }
 
         public void EdgesDragged(double dragDeltaX, double dragDeltaY)
         {
-            foreach (Edge edge in edges)
+            foreach (IEdgeable edge in edges)
             {
                 edge.EdgeDragged(dragDeltaX, dragDeltaY);
             }

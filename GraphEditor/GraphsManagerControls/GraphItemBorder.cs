@@ -1,4 +1,5 @@
-﻿using GraphEditor.GraphsManagerControls;
+﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.GraphsManagerControls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
