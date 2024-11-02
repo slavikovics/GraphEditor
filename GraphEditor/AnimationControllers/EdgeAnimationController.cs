@@ -32,6 +32,11 @@ namespace GraphEditor
             edges.Add(edge);
         }
 
+        public void RemoveEdge(IEdgeable edge)
+        {
+            edges.Remove(edge);
+        }
+
         public void EdgesDragged(double dragDeltaX, double dragDeltaY)
         {
             foreach (IEdgeable edge in edges)

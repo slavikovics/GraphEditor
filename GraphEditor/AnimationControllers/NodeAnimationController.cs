@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphEditor.EdgesAndNodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,11 @@ namespace GraphEditor
         public void AddNode(Node node)
         {
             _nodes.Add(node);
+        }
+
+        public void RemoveNode(Node node)
+        {
+            _nodes.Remove(node);
         }
     }
 }

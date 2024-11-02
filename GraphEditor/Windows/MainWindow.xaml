@@ -493,6 +493,7 @@
                     </Image>
                 </Button>
                 <Button Template="{StaticResource ButtonTemplate}" 
+                Name="DeleteButton"
                 BorderThickness="0" Background="Purple" 
                 Grid.Row="3"
                 Margin="5" 
@@ -502,7 +503,8 @@
                 MouseEnter="Button_MouseEnter"
                 MouseLeave="Button_MouseLeave"
                 MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                Click="DeleteButton_Click">
 
                     <Image>
                         <Image.Source>

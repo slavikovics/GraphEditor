@@ -319,5 +319,11 @@ namespace GraphEditor
         {
 
         }
+
+        public void Remove()
+        {
+            _mainCanvas.Children.Remove(edgeVisualRepresentation);
+            _mainCanvas.Children.Remove(_arrow);
+        }
     }
 }

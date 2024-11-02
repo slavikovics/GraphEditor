@@ -22,6 +22,7 @@ namespace GraphEditor
         private const string OrientedPencile = "OrientedPencile";
         private const string NonOriented = "NonOriented";
 
+
         int nodeId = 1;
 
         public event Action KillAllSelections;
@@ -31,10 +32,12 @@ namespace GraphEditor
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
         private bool shouldBeDragged = false;
+        private bool shouldBeRemoved = false;
 
         private string selectedEdgeType = OrientedSimple;
 
-        List<Edge> edges = new List<Edge>();
+        List<Node> nodes = new List<Node>();
+        List<IEdgeable> edges = new List<IEdgeable>();
 
         Ellipse ellipse;
 
@@ -74,13 +77,21 @@ namespace GraphEditor
         {
             shouldNodeBeAdded = true;
             shouldEdgeBeAdded = false;
+            shouldBeRemoved = false;
             KillAllSelections?.Invoke();
             HidePopUpMenus();
         }
 
-        private void OnNodeSelected(object sender, EventArgs e)
+        public void OnNodeSelected(object sender, EventArgs e)
         {
             HidePopUpMenus();
+            if (shouldBeRemoved)
+            {
+                Node nodeToRemove = sender as Node;
+                shouldBeRemoved = false;
+                RemoveNode(nodeToRemove);
+            }
+
             if (!shouldEdgeBeAdded) return;
 
             Node node = sender as Node;
@@ -124,6 +135,7 @@ namespace GraphEditor
                 node.buttonSelected += OnNodeSelected;
                 AnimateGraphsManagerGridExpansion();   
                 InsertNodeBorder(node);
+                nodes.Add(node);
 
                 if (edgeAnimationController == null)
                 {
@@ -201,6 +213,7 @@ namespace GraphEditor
             InsertEdgeBorder(edge);
             //GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", edge.ToString(), "edge"));
             edgeAnimationController.AddEdge(edge);
+            edges.Add(edge);
             return edge;
         }
 
@@ -211,6 +224,7 @@ namespace GraphEditor
             shouldEdgeBeAdded = false;
             shouldNodeBeAdded = false;
             shouldNodeBeMoved = false;
+            shouldBeRemoved = false;
         }
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
@@ -218,6 +232,7 @@ namespace GraphEditor
             shouldEdgeBeAdded = true;
             shouldNodeBeMoved = false;
             shouldNodeBeAdded = false;
+            shouldBeRemoved = false;
             _firstSelected = null;
             _secondSelected = null;
             ShowAddEdgePopUpMenu();
@@ -282,6 +297,7 @@ namespace GraphEditor
             shouldNodeBeMoved = true;
             shouldNodeBeAdded = false;
             shouldEdgeBeAdded = false;
+            shouldBeRemoved = false;
             if (nodeAnimationController != null)
             {
                 nodeAnimationController.EndMovementAnimations();
@@ -397,6 +413,7 @@ namespace GraphEditor
 
         private void ButtonGraph_Click(object sender, RoutedEventArgs e)
         {
+            shouldBeRemoved = false;
             HidePopUpMenus();
             InformationWindow informationWindow = new InformationWindow();
             informationWindow.Show();
@@ -443,6 +460,36 @@ namespace GraphEditor
             (ButtonAddEdge.Content as Image).Source = (NonOrientedPopUp.Content as Image).Source;
             selectedEdgeType = NonOriented;
             HidePopUpMenus();
+        }
+
+        private void RemoveNode(Node nodeToRemove)
+        {
+            nodeToRemove.Remove();
+            nodeAnimationController.RemoveNode(nodeToRemove);
+
+            foreach(IEdgeable edge in edges)
+            {
+                if (edge.GetFirstNodeId() == nodeToRemove._id || edge.GetSecondNodeId() == nodeToRemove._id)
+                {
+                    RemoveEdge(edge);
+                }
+            }
+        }
+
+        private void RemoveEdge(IEdgeable edgeToRemove)
+        {
+            edgeToRemove.Remove();
+            edgeAnimationController.RemoveEdge(edgeToRemove);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            shouldBeRemoved = true;
+            shouldEdgeBeAdded = false;
+            shouldNodeBeMoved = false;
+            shouldNodeBeAdded = false;
+            _firstSelected = null;
+            _secondSelected = null;
         }
     }
 }

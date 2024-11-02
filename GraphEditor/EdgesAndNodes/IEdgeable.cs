@@ -15,5 +15,7 @@ namespace GraphEditor.EdgesAndNodes
 
         int GetSecondNodeId();
 
+        void Remove();
+
     }
 }

@@ -259,5 +259,15 @@ namespace GraphEditor
             _textBlock.Text = newName;
             MoveTextBlock();
         }
+
+        public void Remove()
+        {
+            _canvas.Children.Remove(_textBlock);
+            _window.MouseMove -= OnMouseMove;
+            _window.KillAllSelections -= Unselect;
+            _window.MagicWandOrder -= OnMagicWondOrder;
+            _canvas.Children.Remove(ellipse);
+            buttonSelected -= _window.OnNodeSelected;
+        }
     }
 }
