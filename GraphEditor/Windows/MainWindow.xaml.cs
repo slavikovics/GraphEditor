@@ -44,6 +44,7 @@ namespace GraphEditor
         private Point pointerPosition;
         private Node _firstSelected;
         private Node _secondSelected;
+        private IEdgeable _selectedEdge;
         private EdgeAnimationController edgeAnimationController;
         private NodeAnimationController nodeAnimationController;
         private GraphManager graphsManager;
@@ -481,6 +482,8 @@ namespace GraphEditor
         {
             edgeToRemove.Remove();
             edgeAnimationController.RemoveEdge(edgeToRemove);
+            RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1]);
+            shouldBeRemoved = false;
         }
 
         private void RemoveAllBordersForNode(int nodeId)
@@ -503,14 +506,17 @@ namespace GraphEditor
             }
         }
 
-        private void RemoveAllBordersFroEdge(int firstNodeId, int secondNodeId)
+        private void RemoveAllBordersForEdge(int firstNodeId, int secondNodeId)
         {
             GraphItemBorder borderToRemove = null;
             foreach (GraphItemBorder border in GraphVisualTreeStackPanel.Children)
             {
-                if ((firstNodeId == border._nodesDependencies[0] && secondNodeId == border._nodesDependencies[1]) || (secondNodeId == border._nodesDependencies[0] && firstNodeId == border._nodesDependencies[1]))
+                if (border._nodesDependencies.Count == 2)
                 {
-                    borderToRemove = border;
+                    if ((firstNodeId == border._nodesDependencies[0] && secondNodeId == border._nodesDependencies[1]) || (secondNodeId == border._nodesDependencies[0] && firstNodeId == border._nodesDependencies[1]))
+                    {
+                        borderToRemove = border;
+                    }
                 }
             }
 
@@ -527,6 +533,16 @@ namespace GraphEditor
             shouldNodeBeAdded = false;
             _firstSelected = null;
             _secondSelected = null;
+        }
+
+        public void OnEdgeSelected(object sender, EventArgs e)
+        {
+            IEdgeable edgeable = sender as IEdgeable;
+            if (shouldBeRemoved)
+            {
+                RemoveEdge(edgeable);
+            }
+            _selectedEdge = sender as IEdgeable;
         }
     }
 }

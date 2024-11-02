@@ -83,6 +83,7 @@ namespace GraphEditor
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
             edgeVisualRepresentation.MouseEnter += EdgeVisualRepresentationMouseEnter;
             edgeVisualRepresentation.MouseLeave += EdgeVisualRepresentationMouseLeave;
+            edgeVisualRepresentation.MouseDown += EdgeVisualRepresentationMouseDown;
             //EdgePositioning(true);
 
             edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
@@ -333,6 +334,11 @@ namespace GraphEditor
             dependencies.Add(GetFirstNodeId());
             dependencies.Add(GetSecondNodeId());
             return dependencies;
+        }
+
+        private void EdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _mainWindow.OnEdgeSelected(this, e);
         }
     }
 }
