@@ -1,6 +1,7 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphsManagerControls;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -324,6 +325,14 @@ namespace GraphEditor
         {
             _mainCanvas.Children.Remove(edgeVisualRepresentation);
             _mainCanvas.Children.Remove(_arrow);
+        }
+
+        public List<int> GetNodesDependencies()
+        {
+            List<int> dependencies = new List<int>();
+            dependencies.Add(GetFirstNodeId());
+            dependencies.Add(GetSecondNodeId());
+            return dependencies;
         }
     }
 }

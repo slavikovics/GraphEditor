@@ -269,5 +269,10 @@ namespace GraphEditor
             _canvas.Children.Remove(ellipse);
             buttonSelected -= _window.OnNodeSelected;
         }
+
+        public List<int> GetIdAsList()
+        {
+            return new List<int> { _id };
+        }
     }
 }

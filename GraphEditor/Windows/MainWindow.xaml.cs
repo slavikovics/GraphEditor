@@ -319,7 +319,7 @@ namespace GraphEditor
 
         private void InsertEdgeBorder(IEdgeable edge)
         {
-            Border edgeBorder = graphsManager.AddEdge(edge);
+            Border edgeBorder = graphsManager.AddEdge(edge, edge.GetNodesDependencies());
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
             int firstNodeId;
             if (selectedEdgeType == NonOriented)
@@ -345,7 +345,7 @@ namespace GraphEditor
 
         private void InsertNodeBorder(Node node)
         {
-            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddNode(node));
+            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddNode(node, node.GetIdAsList()));
         }
 
         private void AnimateGraphsManagerGridExpansion()
@@ -466,6 +466,7 @@ namespace GraphEditor
         {
             nodeToRemove.Remove();
             nodeAnimationController.RemoveNode(nodeToRemove);
+            RemoveAllBordersForNode(nodeToRemove._id);
 
             foreach(IEdgeable edge in edges)
             {
@@ -480,6 +481,42 @@ namespace GraphEditor
         {
             edgeToRemove.Remove();
             edgeAnimationController.RemoveEdge(edgeToRemove);
+        }
+
+        private void RemoveAllBordersForNode(int nodeId)
+        {
+            List<GraphItemBorder> bordersToRemove = new List<GraphItemBorder>();
+            foreach(GraphItemBorder border in GraphVisualTreeStackPanel.Children)
+            {
+                foreach(int node in border._nodesDependencies)
+                {
+                    if (node == nodeId)
+                    {
+                        bordersToRemove.Add(border);
+                    }
+                }
+            }
+
+            foreach(GraphItemBorder border in bordersToRemove)
+            {
+                GraphVisualTreeStackPanel.Children.Remove(border);
+            }
+        }
+
+        private void RemoveAllBordersFroEdge(int firstNodeId, int secondNodeId)
+        {
+            GraphItemBorder borderToRemove = null;
+            foreach (GraphItemBorder border in GraphVisualTreeStackPanel.Children)
+            {
+                if ((firstNodeId == border._nodesDependencies[0] && secondNodeId == border._nodesDependencies[1]) || (secondNodeId == border._nodesDependencies[0] && firstNodeId == border._nodesDependencies[1]))
+                {
+                    borderToRemove = border;
+                }
+            }
+
+
+            GraphVisualTreeStackPanel.Children.Remove(borderToRemove);
+
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

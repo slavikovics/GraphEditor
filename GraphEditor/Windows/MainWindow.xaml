@@ -779,9 +779,10 @@
                 <Border Background="#E59370DB" CornerRadius="20" BorderThickness="4" BorderBrush="#FFAEA3D8">
                     <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
                         
-                        <StackPanel x:Name="GraphVisualTreeStackPanel">
+                        <StackPanel>
                             <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" FontSize="15" Foreground="#E5221B2F"/>
-
+                            <StackPanel x:Name="GraphVisualTreeStackPanel">
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>

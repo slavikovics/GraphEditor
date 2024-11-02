@@ -33,29 +33,29 @@ namespace GraphEditor.GraphsManager
             _edges = new List<IEdgeable>();
         }
 
-        public Border AddNode(Node node)
+        public GraphItemBorder AddNode(Node node, List<int> nodesDependencies)
         {
-            Border border = GenerateGraphManagerGraphBorder("node" + node._id.ToString(), node.ToString(), "node", node);
+            GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node._id.ToString(), node.ToString(), "node", node, nodesDependencies);
             _nodes.Add(node);
             return border;
         }
 
-        public Border AddGraph(string graphName)
+        public GraphItemBorder AddGraph(string graphName)
         {
-            return GenerateGraphManagerGraphBorder("", "Graph", "graph", null);
+            return GenerateGraphManagerGraphBorder("", "Graph", "graph", null, new List<int>());
         }
 
-        public Border AddEdge(IEdgeable edge)
+        public GraphItemBorder AddEdge(IEdgeable edge, List<int> nodesDependencies)
         {
-            Border border = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge", edge);
+            GraphItemBorder border = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge", edge, nodesDependencies);
             _edges.Add(edge);
             return border;
         }
 
-        private Border GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable)
+        private GraphItemBorder GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable, List<int> nodesDependencies)
         {
             GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType,
-                _buttonTemplate, _buttonAddNodeContent, _buttonAddEdgeContent, _buttonAddGraphContent, renamable);
+                _buttonTemplate, _buttonAddNodeContent, _buttonAddEdgeContent, _buttonAddGraphContent, renamable, nodesDependencies);
 
             return graphItemBorder;
         }

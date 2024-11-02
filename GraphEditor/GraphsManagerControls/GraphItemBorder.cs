@@ -1,5 +1,6 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphsManagerControls;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -26,8 +27,10 @@ namespace GraphEditor
 
         private IRenamable _renamable;
 
+        public List<int> _nodesDependencies;
+
         public GraphItemBorder(string borderName, string borderString, string borderType, 
-            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable)
+            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable, List<int> nodesDependencies)
         {
             Name = borderName;
             _borderType = borderType;
@@ -37,6 +40,7 @@ namespace GraphEditor
             _buttonAddEdgeContent = buttonAddEdgeContent;
             _buttonGraphImageContent = buttonGraphImageContent;
             _renamable = renamable;
+            _nodesDependencies = nodesDependencies;
 
             Height = 30;
             Margin = new Thickness(4);
