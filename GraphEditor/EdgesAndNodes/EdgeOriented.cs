@@ -12,7 +12,8 @@ namespace GraphEditor
     internal class EdgeOriented : IRenamable, IEdgeable
     {
         public const int Margin = 4;
-        public const int Height = 4;
+        public const int Height = 12;
+        //public const int Height = 4;
         public const int RadiusX = 4;
         public const int RadiusY = 4;
         public double Width = 10;
@@ -47,11 +48,13 @@ namespace GraphEditor
             _mainCanvas.Children.Insert(0, edgeVisualRepresentation);
             edgeVisualRepresentation.Height = Height;
             edgeVisualRepresentation.Width = Width;
-            //edgeVisualRepresentation.RadiusX = RadiusX;
-            //edgeVisualRepresentation.RadiusY = RadiusY;
+            edgeVisualRepresentation.RadiusX = RadiusX;
+            edgeVisualRepresentation.RadiusY = RadiusY;
+            ////edgeVisualRepresentation.RadiusX = RadiusX;
+            ////edgeVisualRepresentation.RadiusY = RadiusY;
             edgeBrush = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.Stroke = edgeBrush;
-            edgeVisualRepresentation.Fill = edgeBrush;
+            //edgeVisualRepresentation.Fill = edgeBrush;
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
             _arrow = new Image();
