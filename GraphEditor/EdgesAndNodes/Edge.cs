@@ -161,6 +161,11 @@ namespace GraphEditor
             return _firstNode._id;
         }
 
+        public int GetSecondNodeId()
+        {
+            return _secondNode._id;
+        }
+
         private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
@@ -248,7 +253,7 @@ namespace GraphEditor
 
         public override string ToString()
         {
-            return  "Edge " + _firstNode._id + " - " + _secondNode._id;
+            return  "Edge " + _firstNode._id + " = " + _secondNode._id;
         }
 
         public void Rename(string newName)

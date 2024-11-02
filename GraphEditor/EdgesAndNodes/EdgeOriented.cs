@@ -12,7 +12,7 @@ namespace GraphEditor
     internal class EdgeOriented : IRenamable, IEdgeable
     {
         public const int Margin = 4;
-        public const int Height = 12;
+        public int Height = 4;
         //public const int Height = 4;
         public const int RadiusX = 4;
         public const int RadiusY = 4;
@@ -33,28 +33,39 @@ namespace GraphEditor
         private Brush edgeBrush;
         private bool isAnimated = false;
         private Image _arrow;
+        private bool _isPencile;
 
         private const int ArrowOffset = 5;
 
-        public EdgeOriented(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow)
+        public EdgeOriented(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow, bool isPencile)
         {
             //isAnimated = true;
             _firstNode = firstNode;
             _secondNode = secondNode;
             _mainWindow = window;
             _mainCanvas = mainCanvas;
+            _isPencile = isPencile;
 
             edgeVisualRepresentation = new Rectangle();
             _mainCanvas.Children.Insert(0, edgeVisualRepresentation);
-            edgeVisualRepresentation.Height = Height;
+
             edgeVisualRepresentation.Width = Width;
-            edgeVisualRepresentation.RadiusX = RadiusX;
-            edgeVisualRepresentation.RadiusY = RadiusY;
-            ////edgeVisualRepresentation.RadiusX = RadiusX;
-            ////edgeVisualRepresentation.RadiusY = RadiusY;
             edgeBrush = new SolidColorBrush(StrokeColor);
+
+            if (isPencile)
+            {
+                edgeVisualRepresentation.RadiusX = RadiusX;
+                edgeVisualRepresentation.RadiusY = RadiusY;
+                Height = 12;
+            }
+            else
+            {
+                edgeVisualRepresentation.Fill = edgeBrush;
+            }
+
+            edgeVisualRepresentation.Height = Height;
             edgeVisualRepresentation.Stroke = edgeBrush;
-            //edgeVisualRepresentation.Fill = edgeBrush;
+            
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
 
             _arrow = new Image();
@@ -194,6 +205,11 @@ namespace GraphEditor
             return _firstNode._id;
         }
 
+        public int GetSecondNodeId()
+        {
+            return _secondNode._id;
+        }
+
         private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
@@ -292,7 +308,11 @@ namespace GraphEditor
 
         public override string ToString()
         {
-            return  "Edge " + _firstNode._id + " - " + _secondNode._id;
+            if (_isPencile)
+            {
+                return "Edge " + _secondNode._id + " => " + _firstNode._id;
+            }
+            return  "Edge " + _secondNode._id + " -> " + _firstNode._id;
         }
 
         public void Rename(string newName)

@@ -18,6 +18,10 @@ namespace GraphEditor
         bool isElementSelected = false;
         bool areActionsDesired = false;
 
+        private const string OrientedSimple = "OrientedSimple";
+        private const string OrientedPencile = "OrientedPencile";
+        private const string NonOriented = "NonOriented";
+
         int nodeId = 1;
 
         public event Action KillAllSelections;
@@ -27,6 +31,8 @@ namespace GraphEditor
         public bool shouldEdgeBeAdded = false;
         public bool shouldNodeBeMoved = true;
         private bool shouldBeDragged = false;
+
+        private string selectedEdgeType = OrientedSimple;
 
         List<Edge> edges = new List<Edge>();
 
@@ -69,10 +75,12 @@ namespace GraphEditor
             shouldNodeBeAdded = true;
             shouldEdgeBeAdded = false;
             KillAllSelections?.Invoke();
+            HidePopUpMenus();
         }
 
         private void OnNodeSelected(object sender, EventArgs e)
         {
+            HidePopUpMenus();
             if (!shouldEdgeBeAdded) return;
 
             Node node = sender as Node;
@@ -100,6 +108,7 @@ namespace GraphEditor
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            HidePopUpMenus();
             Point currentMousePosition = e.GetPosition(sender as Window);
             if (currentMousePosition.Y <= 20)
             {
@@ -180,8 +189,14 @@ namespace GraphEditor
 
         private IEdgeable CreateEdge()
         {
-            //Edge edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas);
-            EdgeOriented edge = new EdgeOriented(_firstSelected, _secondSelected, this, MainCanvas, EdgeOrientedArrow);
+            IEdgeable edge;
+
+            switch(selectedEdgeType)
+            {
+                case NonOriented: edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas); break;
+                case OrientedSimple: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
+                default: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
+            }
             AnimateGraphsManagerGridExpansion();
             InsertEdgeBorder(edge);
             //GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", edge.ToString(), "edge"));
@@ -191,6 +206,7 @@ namespace GraphEditor
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             MagicWandOrder?.Invoke();
             shouldEdgeBeAdded = false;
             shouldNodeBeAdded = false;
@@ -204,10 +220,65 @@ namespace GraphEditor
             shouldNodeBeAdded = false;
             _firstSelected = null;
             _secondSelected = null;
+            ShowAddEdgePopUpMenu();
+        }
+
+        private void ShowAddEdgePopUpMenu()
+        {
+
+            Point ButtonAddPosition = ButtonAddEdge.TranslatePoint(new Point(0, 0), mainGrid);
+
+            OrientedSimplePopUp.Visibility = Visibility.Visible;
+            NonOrientedPopUp.Visibility = Visibility.Visible;
+            OrientedPencilePopUp.Visibility = Visibility.Visible;
+
+            DoubleAnimation OrientedSimplePopUpTopAnimation = new DoubleAnimation();
+            OrientedSimplePopUpTopAnimation.From = ButtonAddPosition.Y;
+            OrientedSimplePopUpTopAnimation.To = ButtonAddPosition.Y - 45;
+            OrientedSimplePopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+
+            DoubleAnimation NonOrientedPopUpTopAnimation = new DoubleAnimation();
+            NonOrientedPopUpTopAnimation.From = ButtonAddPosition.Y;
+            NonOrientedPopUpTopAnimation.To = ButtonAddPosition.Y + 5;
+            NonOrientedPopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+
+
+            DoubleAnimation OrientedPencilePopUpTopAnimation = new DoubleAnimation();
+            OrientedPencilePopUpTopAnimation.From = ButtonAddPosition.Y;
+            OrientedPencilePopUpTopAnimation.To = ButtonAddPosition.Y + 55;
+            OrientedPencilePopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+
+            DoubleAnimation EdgePopUpLeftAnimation = new DoubleAnimation();
+            EdgePopUpLeftAnimation.From = -50;
+            EdgePopUpLeftAnimation.To = 0;
+            EdgePopUpLeftAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+
+            DoubleAnimation arrowTypesWidthAnimation = new DoubleAnimation();
+            arrowTypesWidthAnimation.From = 3;
+            arrowTypesWidthAnimation.To = 40;
+            arrowTypesWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+
+            OrientedSimplePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+            OrientedSimplePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+
+            NonOrientedPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+            NonOrientedPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+
+            OrientedPencilePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+            OrientedPencilePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+
+            OrientedSimplePopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
+            NonOrientedPopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
+            OrientedPencilePopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
+
+            OrientedSimplePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+            NonOrientedPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+            OrientedPencilePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
         }
 
         private void ButtonSelect_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             shouldNodeBeMoved = true;
             shouldNodeBeAdded = false;
             shouldEdgeBeAdded = false;
@@ -234,7 +305,15 @@ namespace GraphEditor
         {
             Border edgeBorder = graphsManager.AddEdge(edge);
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
-            int firstNodeId = edge.GetFirstNodeId();
+            int firstNodeId;
+            if (selectedEdgeType == NonOriented)
+            {
+                 firstNodeId = edge.GetFirstNodeId();
+            }
+            else
+            {
+                firstNodeId = edge.GetSecondNodeId();
+            }
             int i = 0;
             foreach (UIElement uIElement in GraphVisualTreeStackPanel.Children)
             {
@@ -264,22 +343,26 @@ namespace GraphEditor
 
         private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             this.WindowState = WindowState.Minimized;
         }
 
         private void MaximizeWindowButton_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
             else this.WindowState = WindowState.Normal;
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             this.Close();
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            HidePopUpMenus();
             this.DragMove();
         }
 
@@ -314,8 +397,52 @@ namespace GraphEditor
 
         private void ButtonGraph_Click(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             InformationWindow informationWindow = new InformationWindow();
             informationWindow.Show();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            HidePopUpMenus();
+        }
+
+        private void HidePopUpMenus()
+        {
+            OrientedSimplePopUp.Visibility = Visibility.Hidden;
+            NonOrientedPopUp.Visibility = Visibility.Hidden;
+            OrientedPencilePopUp.Visibility = Visibility.Hidden;
+        }
+
+        private void GraphsManagerGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            HidePopUpMenus();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            HidePopUpMenus();
+        }
+
+        private void OrientedSimplePopUp_Click(object sender, RoutedEventArgs e)
+        {
+            (ButtonAddEdge.Content as Image).Source = (OrientedSimplePopUp.Content as Image).Source;
+            selectedEdgeType = OrientedSimple;
+            HidePopUpMenus();
+        }
+
+        private void OrientedPencilePopUp_Click(object sender, RoutedEventArgs e)
+        {
+            (ButtonAddEdge.Content as Image).Source = (OrientedPencilePopUp.Content as Image).Source;
+            selectedEdgeType = OrientedPencile;
+            HidePopUpMenus();
+        }
+
+        private void NonOrientedPopUp_Click(object sender, RoutedEventArgs e)
+        {
+            (ButtonAddEdge.Content as Image).Source = (NonOrientedPopUp.Content as Image).Source;
+            selectedEdgeType = NonOriented;
+            HidePopUpMenus();
         }
     }
 }

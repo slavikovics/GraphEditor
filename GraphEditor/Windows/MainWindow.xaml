@@ -10,7 +10,7 @@
         MinHeight="700"
         MinWidth="1280" 
         Title="Graph editor" Height="700" Width="800" Loaded="Window_Loaded"
-        MouseDown="Canvas_MouseDown" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove">
+        MouseDown="Canvas_MouseDown" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftButtonDown" SizeChanged="Window_SizeChanged">
 
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
@@ -113,7 +113,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
+        <Grid x:Name="mainGrid"  Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
@@ -172,7 +172,149 @@
                     </Image.Source>
                 </Image>
 
+                <Button x:Name="OrientedSimplePopUp" Template="{StaticResource ButtonTemplate}" 
+                        BorderThickness="0"
+                        Visibility="Hidden"
+                        Background="Purple" Grid.Row="2" 
+                        Margin="5" 
+                        Padding="0" 
+                        Height="10" 
+                        Width="10" 
+                        MouseEnter="Button_MouseEnter" 
+                        MouseLeave="Button_MouseLeave" 
+                        MouseLeftButtonDown="Button_MouseLeftButtonDown" 
+                        MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                        Click="OrientedSimplePopUp_Click">
 
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup>
+                                            <DrawingGroup.ClipGeometry>
+                                                <RectangleGeometry Rect="0,0,400,400" />
+                                            </DrawingGroup.ClipGeometry>
+                                            <GeometryDrawing Brush="#FFAEA3D8">
+                                                <GeometryDrawing.Geometry>
+                                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <DrawingGroup Transform="0.8336,-0.5524,0.5524,0.8336,-78.31,144.72">
+                                                <GeometryDrawing Brush="#FFAEA3D8">
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry RadiusX="11" RadiusY="11" Rect="89.56,188.53,223,27.64" />
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingGroup>
+                                            <GeometryDrawing Brush="#FFAEA3D8">
+                                                <GeometryDrawing.Geometry>
+                                                    <PathGeometry FillRule="Nonzero" Figures="M253.65,130.66L302.32,121.36C309.42,120,315.01,127.35,311.81,133.83L289.87,178.26C286.17,185.75,275.09,184.3,273.44,176.11L270.28,160.39C269.75,157.76,268.04,155.52,265.65,154.3L251.34,147.06C243.89,143.29,245.44,132.22,253.65,130.65z" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
+
+                <Button Canvas.Top="100" x:Name="OrientedPencilePopUp" Template="{StaticResource ButtonTemplate}" 
+                       BorderThickness="0"
+                       Background="Purple" Grid.Row="2" 
+                       Visibility="Hidden"
+                       Margin="5" 
+                       Padding="0" 
+                       Height="10" 
+                       Width="10" 
+                       MouseEnter="Button_MouseEnter" 
+                       MouseLeave="Button_MouseLeave" 
+                       MouseLeftButtonDown="Button_MouseLeftButtonDown" 
+                       MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                       Click="OrientedPencilePopUp_Click">
+
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup>
+                                            <DrawingGroup.ClipGeometry>
+                                                <RectangleGeometry Rect="0,0,400,400" />
+                                            </DrawingGroup.ClipGeometry>
+                                            <GeometryDrawing Brush="#FFAEA3D8">
+                                                <GeometryDrawing.Geometry>
+                                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <GeometryDrawing Brush="#FFAEA3D8">
+                                                <GeometryDrawing.Geometry>
+                                                    <PathGeometry FillRule="Nonzero" Figures="M245.05,134.79L293.72,125.49C300.82,124.13,306.41,131.48,303.21,137.96L281.27,182.39C277.57,189.88,266.49,188.43,264.84,180.24L261.68,164.52C261.15,161.89,259.44,159.65,257.05,158.43L242.74,151.19C235.29,147.42,236.84,136.35,245.05,134.78z" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <DrawingGroup Transform="0.8191,-0.5737,0.5737,0.8191,-89.51,146.2">
+                                                <GeometryDrawing>
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#FFAEA3D8" Thickness="11" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                                    </GeometryDrawing.Pen>
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry RadiusX="11.25" RadiusY="11.25" Rect="78,198,218,34" />
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
+
+                <Button Canvas.Top="200" x:Name="NonOrientedPopUp" Template="{StaticResource ButtonTemplate}" 
+       BorderThickness="0"
+       Background="Purple" Grid.Row="2" 
+       Visibility="Hidden"
+       Margin="5" 
+       Padding="0" 
+       Height="10" 
+       Width="10" 
+       MouseEnter="Button_MouseEnter" 
+       MouseLeave="Button_MouseLeave" 
+       MouseLeftButtonDown="Button_MouseLeftButtonDown" 
+       MouseLeftButtonUp="Button_MouseLeftButtonUp"
+       Click="NonOrientedPopUp_Click">
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup>
+                                            <DrawingGroup.ClipGeometry>
+                                                <RectangleGeometry Rect="0,0,400,400" />
+                                            </DrawingGroup.ClipGeometry>
+                                            <GeometryDrawing Brush="#FFAEA3D8">
+                                                <GeometryDrawing.Geometry>
+                                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <DrawingGroup Transform="0.8191,-0.5737,0.5737,0.8191,-80.55,153.07">
+                                                <GeometryDrawing>
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#FFAEA3D8" Thickness="11" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                                    </GeometryDrawing.Pen>
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry RadiusX="11.25" RadiusY="11.25" Rect="74.6,187.23,255.56,34" />
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
                 <!--<Rectangle x:Name="DemoRect" Height="10" RadiusX="4" RadiusY="4" Canvas.Left="575" Canvas.Top="464" Width="10" Stroke="#FFAEA3D8" FlowDirection="RightToLeft" StrokeThickness="3" RenderTransformOrigin="0.5,0.5">
     <Rectangle.RenderTransform>
         <TransformGroup>
@@ -340,16 +482,9 @@
                                             </DrawingGroup>
                                             <GeometryDrawing Brush="#FFAEA3D8">
                                                 <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="8.5" RadiusY="8.5" Rect="217,133,74,21" />
+                                                    <PathGeometry FillRule="Nonzero" Figures="M253.65,130.66L302.32,121.36C309.42,120,315.01,127.35,311.81,133.83L289.87,178.26C286.17,185.75,275.09,184.3,273.44,176.11L270.28,160.39C269.75,157.76,268.04,155.52,265.65,154.3L251.34,147.06C243.89,143.29,245.44,132.22,253.65,130.65z" />
                                                 </GeometryDrawing.Geometry>
                                             </GeometryDrawing>
-                                            <DrawingGroup Transform="0.4061,-0.9138,0.9138,0.4061,2.19,355.27">
-                                                <GeometryDrawing Brush="#FFAEA3D8">
-                                                    <GeometryDrawing.Geometry>
-                                                        <RectangleGeometry RadiusX="8.5" RadiusY="8.5" Rect="238.35,165.12,72.1,21.65" />
-                                                    </GeometryDrawing.Geometry>
-                                                </GeometryDrawing>
-                                            </DrawingGroup>
                                         </DrawingGroup>
                                     </DrawingGroup>
                                 </DrawingImage.Drawing>
@@ -638,7 +773,7 @@
 
                 </Button>
             </Grid>
-            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="100" VerticalAlignment="Top"  Grid.Column="2">
+            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="100" VerticalAlignment="Top"  Grid.Column="2" MouseDown="GraphsManagerGrid_MouseDown">
                 <Border Background="#E59370DB" CornerRadius="20" BorderThickness="4" BorderBrush="#FFAEA3D8">
                     <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
                         

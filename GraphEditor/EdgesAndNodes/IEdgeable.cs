@@ -13,5 +13,7 @@ namespace GraphEditor.EdgesAndNodes
 
         int GetFirstNodeId();
 
+        int GetSecondNodeId();
+
     }
 }
