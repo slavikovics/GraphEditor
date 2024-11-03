@@ -29,35 +29,34 @@
                         <VisualState x:Name="Normal">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="MediumPurple" 
-            Duration="0:0:0.2" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="MediumPurple" 
+                                    Duration="0:0:0.2" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="MouseOver">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="DarkOrchid" 
-            Duration="0:0:0.3" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="DarkOrchid" 
+                                    Duration="0:0:0.3" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
                                 <ColorAnimation 
-            Storyboard.TargetName="BorderTemplate" 
-            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-            To="Purple" 
-            Duration="0:0:0.1" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="Purple" 
+                                    Duration="0:0:0.1" />
                             </Storyboard>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
             </Border>
         </ControlTemplate>
-
         <ControlTemplate x:Key="DialogButtonTemplate" TargetType="Button">
             <Grid>
                 <Border x:Name="BorderTemplate" BorderThickness="2" BorderBrush="#FFAEA3D8" CornerRadius="10" Background="MediumPurple"/>
@@ -67,28 +66,28 @@
                         <VisualState x:Name="Normal">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="MediumPurple" 
-Duration="0:0:0.2" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="MediumPurple" 
+                                    Duration="0:0:0.2" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="MouseOver">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="DarkOrchid" 
-Duration="0:0:0.3" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="DarkOrchid" 
+                                    Duration="0:0:0.3" />
                             </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
                                 <ColorAnimation 
-Storyboard.TargetName="BorderTemplate" 
-Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-To="Purple" 
-Duration="0:0:0.1" />
+                                    Storyboard.TargetName="BorderTemplate" 
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="Purple" 
+                                    Duration="0:0:0.1" />
                             </Storyboard>
                         </VisualState>
                     </VisualStateGroup>
@@ -116,18 +115,17 @@ Duration="0:0:0.1" />
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="CollapseWindowButton" Template="{StaticResource ButtonTemplate}" 
-        BorderThickness="0" Background="Purple" 
-        Grid.Column="1"
-        Margin="2 11 2 2" 
-        Padding="0" 
-        Height="20" 
-        Width="20" 
-        Click="CollapseWindowButton_Click"
-        MouseEnter="Button_MouseEnter"
-        MouseLeave="Button_MouseLeave"
-        MouseLeftButtonDown="Button_MouseLeftButtonDown"
-        MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="1"
+                    Margin="2 11 2 2" 
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="CollapseWindowButton_Click"
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -157,18 +155,17 @@ Duration="0:0:0.1" />
                 </Image>
             </Button>
             <Button x:Name="MaximizeWindowButton" Template="{StaticResource ButtonTemplate}" 
-            BorderThickness="0" Background="Purple" 
-            Grid.Column="2"
-            Margin="2 11 2 2"  
-            Padding="0" 
-            Height="20" 
-            Width="20" 
-            Click="MaximizeWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="2"
+                    Margin="2 11 2 2"  
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="MaximizeWindowButton_Click"
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -219,18 +216,17 @@ Duration="0:0:0.1" />
                 </Image>
             </Button>
             <Button x:Name="CloseWindowButton" Template="{StaticResource ButtonTemplate}" 
-            BorderThickness="0" Background="Purple" 
-            Grid.Column="3"
-            Margin="2 11 2 2" 
-            Padding="0" 
-            Height="20" 
-            Width="20" 
-            Click="CloseWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="3"
+                    Margin="2 11 2 2" 
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="CloseWindowButton_Click"
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>

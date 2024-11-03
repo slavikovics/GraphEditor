@@ -1,6 +1,7 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphsManager;
 using GraphEditor.GraphsManagerControls;
+using GraphEditor.Windows.MainWindow;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -15,24 +16,16 @@ namespace GraphEditor
 {
     public partial class MainWindow : Window
     {
-        bool isElementSelected = false;
-        bool areActionsDesired = false;
-
         private const string OrientedSimple = "OrientedSimple";
         private const string OrientedPencile = "OrientedPencile";
         private const string NonOriented = "NonOriented";
 
+        public MainWindowStates states;
 
         int nodeId = 1;
 
         public event Action KillAllSelections;
         public event Action MagicWandOrder;
-
-        public bool shouldNodeBeAdded = false;
-        public bool shouldEdgeBeAdded = false;
-        public bool shouldNodeBeMoved = true;
-        private bool shouldBeDragged = false;
-        private bool shouldBeRemoved = false;
 
         private string selectedEdgeType = OrientedSimple;
 
@@ -52,6 +45,7 @@ namespace GraphEditor
         public MainWindow()
         {
             InitializeComponent();
+            states = new MainWindowStates();
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -76,9 +70,7 @@ namespace GraphEditor
 
         private void ButtonAddNode_Click(object sender, RoutedEventArgs e)
         {
-            shouldNodeBeAdded = true;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
+            states.MoveToNodeAddingState();
             KillAllSelections?.Invoke();
             HidePopUpMenus();
         }
@@ -86,14 +78,14 @@ namespace GraphEditor
         public void OnNodeSelected(object sender, EventArgs e)
         {
             HidePopUpMenus();
-            if (shouldBeRemoved)
+            if (states.shouldBeRemoved)
             {
                 Node nodeToRemove = sender as Node;
-                shouldBeRemoved = false;
+                //states.MoveToMovingState();
                 RemoveNode(nodeToRemove);
             }
 
-            if (!shouldEdgeBeAdded) return;
+            if (!states.shouldEdgeBeAdded) return;
 
             Node node = sender as Node;
 
@@ -130,7 +122,7 @@ namespace GraphEditor
                 }
                 return;
             }
-            if (shouldNodeBeAdded)
+            if (states.shouldNodeBeAdded)
             {
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
                 node.buttonSelected += OnNodeSelected;
@@ -151,54 +143,18 @@ namespace GraphEditor
             }
             else
             {
-                if (!shouldNodeBeMoved)
+                if (!states.shouldNodeBeMoved)
                 {
-                    shouldNodeBeAdded = false;
+                    //states.MoveToMovingState();
                     return;
                 }
-                
-                shouldBeDragged = true;
+                else if (states.shouldNodeBeMoved)
+                {
+                    states.MoveToDraggingState();
+                }
                 pointerPosition = currentMousePosition;
             }    
         }
-
-        //private void AutoGenerateNodes(int numberOfNodes)
-        //{
-        //    Random random = new Random();
-        //    List <Node> nodes = new List<Node>();
-        //    List <Edge> edges = new List<Edge>();   
-
-        //    for (int i = 0; i < numberOfNodes; i++)
-        //    {
-        //        double X = random.Next((int)this.ActualWidth - 100) + 80;
-        //        double Y = random.Next((int)this.ActualWidth - 100) + 50;
-        //        Node node = new Node(X, Y, MainCanvas, this, nodeId);
-        //        node.buttonSelected += OnNodeSelected;
-        //        if (edgeAnimationController == null)
-        //        {
-        //            edgeAnimationController = new EdgeAnimationController(node);
-        //        }
-        //        if (nodeAnimationController == null)
-        //        {
-        //            nodeAnimationController = new NodeAnimationController();
-        //        }
-        //        nodeAnimationController.AddNode(node);
-        //        nodes.Add(node);
-        //        nodeId++;
-        //        //Thread.Sleep(10);
-        //    }
-        //    for (int i = 0; i < nodes.Count - 1; i++)
-        //    {
-        //        for (int j = i + 1; j < nodes.Count; j++)
-        //        {
-        //            _firstSelected = nodes[i];
-        //            _secondSelected = nodes[j];
-        //            edges.Add(CreateEdge());
-        //        }
-        //    }
-        //    Console.WriteLine("Nodes: " + nodes.Count);
-        //    Console.WriteLine("Edges: " + edges.Count);
-        //}
 
         private IEdgeable CreateEdge()
         {
@@ -222,18 +178,12 @@ namespace GraphEditor
         {
             HidePopUpMenus();
             MagicWandOrder?.Invoke();
-            shouldEdgeBeAdded = false;
-            shouldNodeBeAdded = false;
-            shouldNodeBeMoved = false;
-            shouldBeRemoved = false;
+            states.MoveToMagicState();
         }
 
         private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
         {
-            shouldEdgeBeAdded = true;
-            shouldNodeBeMoved = false;
-            shouldNodeBeAdded = false;
-            shouldBeRemoved = false;
+            states.MoveToEdgeAddingState();
             _firstSelected = null;
             _secondSelected = null;
             ShowAddEdgePopUpMenu();
@@ -241,7 +191,6 @@ namespace GraphEditor
 
         private void ShowAddEdgePopUpMenu()
         {
-
             Point ButtonAddPosition = ButtonAddEdge.TranslatePoint(new Point(0, 0), mainGrid);
 
             OrientedSimplePopUp.Visibility = Visibility.Visible;
@@ -295,10 +244,7 @@ namespace GraphEditor
         private void ButtonSelect_Click(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
-            shouldNodeBeMoved = true;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
+            states.MoveToMovingState();
             if (nodeAnimationController != null)
             {
                 nodeAnimationController.EndMovementAnimations();
@@ -354,9 +300,9 @@ namespace GraphEditor
         {
             DoubleAnimation gridAnimation = new DoubleAnimation();
             gridAnimation.To = 88 + GraphVisualTreeStackPanel.Children.Count * 38;
-
-            if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;
             gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+
+            if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;      
             GraphsManagerGrid.BeginAnimation(HeightProperty, gridAnimation);
         }
 
@@ -387,12 +333,12 @@ namespace GraphEditor
 
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            shouldBeDragged = false;
+            if (states.shouldBeDragged) states.MoveToMovingState();
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!shouldBeDragged) return;
+            if (!states.shouldBeDragged) return;
             Point newPosition = e.GetPosition(sender as Window);
             double dragDeltaX = newPosition.X - pointerPosition.X;
             double dragDeltaY = newPosition.Y - pointerPosition.Y;
@@ -416,7 +362,7 @@ namespace GraphEditor
 
         private void ButtonGraph_Click(object sender, RoutedEventArgs e)
         {
-            shouldBeRemoved = false;
+            //states.MoveToMovingState();
             HidePopUpMenus();
             InformationWindow informationWindow = new InformationWindow();
             informationWindow.Show();
@@ -487,7 +433,7 @@ namespace GraphEditor
             edgeAnimationController.RemoveEdge(edgeToRemove);
             RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1]);
             AnimateGraphsManagerGridExpansion();
-            shouldBeRemoved = false;
+            //states.MoveToMovingState();
         }
 
         private void RemoveAllBordersForNode(int nodeId)
@@ -531,10 +477,7 @@ namespace GraphEditor
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            shouldBeRemoved = true;
-            shouldEdgeBeAdded = false;
-            shouldNodeBeMoved = false;
-            shouldNodeBeAdded = false;
+            states.MoveToRemovingState();
             _firstSelected = null;
             _secondSelected = null;
         }
@@ -542,7 +485,7 @@ namespace GraphEditor
         public void OnEdgeSelected(object sender, EventArgs e)
         {
             IEdgeable edgeable = sender as IEdgeable;
-            if (shouldBeRemoved)
+            if (states.shouldBeRemoved)
             {
                 RemoveEdge(edgeable);
             }

@@ -98,10 +98,10 @@ namespace GraphEditor
             else
             {            
                 buttonSelected?.Invoke(this, new EventArgs());
-                if (!_window.shouldNodeBeMoved) return;
+                if (!_window.states.shouldNodeBeMoved) return;
 
                 isSelected = true;
-                _window.shouldNodeBeAdded = false;
+                //_window.states.MoveToMovingState();
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
                 movementDiffLeft = currentMousePosition.X - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceLeftSize - GetPosLeft();
@@ -122,7 +122,7 @@ namespace GraphEditor
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!isSelected) return;
-            if (!_window.shouldNodeBeMoved) return;
+            if (!_window.states.shouldNodeBeMoved) return;
 
             EndMovementAnimations();
 

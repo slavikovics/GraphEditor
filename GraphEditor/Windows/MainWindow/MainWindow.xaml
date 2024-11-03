@@ -120,8 +120,6 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Canvas Name="MainCanvas" Grid.Column="1">
-                <!--<Ellipse x:Name="Ellipse" Width="20" Height="20" Fill="#FFAEA3D8" Canvas.Top="100" Canvas.Left="100" DragLeave="Ellipse_DragLeave" MouseDown="Ellipse_MouseDown"></Ellipse>-->
-
                 <Button x:Name="EllipseExample" Template="{StaticResource ButtonTemplate}"  Width="30" Height="30" Canvas.Top="100" Canvas.Left="100" Visibility="Hidden">
                     <Image>
                         <Image.Source>
@@ -315,41 +313,6 @@
                         </Image.Source>
                     </Image>
                 </Button>
-                <!--<Rectangle x:Name="DemoRect" Height="10" RadiusX="4" RadiusY="4" Canvas.Left="575" Canvas.Top="464" Width="10" Stroke="#FFAEA3D8" FlowDirection="RightToLeft" StrokeThickness="3" RenderTransformOrigin="0.5,0.5">
-    <Rectangle.RenderTransform>
-        <TransformGroup>
-            <ScaleTransform/>
-            <SkewTransform/>
-            <RotateTransform Angle="20"/>
-            <TranslateTransform/>
-            <SkewTransform/>
-        </TransformGroup>
-    </Rectangle.RenderTransform>
-</Rectangle>-->
-                <!--<Image x:Name="DemoTriang" Width="16" Height="16" Canvas.Top="462" Canvas.Left="577" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.55,1.054">
-    <Image.Source>
-        <DrawingImage>
-            <DrawingImage.Drawing>
-                <DrawingGroup>
-                    <DrawingGroup>
-                        <DrawingGroup.ClipGeometry>
-                            <RectangleGeometry Rect="0,0,62.84,58.52" />
-                        </DrawingGroup.ClipGeometry>
-                        <GeometryDrawing Brush="#FF9370DB">
-                            <GeometryDrawing.Pen>
-                                <Pen Brush="#FFAEA3D8" Thickness="10" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
-                            </GeometryDrawing.Pen>
-                            <GeometryDrawing.Geometry>
-                                <PathGeometry FillRule="Nonzero" Figures="M8.17,5.2L56.53,27.22C58.28,28.02,58.28,30.5,56.53,31.29L8.17,53.32C6.69,53.99,5,52.91,5,51.28L5,7.24C5,5.61,6.68,4.53,8.17,5.2z" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                    </DrawingGroup>
-                </DrawingGroup>
-            </DrawingImage.Drawing>
-        </DrawingImage>
-    </Image.Source>
-</Image>-->
-
             </Canvas>
             <Grid Height="630">
                 <Grid.RowDefinitions>
@@ -778,7 +741,7 @@
             <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="88" VerticalAlignment="Top"  Grid.Column="2" MouseDown="GraphsManagerGrid_MouseDown">
                 <Border Background="#E59370DB" CornerRadius="20" BorderThickness="4" BorderBrush="#FFAEA3D8">
                     <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
-                        
+
                         <StackPanel>
                             <Label Content="Graphs manager" FontWeight="Bold" HorizontalAlignment="Center" FontSize="15" Foreground="#E5221B2F"/>
                             <StackPanel x:Name="GraphVisualTreeStackPanel">
@@ -950,5 +913,4 @@
             </Button>
         </Grid>
     </Grid>
-
 </Window>
