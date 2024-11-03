@@ -316,6 +316,7 @@ namespace GraphEditor
         private void InsertGraphBorder()
         {
             GraphVisualTreeStackPanel.Children.Add(graphsManager.AddGraph("Graph"));
+            AnimateGraphsManagerGridExpansion();
         }
 
         private void InsertEdgeBorder(IEdgeable edge)
@@ -351,9 +352,10 @@ namespace GraphEditor
 
         private void AnimateGraphsManagerGridExpansion()
         {
-            if (GraphsManagerGrid.ActualHeight >= 600) return;
             DoubleAnimation gridAnimation = new DoubleAnimation();
-            gridAnimation.To = GraphsManagerGrid.ActualHeight + 38;
+            gridAnimation.To = 88 + GraphVisualTreeStackPanel.Children.Count * 38;
+
+            if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;
             gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             GraphsManagerGrid.BeginAnimation(HeightProperty, gridAnimation);
         }
@@ -468,8 +470,9 @@ namespace GraphEditor
             nodeToRemove.Remove();
             nodeAnimationController.RemoveNode(nodeToRemove);
             RemoveAllBordersForNode(nodeToRemove._id);
+            AnimateGraphsManagerGridExpansion();
 
-            foreach(IEdgeable edge in edges)
+            foreach (IEdgeable edge in edges)
             {
                 if (edge.GetFirstNodeId() == nodeToRemove._id || edge.GetSecondNodeId() == nodeToRemove._id)
                 {
@@ -483,6 +486,7 @@ namespace GraphEditor
             edgeToRemove.Remove();
             edgeAnimationController.RemoveEdge(edgeToRemove);
             RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1]);
+            AnimateGraphsManagerGridExpansion();
             shouldBeRemoved = false;
         }
 
