@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace GraphEditor
 {
-    internal class EdgeNonOriented : EdgeBase, IRenamable, IEdgeable
+    internal class EdgeNonOriented : EdgeBase
     {
         private EdgeNonOrientedConfiguration edgeConfiguration;
 

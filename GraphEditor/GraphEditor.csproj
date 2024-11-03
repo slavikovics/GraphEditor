@@ -84,9 +84,11 @@
     <Compile Include="EdgesAndNodes\Edges\EdgeCalculations.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeNonOriented\EdgeNonOrientedConfiguration.cs" />
+    <Compile Include="EdgesAndNodes\Edges\EdgesOriented\ArrowConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgesOriented\EdgeOriented.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeNonOriented\EdgeNonOriented.cs" />
     <Compile Include="AnimationControllers\EdgeAnimationController.cs" />
+    <Compile Include="EdgesAndNodes\Edges\EdgesOriented\EdgeOrientedConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Edges\IEdgeable.cs" />
     <Compile Include="EdgesAndNodes\Nodes\HiddenNode.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeAnimator.cs" />

@@ -12,6 +12,12 @@ namespace GraphEditor.EdgesAndNodes.Edges
             return basePointLeft;
         }
 
+        public static double CalculateEdgePositionBaseLeftWithArrow(Node node, int ArrowOffset)
+        {
+            double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2 + ArrowOffset;
+            return basePointLeft;
+        }
+
         public static double CalculateEdgePositionBaseTop(Node node)
         {
             return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2;
@@ -38,6 +44,11 @@ namespace GraphEditor.EdgesAndNodes.Edges
         public static double CalculateFinalWidth(Node node1, Node node2, int EdgeOffsetLeft)
         {
             return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft;
+        }
+
+        public static double CalculateFinalWidthWithArrow(Node node1, Node node2, int EdgeOffsetLeft, int ArrowOffset)
+        {
+            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft - ArrowOffset;
         }
 
         public static double CalculateAngle(Node node1, Node node2)
@@ -79,6 +90,28 @@ namespace GraphEditor.EdgesAndNodes.Edges
             if (Width == 0) return 0;
 
             double originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / edgeVisualRepresentation.Width;
+
+            if (originLeft > 100 || originLeft < -100) return 0;
+
+            return originLeft;
+        }
+
+        public static double CalculateRenderTransformOriginLeftWithArrow(double Width, Node _firstNode, Rectangle edgeVisualRepresentation, int ArrowOffset)
+        {
+            if (Width == 0) return 0;
+
+            double originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5 + ArrowOffset) / edgeVisualRepresentation.Width;
+
+            if (originLeft > 100 || originLeft < -100) return 0;
+
+            return originLeft;
+        }
+
+        public  static double CalculateArrowRenderTransformOriginLeft(Image _arrow, Node _firstNode)
+        {
+            if (_arrow.Width == 0) return 0;
+
+            double originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / _arrow.Width;
 
             if (originLeft > 100 || originLeft < -100) return 0;
 

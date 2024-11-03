@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphEditor.GraphsManagerControls;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace GraphEditor.EdgesAndNodes.Edges
 {
-    internal class EdgeBase
+    internal class EdgeBase : IEdgeable, IRenamable
     {
         protected double _offsetTop;
         protected double Angle;
