@@ -1,4 +1,5 @@
 ﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.GraphsManagerControls;
 using System;
 using System.Collections.Generic;
@@ -35,13 +36,18 @@ namespace GraphEditor
 
         public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {
-            //isAnimated = true;
             _firstNode = firstNode;
             _secondNode = secondNode;
             _mainWindow = window;
             _mainCanvas = mainCanvas;
-
             edgeVisualRepresentation = new Rectangle();
+
+            SetUpEdgeVisualRepresentation();
+            SetUpEvents();      
+        }
+
+        private void SetUpEdgeVisualRepresentation()
+        {
             _mainCanvas.Children.Insert(0, edgeVisualRepresentation);
             edgeVisualRepresentation.Height = Height;
             edgeVisualRepresentation.Width = Width;
@@ -50,19 +56,17 @@ namespace GraphEditor
             edgeBrush = new SolidColorBrush(StrokeColor);
             edgeVisualRepresentation.Stroke = edgeBrush;
             edgeVisualRepresentation.StrokeThickness = StrokeThickness;
+        }
 
-            // TODO call width animation
-
+        private void SetUpEvents()
+        {
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
             edgeVisualRepresentation.MouseEnter += EdgeVisualRepresentationMouseEnter;
             edgeVisualRepresentation.MouseLeave += EdgeVisualRepresentationMouseLeave;
             edgeVisualRepresentation.MouseDown += EdgeVisualRepresentationMouseDown;
-            //EdgePositioning(true);
-
             edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
-            
         }
 
         private void EdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -109,7 +113,7 @@ namespace GraphEditor
         public void EdgePositioning(bool isInGraph)
         {
             double angle = CalculateAngle(_firstNode, _secondNode);
-            double width = CalculateFinalWidth(_firstNode, _secondNode);
+            double width = EdgeCalculations.CalculateFinalWidth(_firstNode, _secondNode, EdgeOffsetLeft);
 
             if (isInGraph)
             {
@@ -133,10 +137,9 @@ namespace GraphEditor
 
             double originLeft = CalculateRenderTransformOriginLeft();
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, GetEdgePositionBaseLeft(_firstNode) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, GetEdgePositionBaseTop(_firstNode) - _offsetTop);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeft(_firstNode) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
+            edgeVisualRepresentation.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _offsetTop);
 
-            Console.WriteLine(CalculateAngle(_firstNode, _secondNode));
             edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
             RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
 
@@ -178,27 +181,14 @@ namespace GraphEditor
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
         }
 
-        private double GetEdgePositionBaseLeft(Node node)
-        {
-            double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
-            return basePointLeft;
-        }
-
-        private double GetEdgePositionBaseTop(Node node)
-        {
-            // return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2 - Height;
-            return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2;
-        }
-
-        private double CalculateFinalWidth(Node node1, Node node2)
-        {
-            // return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * Margin;
-            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft;
-        }
+        //private double CalculateFinalWidth(Node node1, Node node2)
+        //{
+        //    return EdgeCalculations.CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft;
+        //}
 
         private double CalculateAngle(Node node1, Node node2)
         {
-            double AngleRadians = Math.Atan(CalculateDeltaY(node1, node2) / CalculateDeltaX(node1, node2));
+            double AngleRadians = Math.Atan(EdgeCalculations.CalculateDeltaY(node1, node2) / EdgeCalculations.CalculateDeltaX(node1, node2));
             double AngleDegrees = AngleRadians / Math.PI * 180 * -1;
 
             if (node1.GetPosLeft() <= node2.GetPosLeft())
@@ -238,24 +228,6 @@ namespace GraphEditor
             if (originLeft > 100 || originLeft < -100) return 0;
 
             return originLeft;
-        }
-
-        private double CalculateLengthBetweenNodes(Node node1, Node node2)
-        {
-            double deltaX = CalculateDeltaX(node1, node2);
-            double deltaY = CalculateDeltaY(node1, node2);
-
-            return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
-        }
-
-        private double CalculateDeltaX(Node node1, Node node2)
-        {
-            return (double)node2.GetPosLeft() - (double)node1.GetPosLeft();
-        }
-
-        private double CalculateDeltaY(Node node1, Node node2)
-        {
-            return (double)node2.GetPosTop() - (double)node1.GetPosTop();
         }
 
         public override string ToString()
