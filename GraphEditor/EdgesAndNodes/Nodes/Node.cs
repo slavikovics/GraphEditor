@@ -15,7 +15,7 @@ namespace GraphEditor
 
         private Canvas _canvas;
 
-        private TextBlock _textBlock;
+        protected TextBlock _textBlock;
 
         private MainWindow _window;
 
@@ -58,7 +58,7 @@ namespace GraphEditor
             _canvas.Children.Add(_textBlock);
         }
 
-        protected void SetUpEvents()
+        private void SetUpEvents()
         {
             (ellipse.Content as Image).MouseDown += OnMouseDown;
             _window.MouseMove += OnMouseMove;
@@ -163,7 +163,7 @@ namespace GraphEditor
             _textBlock.SetValue(Canvas.TopProperty, CanvasTop);
         }
 
-        private void OnMagicWondOrder()
+        protected void OnMagicWondOrder()
         {
             double leftTarget = random.Next(100) - 50;
             double topTarget = random.Next(100) - 50;

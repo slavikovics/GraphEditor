@@ -206,7 +206,7 @@ namespace GraphEditor
 
             switch(selectedEdgeType)
             {
-                case NonOriented: edge = new Edge(_firstSelected, _secondSelected, this, MainCanvas); break;
+                case NonOriented: edge = new EdgeNonOriented(_firstSelected, _secondSelected, this, MainCanvas); break;
                 case OrientedSimple: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
                 default: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
