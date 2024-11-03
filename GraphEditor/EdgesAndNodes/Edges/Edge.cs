@@ -13,26 +13,23 @@ namespace GraphEditor
 {
     internal class Edge : IRenamable, IEdgeable
     {
-        public const int Margin = 4;
-        public const int Height = 10;
-        public const int RadiusX = 4;
-        public const int RadiusY = 4;
-        public double Width = 10;
-        public Color StrokeColor = Colors.MediumPurple;
-        public const int StrokeThickness = 3;
-        public const int EdgeOffsetLeft = 5;
+        //public const int Margin = 4;
+        //public const int Height = 10;
+        //public const int RadiusX = 4;
+        //public const int RadiusY = 4;
+        //public double Width = 10;
+        //public Color StrokeColor = Colors.MediumPurple;
+        //public const int StrokeThickness = 3;
+        //public const int EdgeOffsetLeft = 5;
 
         private double _offsetTop;
         private double Angle;
-        private double _transformRotateAngleCalculationResult;
-        private double desiredWidth;
         private Node _firstNode;
         private Node _secondNode;
         private MainWindow _mainWindow;
         private Canvas _mainCanvas;
         private Rectangle edgeVisualRepresentation;
         private Brush edgeBrush;
-        private bool isAnimated = false;
 
         public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {
@@ -49,13 +46,13 @@ namespace GraphEditor
         private void SetUpEdgeVisualRepresentation()
         {
             _mainCanvas.Children.Insert(0, edgeVisualRepresentation);
-            edgeVisualRepresentation.Height = Height;
-            edgeVisualRepresentation.Width = Width;
-            edgeVisualRepresentation.RadiusX = RadiusX;
-            edgeVisualRepresentation.RadiusY = RadiusY;
-            edgeBrush = new SolidColorBrush(StrokeColor);
+            edgeVisualRepresentation.Height = EdgeConfiguration.Height;
+            edgeVisualRepresentation.Width = EdgeConfiguration.Width;
+            edgeVisualRepresentation.RadiusX = EdgeConfiguration.RadiusX;
+            edgeVisualRepresentation.RadiusY = EdgeConfiguration.RadiusY;
+            edgeBrush = new SolidColorBrush(EdgeConfiguration.StrokeColor);
             edgeVisualRepresentation.Stroke = edgeBrush;
-            edgeVisualRepresentation.StrokeThickness = StrokeThickness;
+            edgeVisualRepresentation.StrokeThickness = EdgeConfiguration.StrokeThickness;
         }
 
         private void SetUpEvents()
@@ -77,7 +74,7 @@ namespace GraphEditor
         private void EdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             ColorAnimation edgeHoverAnimation = new ColorAnimation();
-            edgeHoverAnimation.To = StrokeColor;
+            edgeHoverAnimation.To = EdgeConfiguration.StrokeColor;
             edgeHoverAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
@@ -92,8 +89,7 @@ namespace GraphEditor
 
         private void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
         {
-            double originLeft = CalculateRenderTransformOriginLeft();
-            
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeft(EdgeConfiguration.Width, _firstNode, edgeVisualRepresentation);
             edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
         }
 
@@ -112,36 +108,36 @@ namespace GraphEditor
 
         public void EdgePositioning(bool isInGraph)
         {
-            double angle = CalculateAngle(_firstNode, _secondNode);
-            double width = EdgeCalculations.CalculateFinalWidth(_firstNode, _secondNode, EdgeOffsetLeft);
+            double angle = EdgeCalculations.CalculateAngle(_firstNode, _secondNode);
+            double width = EdgeCalculations.CalculateFinalWidth(_firstNode, _secondNode, EdgeConfiguration.EdgeOffsetLeft);
 
             if (isInGraph)
             {
                 if (Angle == angle) return;
-                if (Width == width) return;
+                if (EdgeConfiguration.Width == width) return;
             }
 
             edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
 
-            if (width >= EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
+            if (width >= EdgeConfiguration.EdgeOffsetLeft) edgeVisualRepresentation.Width = width;
             else if (isInGraph)
             {
                 edgeVisualRepresentation.Width = 0;
                 return;
             }
 
-            Width = width;
+            EdgeConfiguration.Width = width;
             Angle = angle;
             
-            _offsetTop = Height / 2;
+            _offsetTop = EdgeConfiguration.Height / 2;
 
-            double originLeft = CalculateRenderTransformOriginLeft();
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeft(EdgeConfiguration.Width, _firstNode, edgeVisualRepresentation);
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeft(_firstNode) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
+            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeft(_firstNode) + EdgeConfiguration.EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2);
             edgeVisualRepresentation.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _offsetTop);
 
             edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
-            RotateTransform rotateTransform = new RotateTransform(CalculateAngle(_firstNode, _secondNode));
+            RotateTransform rotateTransform = new RotateTransform(EdgeCalculations.CalculateAngle(_firstNode, _secondNode));
 
             edgeVisualRepresentation.RenderTransform = rotateTransform;
 
@@ -156,8 +152,8 @@ namespace GraphEditor
         private void AnimateEdgeCreation()
         {
             DoubleAnimation edgeWidthAnimation = new DoubleAnimation();
-            edgeWidthAnimation.From = Height;
-            edgeWidthAnimation.To = Width;
+            edgeWidthAnimation.From = EdgeConfiguration.Height;
+            edgeWidthAnimation.To = EdgeConfiguration.Width;
             edgeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
             edgeWidthAnimation.AccelerationRatio = 0.5;
             edgeWidthAnimation.DecelerationRatio = 0.5;
@@ -179,55 +175,6 @@ namespace GraphEditor
         private void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
-        }
-
-        //private double CalculateFinalWidth(Node node1, Node node2)
-        //{
-        //    return EdgeCalculations.CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft;
-        //}
-
-        private double CalculateAngle(Node node1, Node node2)
-        {
-            double AngleRadians = Math.Atan(EdgeCalculations.CalculateDeltaY(node1, node2) / EdgeCalculations.CalculateDeltaX(node1, node2));
-            double AngleDegrees = AngleRadians / Math.PI * 180 * -1;
-
-            if (node1.GetPosLeft() <= node2.GetPosLeft())
-            {
-                if (node1.GetPosTop() <= node2.GetPosTop())
-                {
-                    _transformRotateAngleCalculationResult = 360 - AngleDegrees;
-                    return 360 - AngleDegrees;
-                }
-                else
-                {
-                    _transformRotateAngleCalculationResult = -1 * AngleDegrees;
-                    return -1 * AngleDegrees; 
-                }
-            }
-            else
-            {
-                if (node1.GetPosTop() <= node2.GetPosTop())
-                {
-                    _transformRotateAngleCalculationResult = 180 + (-1) * AngleDegrees;
-                    return 180 + (-1) * AngleDegrees;
-                }
-                else
-                {
-                    _transformRotateAngleCalculationResult = 180 - AngleDegrees;
-                    return 180 - AngleDegrees;
-                }
-            }
-        }
-
-        private double CalculateRenderTransformOriginLeft()
-        {
-            if (Width == 0) return 0;
-
-            double originLeft = -1 * (_firstNode.GetEllipseDimensions() / 2 + 5) / edgeVisualRepresentation.Width;
-
-            if (originLeft > 100 || originLeft < -100) return 0;
-
-            return originLeft;
         }
 
         public override string ToString()

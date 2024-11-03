@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using GraphEditor.GraphsManagerControls;
+using System.Windows.Controls;
 
 namespace GraphEditor
 {
@@ -6,9 +7,9 @@ namespace GraphEditor
     {
         public RenamingButton(ControlTemplate buttonTemplate)
         {
-            Height = 20;
-            Width = 20;
-            VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            Height = RenamingButtonConfiguration.ButtonHeight;
+            Width = RenamingButtonConfiguration.ButtonWidth;
+            VerticalAlignment = RenamingButtonConfiguration.ButtonVerticalAlignment;
             Template = buttonTemplate;
         }
     }

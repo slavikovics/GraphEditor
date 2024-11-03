@@ -79,19 +79,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EdgesAndNodes\Edges\EdgeAnimator.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeCalculations.cs" />
+    <Compile Include="EdgesAndNodes\Edges\EdgeConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeOriented.cs" />
     <Compile Include="EdgesAndNodes\Edges\Edge.cs" />
     <Compile Include="AnimationControllers\EdgeAnimationController.cs" />
     <Compile Include="EdgesAndNodes\Edges\IEdgeable.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeAnimator.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeCalculations.cs" />
+    <Compile Include="EdgesAndNodes\Nodes\NodeConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeSettings.cs" />
     <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
     <Compile Include="GraphsManagerControls\GraphManager.cs" />
     <Compile Include="GraphsManagerControls\IRenamable.cs" />
     <Compile Include="GraphsManagerControls\RenamingButton.cs" />
+    <Compile Include="GraphsManagerControls\RenamingButtonConfiguration.cs" />
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
     <Compile Include="Windows\RenamingWindow.xaml.cs">
       <DependentUpon>RenamingWindow.xaml</DependentUpon>
