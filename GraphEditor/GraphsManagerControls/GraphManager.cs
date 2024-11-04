@@ -1,7 +1,10 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphsManagerControls;
+using GraphEditor.Windows.MainWindow;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace GraphEditor.GraphsManager
 {
@@ -54,6 +57,13 @@ namespace GraphEditor.GraphsManager
                 _buttonTemplate, _buttonAddNodeContent, _buttonAddEdgeContent, _buttonAddGraphContent, renamable, nodesDependencies);
 
             return graphItemBorder;
+        }
+
+        public static void AnimateGraphsManagerGridExpansion(StackPanel GraphVisualTreeStackPanel, Grid GraphsManagerGrid) 
+        {
+            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(GraphVisualTreeStackPanel);
+            if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;
+            GraphsManagerGrid.BeginAnimation(Grid.HeightProperty, gridAnimation);
         }
     }
 }
