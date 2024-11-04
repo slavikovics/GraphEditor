@@ -1,6 +1,7 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphsManager;
 using GraphEditor.GraphsManagerControls;
+using GraphEditor.GraphTabs;
 using GraphEditor.Windows.MainWindow;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,16 @@ namespace GraphEditor
         public MainWindow()
         {
             InitializeComponent();
+            AddTabView();
             states = new MainWindowStates();
+        }
+
+        private void AddTabView()
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = "graph";
+            TabView tabView = new TabView(textBlock, textBlock, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("ButtonTemplate"));
+            tabView.AddTabViewToMainWindow(TabViewCanvas);
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)

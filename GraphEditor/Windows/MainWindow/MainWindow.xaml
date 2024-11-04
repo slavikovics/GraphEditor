@@ -754,25 +754,26 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="24"/>
                 <ColumnDefinition Width="24"/>
                 <ColumnDefinition Width="24"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
+            <Canvas Name="TabViewCanvas"  Grid.Column="1"></Canvas>
             <Button x:Name="CollapseWindowButton" Template="{StaticResource ButtonTemplate}" 
-        BorderThickness="0" Background="Purple" 
-        Grid.Column="1"
-        Margin="2 11 2 2" 
-        Padding="0" 
-        Height="20" 
-        Width="20" 
-        Click="CollapseWindowButton_Click"
-        MouseEnter="Button_MouseEnter"
-        MouseLeave="Button_MouseLeave"
-        MouseLeftButtonDown="Button_MouseLeftButtonDown"
-        MouseLeftButtonUp="Button_MouseLeftButtonUp">
-
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="2"
+                    Margin="2 11 2 2" 
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="CollapseWindowButton_Click"
+                    MouseEnter="Button_MouseEnter"
+                    MouseLeave="Button_MouseLeave"
+                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
+                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -803,7 +804,7 @@
             </Button>
             <Button x:Name="MaximizeWindowButton" Template="{StaticResource ButtonTemplate}" 
             BorderThickness="0" Background="Purple" 
-            Grid.Column="2"
+            Grid.Column="3"
             Margin="2 11 2 2"  
             Padding="0" 
             Height="20" 
@@ -865,7 +866,7 @@
             </Button>
             <Button x:Name="CloseWindowButton" Template="{StaticResource ButtonTemplate}" 
             BorderThickness="0" Background="Purple" 
-            Grid.Column="3"
+            Grid.Column="4"
             Margin="2 11 2 2" 
             Padding="0" 
             Height="20" 

@@ -12,5 +12,12 @@ namespace GraphEditor
             VerticalAlignment = RenamingButtonConfiguration.ButtonVerticalAlignment;
             Template = buttonTemplate;
         }
+
+        public RenamingButton()
+        {
+            Height = RenamingButtonConfiguration.ButtonHeight;
+            Width = RenamingButtonConfiguration.ButtonWidth;
+            VerticalAlignment = RenamingButtonConfiguration.ButtonVerticalAlignment;
+        }
     }
 }

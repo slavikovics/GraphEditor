@@ -102,6 +102,9 @@
     <Compile Include="GraphsManagerControls\RenamingButton.cs" />
     <Compile Include="GraphsManagerControls\RenamingButtonConfiguration.cs" />
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
+    <Compile Include="GraphTabs\Tab.cs" />
+    <Compile Include="GraphTabs\TabButton.cs" />
+    <Compile Include="GraphTabs\TabView.cs" />
     <Compile Include="Windows\MainWindow\BordersInserter.cs" />
     <Compile Include="Windows\MainWindow\BordersRemover.cs" />
     <Compile Include="Windows\MainWindow\MainWindowAnimator.cs" />
