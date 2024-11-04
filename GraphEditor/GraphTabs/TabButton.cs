@@ -33,13 +33,31 @@ namespace GraphEditor.GraphTabs
             this.BeginAnimation(WidthProperty, buttonExpansionAnimation);
         }
 
-        public void AnimateButtonMovementRight()
+        public void AnimateButtonMovementRight(double canvasLeft)
         {
             DoubleAnimation buttonMovementAnimation = new DoubleAnimation();
-            buttonMovementAnimation.From = (double)this.GetValue(Canvas.LeftProperty) - 100;
-            buttonMovementAnimation.To = (double)this.GetValue(Canvas.LeftProperty);
+            buttonMovementAnimation.From = canvasLeft - 100;
+            buttonMovementAnimation.To = canvasLeft;
             buttonMovementAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
             this.BeginAnimation(Canvas.LeftProperty, buttonMovementAnimation);
+        }
+
+        public void AnimationHeightExpansion()
+        {
+            DoubleAnimation heightAnimation = new DoubleAnimation();
+            heightAnimation.From = Height;
+            heightAnimation.To = 45;
+            heightAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(150));
+            this.BeginAnimation(HeightProperty, heightAnimation);
+        }
+
+        public void AnimationHeightShrinking()
+        {
+            DoubleAnimation heightAnimation = new DoubleAnimation();
+            heightAnimation.From = Height;
+            heightAnimation.To = 35;
+            heightAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(150));
+            this.BeginAnimation(HeightProperty, heightAnimation);
         }
     }
 }

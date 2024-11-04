@@ -46,7 +46,6 @@ namespace GraphEditor
         public MainWindow()
         {
             InitializeComponent();
-            AddTabView();
             states = new MainWindowStates();
         }
 
@@ -54,7 +53,7 @@ namespace GraphEditor
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = "Graph 1";
-            TabView tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas);
+            TabView tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas, MainCanvas);
             tabView.AddTabViewToMainWindow();
         }
 
@@ -249,6 +248,7 @@ namespace GraphEditor
         {
             graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
             InsertGraphBorder();
+            AddTabView();
         }
 
         private void InsertGraphBorder()

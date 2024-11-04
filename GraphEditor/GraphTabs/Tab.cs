@@ -22,7 +22,7 @@ namespace GraphEditor.GraphTab
             tabButton.Content = contentImage;
         }
 
-        public TabButton GetTabAsRenamingButton()
+        public TabButton GetTabAsTabButton()
         {
             return tabButton;
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Media3D;
 
 namespace GraphEditor.GraphTabs
 {
@@ -16,66 +17,93 @@ namespace GraphEditor.GraphTabs
 
         private int selectedTabId;
 
+        private int maxId = 1;
+
         private ControlTemplate _tabButtonTemplate;
 
-        private Canvas _canvas;
+        private Canvas _canvasTabViewUI;
 
-        public TabView(TextBlock firstTabContent, Image addNewTabContent, ControlTemplate buttonAddTemplate, 
-            ControlTemplate tabButtonTemplate, Canvas canvas)
+        private Canvas _canvasMainCanvas;
+
+        public TabView(TextBlock TabContent, Image addNewTabContent, ControlTemplate buttonAddTemplate, 
+            ControlTemplate tabButtonTemplate, Canvas canvasTabViewUI, Canvas canvasMainCanvas)
         {
-            Tab firstTab = new Tab(firstTabContent, tabButtonTemplate, 1);
+            InitializeTabView(canvasTabViewUI, tabButtonTemplate, canvasMainCanvas);
+            SetUpAddNewTabButton(addNewTabContent, buttonAddTemplate);
+            CreateTab(TabContent);
+            AddTabViewToMainWindow();
+        }
+
+        private void SetUpAddNewTabButton(Image addNewTabContent, ControlTemplate buttonAddTemplate)
+        {
             Tab addNewTab = new Tab(addNewTabContent, buttonAddTemplate, 0);
-            selectedTabId = 1;
-            TabViewButtons = new List<TabButton>();
-            Collections = new List<List<UIElement>>();
-            Collections.Add(new List<UIElement>());
-            _tabButtonTemplate = tabButtonTemplate;
-
-            TabButton firstTabAsButton = firstTab.GetTabAsRenamingButton();
-            TabButton addNewAsButton = addNewTab.GetTabAsRenamingButton();
-
-            TabViewButtons.Add(firstTabAsButton);
+            TabButton addNewAsButton = addNewTab.GetTabAsTabButton();
             TabViewButtons.Add(addNewAsButton);
-
-            firstTabAsButton.Click += TabClick;
             addNewAsButton.Click += AddNewTabClick;
-            _canvas = canvas;
+        }
+
+        private void CreateTab(TextBlock TabContent)
+        {
+            Collections.Add(new List<UIElement>());
+            Tab tab = new Tab(TabContent, _tabButtonTemplate, maxId);
+            maxId++;
+            TabButton tabAsButton = tab.GetTabAsTabButton();
+            TabViewButtons.Insert(Collections.Count - 1, tabAsButton);
+            tabAsButton.Click += TabClick;
+        }
+
+        private void InitializeTabView(Canvas canvas, ControlTemplate tabButtonTemplate, Canvas mainCanvas)
+        {
+            _canvasTabViewUI = canvas;
+            _canvasMainCanvas = mainCanvas;
+            _tabButtonTemplate = tabButtonTemplate;
+            selectedTabId = 1;
+            Collections = new List<List<UIElement>>();
+            TabViewButtons = new List<TabButton>();
         }
 
         private void AddNewTabClick(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (Collections.Count >= 8) return;
             TextBlock textBlock = new TextBlock();
             textBlock.Text = "Graph " + (Collections.Count + 1);
-            Collections.Add(new List<UIElement>());
-            AddTabViewButton(textBlock, _tabButtonTemplate);
+            CreateTab(textBlock);
             AddTabViewToMainWindow();
-            TabViewButtons[TabViewButtons.Count - 2].AnimateButtonExpansion();
-            TabViewButtons[TabViewButtons.Count - 1].AnimateButtonMovementRight();
+            AnimateTabViewAddingNewTab();
         }
 
-        private int CalculatePosition()
+        private void AnimateTabViewAddingNewTab()
         {
-            int position = 0;
+            TabViewButtons[TabViewButtons.Count - 2].AnimateButtonExpansion();
+            TabViewButtons[TabViewButtons.Count - 1].AnimateButtonMovementRight(CalculatePosition());
+        }
+
+        private double CalculatePosition()
+        {
+            double position = (TabViewButtons.Count - 1) * (TabViewButtons[1].Width + 10);
             return position;
         }
 
         private void TabClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
-        }
+            TabButton tabButton = (sender as TabButton);
+            int senderId = tabButton._tabButtonId;
+            SwitchTab(senderId);
 
-        public void AddTabViewButton(TextBlock firstTabContent, ControlTemplate tabButtonTemplate)
-        {
-            Tab tabView = new Tab(firstTabContent, tabButtonTemplate, TabViewButtons.Count);
-            TabButton renamingButton = tabView.GetTabAsRenamingButton();
-            TabViewButtons.Insert(Collections.Count - 1, renamingButton);
-            //TabViewButtons.Add(renamingButton);
-            renamingButton.Click += TabClick;
+            foreach(TabButton button in TabViewButtons)
+            {
+                if (button != tabButton && button._tabButtonId != 0)
+                {
+                    button.AnimationHeightShrinking();
+                }
+            }
+
+            tabButton.AnimationHeightExpansion();
         }
 
         public void AddTabViewToMainWindow()
         {
-            EmptyCanvasChildren();
+            EmptyCanvasChildren(_canvasTabViewUI);
 
             double CanvasLeft = 0;
             double CanvasTop = 0;
@@ -86,38 +114,40 @@ namespace GraphEditor.GraphTabs
                 renamingButton.SetValue(Canvas.LeftProperty, CanvasLeft);
                 renamingButton.SetValue(Canvas.TopProperty, CanvasTop);
                 CanvasLeft += renamingButton.Width + Margin;
-                _canvas.Children.Add(renamingButton);
+                _canvasTabViewUI.Children.Add(renamingButton);
             }
         }
 
         public void SwitchTab(int targetId)
         {
+
             SaveCanvasChildren();
-            EmptyCanvasChildren();
+            EmptyCanvasChildren(_canvasMainCanvas);
             AddChildrenToCanvas(targetId);
             selectedTabId = targetId;
+
         }
 
         private void SaveCanvasChildren()
         {
-            Collections[selectedTabId].Clear();
+            Collections[selectedTabId - 1].Clear();
 
-            foreach(UIElement element in _canvas.Children)
+            foreach(UIElement element in _canvasMainCanvas.Children)
             {
-                Collections[selectedTabId].Add(element);
+                Collections[selectedTabId - 1].Add(element);
             }
         }
 
-        private void EmptyCanvasChildren()
+        private void EmptyCanvasChildren(Canvas canvas)
         {
-            _canvas.Children.RemoveRange(0, _canvas.Children.Count);
+            canvas.Children.Clear();
         }
 
         private void AddChildrenToCanvas(int id)
         {
             foreach (UIElement uiElement in Collections[id-1])
             {
-                _canvas.Children.Add(uiElement);
+                _canvasMainCanvas.Children.Add(uiElement);
             }
         }
 
