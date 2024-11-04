@@ -10,6 +10,7 @@ namespace GraphEditor
             Height = RenamingButtonConfiguration.ButtonHeight;
             Width = RenamingButtonConfiguration.ButtonWidth;
             VerticalAlignment = RenamingButtonConfiguration.ButtonVerticalAlignment;
+            FontWeight = RenamingButtonConfiguration.ButtonFontWeight;
             Template = buttonTemplate;
         }
 
@@ -18,6 +19,7 @@ namespace GraphEditor
             Height = RenamingButtonConfiguration.ButtonHeight;
             Width = RenamingButtonConfiguration.ButtonWidth;
             VerticalAlignment = RenamingButtonConfiguration.ButtonVerticalAlignment;
+            FontWeight = RenamingButtonConfiguration.ButtonFontWeight;
         }
     }
 }

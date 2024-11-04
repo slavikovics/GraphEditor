@@ -53,9 +53,9 @@ namespace GraphEditor
         private void AddTabView()
         {
             TextBlock textBlock = new TextBlock();
-            textBlock.Text = "graph";
-            TabView tabView = new TabView(textBlock, textBlock, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("ButtonTemplate"));
-            tabView.AddTabViewToMainWindow(TabViewCanvas);
+            textBlock.Text = "Graph 1";
+            TabView tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas);
+            tabView.AddTabViewToMainWindow();
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)

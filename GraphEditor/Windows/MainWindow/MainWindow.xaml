@@ -101,6 +101,44 @@
                 </DrawingImage>
             </Image.Source>
         </Image>
+
+        <ControlTemplate x:Key="DialogButtonTemplate" TargetType="Button">
+            <Grid>
+                <Border x:Name="BorderTemplate" BorderThickness="2" BorderBrush="#FFAEA3D8" CornerRadius="10" Background="MediumPurple"/>
+                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="MediumPurple" 
+                            Duration="0:0:0.2" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="DarkOrchid" 
+                            Duration="0:0:0.3" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="Purple" 
+                            Duration="0:0:0.1" />
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+        </ControlTemplate>
     </Window.Resources>
 
     <Window.Style>
