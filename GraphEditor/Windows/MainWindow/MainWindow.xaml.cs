@@ -102,7 +102,7 @@ namespace GraphEditor
                     {
                         _secondSelected = null;
                         return;
-                    } // edge can e only between two different nodes
+                    } // edge can be only between two different nodes
                     CreateEdge();
                 }
                 _firstSelected = null;
@@ -166,12 +166,16 @@ namespace GraphEditor
                 case OrientedSimple: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
                 default: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
+            RegisterEdge(edge);
+            return edge;
+        }
+
+        private void RegisterEdge(IEdgeable edge)
+        {
             AnimateGraphsManagerGridExpansion();
             InsertEdgeBorder(edge);
-            //GraphVisualTreeStackPanel.Children.Add(GenerateGraphManagerGraphBorder("", edge.ToString(), "edge"));
             edgeAnimationController.AddEdge(edge);
             edges.Add(edge);
-            return edge;
         }
 
         private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
@@ -197,31 +201,11 @@ namespace GraphEditor
             NonOrientedPopUp.Visibility = Visibility.Visible;
             OrientedPencilePopUp.Visibility = Visibility.Visible;
 
-            DoubleAnimation OrientedSimplePopUpTopAnimation = new DoubleAnimation();
-            OrientedSimplePopUpTopAnimation.From = ButtonAddPosition.Y;
-            OrientedSimplePopUpTopAnimation.To = ButtonAddPosition.Y - 45;
-            OrientedSimplePopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-
-            DoubleAnimation NonOrientedPopUpTopAnimation = new DoubleAnimation();
-            NonOrientedPopUpTopAnimation.From = ButtonAddPosition.Y;
-            NonOrientedPopUpTopAnimation.To = ButtonAddPosition.Y + 5;
-            NonOrientedPopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-
-
-            DoubleAnimation OrientedPencilePopUpTopAnimation = new DoubleAnimation();
-            OrientedPencilePopUpTopAnimation.From = ButtonAddPosition.Y;
-            OrientedPencilePopUpTopAnimation.To = ButtonAddPosition.Y + 55;
-            OrientedPencilePopUpTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-
-            DoubleAnimation EdgePopUpLeftAnimation = new DoubleAnimation();
-            EdgePopUpLeftAnimation.From = -50;
-            EdgePopUpLeftAnimation.To = 0;
-            EdgePopUpLeftAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-
-            DoubleAnimation arrowTypesWidthAnimation = new DoubleAnimation();
-            arrowTypesWidthAnimation.From = 3;
-            arrowTypesWidthAnimation.To = 40;
-            arrowTypesWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(ButtonAddPosition);
+            DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(ButtonAddPosition);
+            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(ButtonAddPosition);
+            DoubleAnimation EdgePopUpLeftAnimation = MainWindowAnimator.BuildEdgePopUpLeftAnimation();
+            DoubleAnimation arrowTypesWidthAnimation = MainWindowAnimator.BuildArrowTypesWidthAnimation();
 
             OrientedSimplePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
             OrientedSimplePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
@@ -298,10 +282,7 @@ namespace GraphEditor
 
         private void AnimateGraphsManagerGridExpansion()
         {
-            DoubleAnimation gridAnimation = new DoubleAnimation();
-            gridAnimation.To = 88 + GraphVisualTreeStackPanel.Children.Count * 38;
-            gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
-
+            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(GraphVisualTreeStackPanel);
             if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;      
             GraphsManagerGrid.BeginAnimation(HeightProperty, gridAnimation);
         }
@@ -357,7 +338,6 @@ namespace GraphEditor
                     edgeAnimationController.EdgesDragged(dragDeltaX, dragDeltaY);
                 }
             }
-
         }
 
         private void ButtonGraph_Click(object sender, RoutedEventArgs e)
@@ -470,9 +450,7 @@ namespace GraphEditor
                 }
             }
 
-
             GraphVisualTreeStackPanel.Children.Remove(borderToRemove);
-
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -484,10 +462,10 @@ namespace GraphEditor
 
         public void OnEdgeSelected(object sender, EventArgs e)
         {
-            IEdgeable edgeable = sender as IEdgeable;
+            IEdgeable edge = sender as IEdgeable;
             if (states.shouldBeRemoved)
             {
-                RemoveEdge(edgeable);
+                RemoveEdge(edge);
             }
             _selectedEdge = sender as IEdgeable;
         }

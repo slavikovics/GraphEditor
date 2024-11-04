@@ -102,6 +102,7 @@
     <Compile Include="GraphsManagerControls\RenamingButton.cs" />
     <Compile Include="GraphsManagerControls\RenamingButtonConfiguration.cs" />
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
+    <Compile Include="Windows\MainWindow\MainWindowAnimator.cs" />
     <Compile Include="Windows\MainWindow\MainWindowStates.cs" />
     <Compile Include="Windows\RenamingWindow.xaml.cs">
       <DependentUpon>RenamingWindow.xaml</DependentUpon>
