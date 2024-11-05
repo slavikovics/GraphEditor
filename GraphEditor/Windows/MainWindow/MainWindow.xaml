@@ -79,6 +79,11 @@
                 <Image x:Name="EdgeOrientedArrow" Visibility="Hidden" 
                        Source="{StaticResource EdgeOrientedArrow}"/>
 
+            </Canvas>
+
+            <Canvas x:Name="ArrowTypesCanvas"
+                    Margin="80 0 0 0">
+
                 <Button x:Name="OrientedSimplePopUp" 
                         Template="{StaticResource ButtonTemplate}" 
                         Content="{StaticResource OrientedSimplePopUp}"
@@ -95,7 +100,8 @@
                         MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
                         Click="OnOrientedSimplePopUpClick"/>
 
-                <Button Canvas.Top="100" x:Name="OrientedPencilPopUp" 
+                <Button Canvas.Top="100" 
+                        x:Name="OrientedPencilPopUp" 
                         Template="{StaticResource ButtonTemplate}" 
                         Content="{StaticResource OrientedPencilPopUp}"
                         BorderThickness="0"
@@ -130,7 +136,7 @@
                         Click="OnNonOrientedPopUpClick"/>
 
             </Canvas>
-            
+
             <Grid Height="630">
                 
                 <Grid.RowDefinitions>

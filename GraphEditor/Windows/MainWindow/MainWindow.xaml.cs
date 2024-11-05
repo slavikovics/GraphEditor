@@ -202,7 +202,7 @@ namespace GraphEditor
 
             DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(ButtonAddPosition);
             DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(ButtonAddPosition);
-            DoubleAnimation OrientedPencilPopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilPopUpTopAnimation(ButtonAddPosition);
+            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(ButtonAddPosition);
             DoubleAnimation EdgePopUpLeftAnimation = MainWindowAnimator.BuildEdgePopUpLeftAnimation();
             DoubleAnimation arrowTypesWidthAnimation = MainWindowAnimator.BuildArrowTypesWidthAnimation();
 
@@ -217,7 +217,7 @@ namespace GraphEditor
 
             OrientedSimplePopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
             NonOrientedPopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
-            OrientedPencilPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilPopUpTopAnimation);
+            OrientedPencilPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
 
             OrientedSimplePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
             NonOrientedPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
@@ -376,6 +376,7 @@ namespace GraphEditor
 
         private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
         {
+            HidePopUpMenus();
             MainWindowStates.MoveToRemovingState();
             _firstSelected = null;
             _secondSelected = null;
