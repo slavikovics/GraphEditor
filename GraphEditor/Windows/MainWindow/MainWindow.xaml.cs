@@ -136,7 +136,7 @@ namespace GraphEditor
                 }
                 if (_nodeAnimationController == null)
                 {
-                    _nodeAnimationController = new NodeAnimationController();
+                    _nodeAnimationController = new NodeAnimationController(MainCanvas);
                 }
                 _nodeAnimationController.AddNode(node);
                 _nodeId++;

@@ -62,9 +62,9 @@ namespace GraphEditor
         {
             (Ellipse.Content as Image).MouseDown += OnMouseDown;
             _window.MouseMove += OnMouseMove;
-            _window.OnKillAllSelections += Unselect;
+            _window.OnKillAllSelections += OnUnselect;
             _window.OnMagicWandOrder += OnMagicWondOrder;
-            Ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
+            Ellipse.LayoutUpdated += OnEllipseLayoutUpdated;
         }
 
         protected void PositionEllipse(double canvasLeft, double canvasTop)
@@ -84,7 +84,7 @@ namespace GraphEditor
             TextBlockSetPosTop(NodeCalculations.CalculateTextBlockCanvasTop(this, NodeConfiguration.EllipseDimensions));
         }
 
-        private void Unselect()
+        private void OnUnselect()
         {
             _isSelected = false;
         }
@@ -165,6 +165,8 @@ namespace GraphEditor
 
         protected void OnMagicWondOrder()
         {
+            if (!_canvas.Children.Contains(Ellipse)) return;
+
             double leftTarget = _random.Next(100) - 50;
             double topTarget = _random.Next(100) - 50;
 
@@ -195,7 +197,7 @@ namespace GraphEditor
             Ellipse.BeginAnimation(Button.HeightProperty, nodeHeightAnimation);
         }
 
-        private void Ellipse_LayoutUpdated(object sender, EventArgs e)
+        private void OnEllipseLayoutUpdated(object sender, EventArgs e)
         {
             MoveTextBlock();
             OnNodesAnimated?.Invoke();
@@ -216,7 +218,7 @@ namespace GraphEditor
         {
             _canvas.Children.Remove(_textBlock);
             _window.MouseMove -= OnMouseMove;
-            _window.OnKillAllSelections -= Unselect;
+            _window.OnKillAllSelections -= OnUnselect;
             _window.OnMagicWandOrder -= OnMagicWondOrder;
             _canvas.Children.Remove(Ellipse);
             OnButtonSelected -= _window.OnNodeSelected;

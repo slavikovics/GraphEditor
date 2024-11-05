@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace GraphEditor
 {
@@ -9,10 +10,12 @@ namespace GraphEditor
 
         private double _dragDeltaX;
         private double _dragDeltaY;
+        private Canvas _canvas;
 
-        public NodeAnimationController()
+        public NodeAnimationController(Canvas canvas)
         {
             _nodes = new List<Node>();
+            _canvas = canvas;
         }
 
         public void SetDragParameters(double dragDeltaX, double dragDeltaY)
@@ -25,6 +28,7 @@ namespace GraphEditor
         {
             foreach (Node node in _nodes)
             {
+                if (!_canvas.Children.Contains(node.Ellipse)) continue;
                 node.Ellipse.SetValue(Canvas.TopProperty, (double)node.GetPosTop() + _dragDeltaY);
                 node.Ellipse.SetValue(Canvas.LeftProperty, (double)node.GetPosLeft() + _dragDeltaX);
             }
