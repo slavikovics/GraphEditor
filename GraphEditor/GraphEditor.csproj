@@ -80,16 +80,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EdgesAndNodes\Edges\EdgeAnimator.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgeBase.cs" />
+    <Compile Include="EdgesAndNodes\Edges\Edge.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeCalculations.cs" />
     <Compile Include="EdgesAndNodes\Edges\EdgeConfiguration.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgeNonOriented\EdgeNonOrientedConfiguration.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgesOriented\ArrowConfiguration.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgesOriented\EdgeOriented.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgeNonOriented\EdgeNonOriented.cs" />
+    <Compile Include="EdgesAndNodes\Edges\NonOrientedEdge\NonOrientedEdgeConfiguration.cs" />
+    <Compile Include="EdgesAndNodes\Edges\OrientedEdges\ArrowConfiguration.cs" />
+    <Compile Include="EdgesAndNodes\Edges\OrientedEdges\OrientedEdge.cs" />
+    <Compile Include="EdgesAndNodes\Edges\NonOrientedEdge\NonOrientedEdge.cs" />
     <Compile Include="AnimationControllers\EdgeAnimationController.cs" />
-    <Compile Include="EdgesAndNodes\Edges\EdgesOriented\EdgeOrientedConfiguration.cs" />
-    <Compile Include="EdgesAndNodes\Edges\IEdgeable.cs" />
+    <Compile Include="EdgesAndNodes\Edges\OrientedEdges\OrientedEdgeConfiguration.cs" />
+    <Compile Include="EdgesAndNodes\Edges\IEdge.cs" />
     <Compile Include="EdgesAndNodes\Nodes\HiddenNode.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeAnimator.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeCalculations.cs" />

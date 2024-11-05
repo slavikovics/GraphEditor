@@ -7,7 +7,7 @@ namespace GraphEditor.Windows.MainWindow
 {
     internal class BordersInserter
     {
-        public static void InsertEdgeBorder(IEdgeable edge, GraphManager graphsManager, string selectedEdgeType, StackPanel GraphVisualTreeStackPanel,
+        public static void InsertEdgeBorder(IEdge edge, GraphManager graphsManager, string selectedEdgeType, StackPanel GraphVisualTreeStackPanel,
             string NonOriented)
         {
             Border edgeBorder = graphsManager.AddEdge(edge, edge.GetNodesDependencies());

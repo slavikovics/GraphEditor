@@ -31,14 +31,14 @@ namespace GraphEditor
         private string selectedEdgeType = OrientedSimple;
 
         List<Node> nodes = new List<Node>();
-        List<IEdgeable> edges = new List<IEdgeable>();
+        List<IEdge> edges = new List<IEdge>();
 
         Ellipse ellipse;
 
         private Point pointerPosition;
         private Node _firstSelected;
         private Node _secondSelected;
-        private IEdgeable _selectedEdge;
+        private IEdge _selectedEdge;
         private EdgeAnimationController edgeAnimationController;
         private NodeAnimationController nodeAnimationController;
         private GraphManager graphsManager;
@@ -165,21 +165,21 @@ namespace GraphEditor
             }    
         }
 
-        private IEdgeable CreateEdge()
+        private IEdge CreateEdge()
         {
-            IEdgeable edge;
+            IEdge edge;
 
             switch(selectedEdgeType)
             {
-                case NonOriented: edge = new EdgeNonOriented(_firstSelected, _secondSelected, this, MainCanvas); break;
-                case OrientedSimple: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
-                default: edge = new EdgeOriented(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
+                case NonOriented: edge = new NonOrientedEdge(_firstSelected, _secondSelected, this, MainCanvas); break;
+                case OrientedSimple: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
+                default: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
             RegisterEdge(edge);
             return edge;
         }
 
-        private void RegisterEdge(IEdgeable edge)
+        private void RegisterEdge(IEdge edge)
         {
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
             BordersInserter.InsertEdgeBorder(edge, graphsManager, selectedEdgeType, GraphVisualTreeStackPanel, NonOriented);
@@ -367,7 +367,7 @@ namespace GraphEditor
             BordersRemover.RemoveAllBordersForNode(nodeToRemove._id, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
 
-            foreach (IEdgeable edge in edges)
+            foreach (IEdge edge in edges)
             {
                 if (edge.GetFirstNodeId() == nodeToRemove._id || edge.GetSecondNodeId() == nodeToRemove._id)
                 {
@@ -376,7 +376,7 @@ namespace GraphEditor
             }
         }
 
-        private void RemoveEdge(IEdgeable edgeToRemove)
+        private void RemoveEdge(IEdge edgeToRemove)
         {
             edgeToRemove.Remove();
             edgeAnimationController.RemoveEdge(edgeToRemove);
@@ -393,12 +393,12 @@ namespace GraphEditor
 
         public void OnEdgeSelected(object sender, EventArgs e)
         {
-            IEdgeable edge = sender as IEdgeable;
+            IEdge edge = sender as IEdge;
             if (states.shouldBeRemoved)
             {
                 RemoveEdge(edge);
             }
-            _selectedEdge = sender as IEdgeable;
+            _selectedEdge = sender as IEdge;
         }
     }
 }

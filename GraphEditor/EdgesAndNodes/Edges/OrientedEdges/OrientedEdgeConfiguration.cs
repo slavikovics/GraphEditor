@@ -1,13 +1,16 @@
 ﻿using System.Windows.Media;
 
-namespace GraphEditor.EdgesAndNodes.Edges
+namespace GraphEditor.EdgesAndNodes.Edges.EdgesOriented
 {
-    internal class EdgeNonOrientedConfiguration : EdgeConfiguration
+    internal class OrientedEdgeConfiguration : EdgeConfiguration
     {
-        public EdgeNonOrientedConfiguration()
+        public int PencileHeight;
+
+        public OrientedEdgeConfiguration()
         {
             Margin = 4;
-            Height = 10;
+            Height = 4;
+            PencileHeight = 12;
             RadiusX = 4;
             RadiusY = 4;
             StrokeColor = Colors.MediumPurple;

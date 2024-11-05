@@ -9,37 +9,37 @@ namespace GraphEditor
 {
     internal class EdgeAnimationController
     {
-        private List<IEdgeable> edges;
+        private List<IEdge> edges;
         private Node _controlNode;
 
         public EdgeAnimationController(Node controlNode)
         {
-            edges = new List<IEdgeable>();
+            edges = new List<IEdge>();
             _controlNode = controlNode;
             _controlNode.OnNodesAnimated += OnNodesAnimated;
         }
 
         private void OnNodesAnimated()
         {
-            foreach (IEdgeable edge in edges)
+            foreach (IEdge edge in edges)
             {
                 edge.EdgePositioning(true);
             }
         }
 
-        public void AddEdge(IEdgeable edge)
+        public void AddEdge(IEdge edge)
         {
             edges.Add(edge);
         }
 
-        public void RemoveEdge(IEdgeable edge)
+        public void RemoveEdge(IEdge edge)
         {
             edges.Remove(edge);
         }
 
         public void EdgesDragged(double dragDeltaX, double dragDeltaY)
         {
-            foreach (IEdgeable edge in edges)
+            foreach (IEdge edge in edges)
             {
                 edge.EdgeDragged(dragDeltaX, dragDeltaY);
             }

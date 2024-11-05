@@ -12,20 +12,20 @@ using System.Windows.Shapes;
 
 namespace GraphEditor
 {
-    internal class EdgeOriented : EdgeBase
+    internal class OrientedEdge : Edge
     {
         public const int EdgeOffsetLeft = 5;
 
         private Image _arrow;
         private bool _isPencile;
-        EdgeOrientedConfiguration edgeConfiguration;
+        OrientedEdgeConfiguration edgeConfiguration;
 
         private const int ArrowOffset = 5;
 
-        public EdgeOriented(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow, bool isPencile) : base (firstNode, secondNode, window, mainCanvas)
+        public OrientedEdge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow, bool isPencile) : base (firstNode, secondNode, window, mainCanvas)
         {
             _isPencile = isPencile;
-            edgeConfiguration = new EdgeOrientedConfiguration();
+            edgeConfiguration = new OrientedEdgeConfiguration();
             SetUpEdgeVisualRepresentation();
             SetUpArrowVisualRepresentation(arrow.Source);
         }
@@ -34,22 +34,22 @@ namespace GraphEditor
         {
             if (_isPencile)
             {
-                edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
-                edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
+                _edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
+                _edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
                 edgeConfiguration.Height = edgeConfiguration.PencileHeight;
             }
             else
             {
-                edgeVisualRepresentation.Fill = edgeBrush;
+                _edgeVisualRepresentation.Fill = _edgeBrush;
             }
-            _mainCanvas.Children.Insert(0, edgeVisualRepresentation);
-            edgeVisualRepresentation.Height = edgeConfiguration.Height;
-            edgeVisualRepresentation.Width = edgeConfiguration.Width;
-            edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
-            edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
-            edgeBrush = new SolidColorBrush(edgeConfiguration.StrokeColor);
-            edgeVisualRepresentation.Stroke = edgeBrush;
-            edgeVisualRepresentation.StrokeThickness = edgeConfiguration.StrokeThickness;
+            _mainCanvas.Children.Insert(0, _edgeVisualRepresentation);
+            _edgeVisualRepresentation.Height = edgeConfiguration.Height;
+            _edgeVisualRepresentation.Width = edgeConfiguration.Width;
+            _edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
+            _edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
+            _edgeBrush = new SolidColorBrush(edgeConfiguration.StrokeColor);
+            _edgeVisualRepresentation.Stroke = _edgeBrush;
+            _edgeVisualRepresentation.StrokeThickness = edgeConfiguration.StrokeThickness;
         }
 
         private void SetUpArrowVisualRepresentation(ImageSource arrowSource)
@@ -65,19 +65,19 @@ namespace GraphEditor
         protected override void EdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             ColorAnimation edgeHoverAnimation = EdgeAnimator.BuildEdgeHoverAnimationLeavePhase(edgeConfiguration);
-            edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
+            _edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
 
         protected override void EdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             ColorAnimation edgeHoverAnimation = EdgeAnimator.BuildEdgeHoverAnimationEnterPhase();
-            edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
+            _edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
 
         protected override void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
         {
-            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, edgeVisualRepresentation, ArrowOffset);       
-            edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);       
+            _edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
 
             originLeft = EdgeCalculations.CalculateArrowRenderTransformOriginLeft(_arrow, _firstNode);
             _arrow.RenderTransformOrigin = new Point(originLeft, 0.5);
@@ -103,44 +103,44 @@ namespace GraphEditor
 
             if (isInGraph)
             {
-                if (Angle == angle) return;
+                if (_angle == angle) return;
                 if (edgeConfiguration.Width == width) return;
             }
 
-            edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
+            _edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
 
             if (width >= EdgeOffsetLeft)
             {
-                edgeVisualRepresentation.Width = width;
+                _edgeVisualRepresentation.Width = width;
                 _arrow.Visibility = Visibility.Visible;
             }
             else if (isInGraph)
             {
-                edgeVisualRepresentation.Width = 0;
+                _edgeVisualRepresentation.Width = 0;
                 _arrow.Visibility = Visibility.Hidden;
                 return;
             }
 
             edgeConfiguration.Width = width;
-            Angle = angle;
+            _angle = angle;
             
             _offsetTop = edgeConfiguration.Height / 2;
 
-            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, edgeVisualRepresentation, ArrowOffset);
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);
 
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeftWithArrow(_firstNode, ArrowOffset) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2 );
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _offsetTop);
+            _edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeftWithArrow(_firstNode, ArrowOffset) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2 );
+            _edgeVisualRepresentation.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _offsetTop);
 
             _arrow.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeftWithArrow(_firstNode, ArrowOffset) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2 - ArrowOffset); //
             _arrow.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _arrow.Height / 2);
 
-            edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
+            _edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
 
             originLeft = EdgeCalculations.CalculateArrowRenderTransformOriginLeft(_arrow, _firstNode);
             _arrow.RenderTransformOrigin = new Point(originLeft, 0.5); 
             RotateTransform rotateTransform = new RotateTransform(EdgeCalculations.CalculateAngle(_firstNode, _secondNode));
 
-            edgeVisualRepresentation.RenderTransform = rotateTransform;
+            _edgeVisualRepresentation.RenderTransform = rotateTransform;
 
             RotateTransform rotateTransformArrow = new RotateTransform(EdgeCalculations.CalculateAngle(_firstNode, _secondNode));
             _arrow.RenderTransform = rotateTransformArrow;
@@ -148,8 +148,8 @@ namespace GraphEditor
 
         public override void EdgeDragged(double dragDeltaX, double dragDeltaY)
         {
-            edgeVisualRepresentation.SetValue(Canvas.LeftProperty, (double)edgeVisualRepresentation.GetValue(Canvas.LeftProperty) + dragDeltaX);
-            edgeVisualRepresentation.SetValue(Canvas.TopProperty, (double)edgeVisualRepresentation.GetValue(Canvas.TopProperty) + dragDeltaY);
+            _edgeVisualRepresentation.SetValue(Canvas.LeftProperty, (double)_edgeVisualRepresentation.GetValue(Canvas.LeftProperty) + dragDeltaX);
+            _edgeVisualRepresentation.SetValue(Canvas.TopProperty, (double)_edgeVisualRepresentation.GetValue(Canvas.TopProperty) + dragDeltaY);
 
             _arrow.SetValue(Canvas.LeftProperty, (double)_arrow.GetValue(Canvas.LeftProperty) + dragDeltaX);
             _arrow.SetValue(Canvas.TopProperty, (double)_arrow.GetValue(Canvas.TopProperty) + dragDeltaY);
@@ -159,7 +159,7 @@ namespace GraphEditor
         {
             DoubleAnimation edgeWidthAnimation = EdgeAnimator.BuildEdgeCreationAnimation(edgeConfiguration);
             edgeWidthAnimation.Completed += EdgeWidthAnimationCompleted;
-            edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
+            _edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
         }
 
         public override string ToString()
@@ -178,7 +178,7 @@ namespace GraphEditor
 
         public override void Remove()
         {
-            _mainCanvas.Children.Remove(edgeVisualRepresentation);
+            _mainCanvas.Children.Remove(_edgeVisualRepresentation);
             _mainCanvas.Children.Remove(_arrow);
         }
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GraphEditor.EdgesAndNodes
 {
-    internal interface IEdgeable : IRenamable
+    internal interface IEdge : IRenamable
     {
         void OnNodePositionChanged(object sender, EventArgs e);
 

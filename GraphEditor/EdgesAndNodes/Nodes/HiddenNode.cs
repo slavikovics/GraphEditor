@@ -11,7 +11,7 @@ namespace GraphEditor.EdgesAndNodes.Nodes
 {
     internal class HiddenNode : Node
     {
-        public HiddenNode(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id, IEdgeable edge) : base(CanvasLeft, CanvasTop, parent, window, id)
+        public HiddenNode(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id, IEdge edge) : base(CanvasLeft, CanvasTop, parent, window, id)
         {
             HideNode();
             window.MagicWandOrder -= OnMagicWondOrder;
