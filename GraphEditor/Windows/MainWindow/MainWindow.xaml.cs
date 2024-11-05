@@ -132,7 +132,7 @@ namespace GraphEditor
 
                 if (_edgeAnimationController == null)
                 {
-                    _edgeAnimationController = new EdgeAnimationController(node);
+                    _edgeAnimationController = new EdgeAnimationController(node, MainCanvas);
                 }
                 if (_nodeAnimationController == null)
                 {

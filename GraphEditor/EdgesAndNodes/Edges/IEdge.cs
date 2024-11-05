@@ -1,6 +1,7 @@
 ﻿using GraphEditor.GraphsManagerControls;
 using System;
 using System.Collections.Generic;
+using System.Windows.Shapes;
 
 namespace GraphEditor.EdgesAndNodes
 {
@@ -19,6 +20,8 @@ namespace GraphEditor.EdgesAndNodes
         void Remove();
 
         List<int> GetNodesDependencies();
+
+        Rectangle GetEdgeVisualRepresentation();
 
     }
 }
