@@ -2,10 +2,8 @@
 using GraphEditor.GraphsManagerControls;
 using GraphEditor.Windows.MainWindow;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace GraphEditor.GraphsManager
 {
@@ -15,27 +13,27 @@ namespace GraphEditor.GraphsManager
 
         private List<IEdge> _edges;
 
-        public ControlTemplate _buttonTemplate;
+        public ControlTemplate ButtonTemplate;
 
-        public Image _buttonAddNodeContent;
+        public Image ButtonAddNodeContent;
 
-        public Image _buttonAddEdgeContent;
+        public Image ButtonAddEdgeContent;
 
-        public Image _buttonAddGraphContent;
+        public Image ButtonAddGraphContent;
 
         public GraphManager(ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonAddGraphContent) 
         {
-            _buttonTemplate = buttonTemplate;
-            _buttonAddNodeContent = buttonAddNodeContent;
-            _buttonAddEdgeContent = buttonAddEdgeContent;
-            _buttonAddGraphContent = buttonAddGraphContent;
+            ButtonTemplate = buttonTemplate;
+            ButtonAddNodeContent = buttonAddNodeContent;
+            ButtonAddEdgeContent = buttonAddEdgeContent;
+            ButtonAddGraphContent = buttonAddGraphContent;
             _nodes = new List<Node>();
             _edges = new List<IEdge>();
         }
 
         public GraphItemBorder AddNode(Node node, List<int> nodesDependencies)
         {
-            GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node._id.ToString(), node.ToString(), "node", node, nodesDependencies);
+            GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node.Id.ToString(), node.ToString(), "node", node, nodesDependencies);
             _nodes.Add(node);
             return border;
         }
@@ -55,16 +53,16 @@ namespace GraphEditor.GraphsManager
         private GraphItemBorder GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable, List<int> nodesDependencies)
         {
             GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType,
-                _buttonTemplate, _buttonAddNodeContent, _buttonAddEdgeContent, _buttonAddGraphContent, renamable, nodesDependencies);
+                ButtonTemplate, ButtonAddNodeContent, ButtonAddEdgeContent, ButtonAddGraphContent, renamable, nodesDependencies);
 
             return graphItemBorder;
         }
 
-        public static void AnimateGraphsManagerGridExpansion(StackPanel GraphVisualTreeStackPanel, Grid GraphsManagerGrid) 
+        public static void AnimateGraphsManagerGridExpansion(StackPanel graphVisualTreeStackPanel, Grid graphsManagerGrid) 
         {
-            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(GraphVisualTreeStackPanel);
-            if (gridAnimation.To >= 600 && GraphsManagerGrid.Height < gridAnimation.To) return;
-            GraphsManagerGrid.BeginAnimation(Grid.HeightProperty, gridAnimation);
+            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(graphVisualTreeStackPanel);
+            if (gridAnimation.To >= 600 && graphsManagerGrid.Height < gridAnimation.To) return;
+            graphsManagerGrid.BeginAnimation(Grid.HeightProperty, gridAnimation);
         }
     }
 }

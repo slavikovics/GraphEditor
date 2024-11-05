@@ -4,24 +4,24 @@ namespace GraphEditor.EdgesAndNodes.Nodes
 {
     internal class NodeCalculations
     {
-        public static double CalculateEllipsePositionLeft(double CanvasLeft, double UILeftSize, double EllipseDimensions)
+        public static double CalculateEllipsePositionLeft(double canvasLeft, double uiLeftSize, double ellipseDimensions)
         {
-            return CanvasLeft - UILeftSize - EllipseDimensions / 2;
+            return canvasLeft - uiLeftSize - ellipseDimensions / 2;
         }
 
-        public static double CalculateEllipsePositionTop(double CanvasTop, double UITopSize, double EllipseDimensions)
+        public static double CalculateEllipsePositionTop(double canvasTop, double uiTopSize, double ellipseDimensions)
         {
-            return CanvasTop - UITopSize - EllipseDimensions / 2;
+            return canvasTop - uiTopSize - ellipseDimensions / 2;
         }
 
-        public static double CalculateTextBlockCanvasLeft(Node node, TextBlock _textBlock, int EllipseDimensions)
+        public static double CalculateTextBlockCanvasLeft(Node node, TextBlock textBlock, int ellipseDimensions)
         {
-            return node.GetPosLeft() - (_textBlock.Width - EllipseDimensions) / 2;
+            return node.GetPosLeft() - (textBlock.Width - ellipseDimensions) / 2;
         }
 
-        public static double CalculateTextBlockCanvasTop(Node node, int EllipseDimensions)
+        public static double CalculateTextBlockCanvasTop(Node node, int ellipseDimensions)
         {
-            return node.GetPosTop() + EllipseDimensions + 8;
+            return node.GetPosTop() + ellipseDimensions + 8;
         }
     }
 }

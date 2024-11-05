@@ -19,6 +19,13 @@ namespace GraphEditor.EdgesAndNodes.Edges
         protected Rectangle _edgeVisualRepresentation;
         protected Brush _edgeBrush;
 
+        public enum EdgeTypes
+        {
+            OrientedSimple,
+            OrientedPencil,
+            NonOriented
+        }
+
         public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {
             _firstNode = firstNode;
@@ -34,31 +41,31 @@ namespace GraphEditor.EdgesAndNodes.Edges
         {
             _firstNode.OnNodeMoved += OnNodePositionChanged;
             _secondNode.OnNodeMoved += OnNodePositionChanged;
-            _edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
-            _edgeVisualRepresentation.MouseEnter += EdgeVisualRepresentationMouseEnter;
-            _edgeVisualRepresentation.MouseLeave += EdgeVisualRepresentationMouseLeave;
-            _edgeVisualRepresentation.MouseDown += EdgeVisualRepresentationMouseDown;
-            _edgeVisualRepresentation.Loaded += EdgeVisualRepresentationLoaded;
+            _edgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;
+            _edgeVisualRepresentation.MouseEnter += OnEdgeVisualRepresentationMouseEnter;
+            _edgeVisualRepresentation.MouseLeave += OnEdgeVisualRepresentationMouseLeave;
+            _edgeVisualRepresentation.MouseDown += OnEdgeVisualRepresentationMouseDown;
+            _edgeVisualRepresentation.Loaded += OnEdgeVisualRepresentationLoaded;
         }
 
-        protected void EdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        protected void OnEdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _mainWindow.OnEdgeSelected(this, e);
         }
 
-        protected virtual void EdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        protected virtual void OnEdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
         }
 
-        protected virtual void EdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        protected virtual void OnEdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
         }
 
-        protected virtual void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
+        protected virtual void OnEdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
         {
         }
 
-        protected virtual void EdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
+        protected virtual void OnEdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
         {
         }
 
@@ -80,22 +87,22 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public int GetFirstNodeId()
         {
-            return _firstNode._id;
+            return _firstNode.Id;
         }
 
         public int GetSecondNodeId()
         {
-            return _secondNode._id;
+            return _secondNode.Id;
         }
 
         protected void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
-            _edgeVisualRepresentation.LayoutUpdated += EdgeVisualRepresentationRenderTransformUpdate;
+            _edgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;
         }
 
         public override string ToString()
         {
-            return "Edge " + _firstNode._id + " - " + _secondNode._id;
+            return "Edge " + _firstNode.Id + " - " + _secondNode.Id;
         }
 
         public virtual void Rename(string newName)

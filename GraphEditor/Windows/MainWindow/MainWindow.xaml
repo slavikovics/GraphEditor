@@ -9,8 +9,8 @@
         Background="#FF221B2F"
         MinHeight="700"
         MinWidth="1280" 
-        Title="Graph editor" Height="700" Width="800" Loaded="Window_Loaded"
-        MouseDown="Canvas_MouseDown" MouseUp="Window_MouseUp" MouseMove="WindowMouseMove" MouseLeftButtonDown="Window_MouseLeftButtonDown" SizeChanged="Window_SizeChanged">
+        Title="Graph editor" Height="700" Width="800" Loaded="OnWindowLoaded"
+        MouseDown="OnCanvasMouseDown" MouseUp="OnWindowMouseUp" MouseMove="OnWindowMouseMove" MouseLeftButtonDown="OmWindowMouseLeftButtonDown" SizeChanged="OnWindowSizeChanged">
 
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
@@ -216,11 +216,11 @@
                         Padding="0" 
                         Height="10" 
                         Width="10" 
-                        MouseEnter="Button_MouseEnter" 
-                        MouseLeave="Button_MouseLeave" 
-                        MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                        MouseLeftButtonUp="Button_MouseLeftButtonUp"
-                        Click="OrientedSimplePopUp_Click">
+                        MouseEnter="OnButtonMouseEnter" 
+                        MouseLeave="OnButtonMouseLeave" 
+                        MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                        Click="OnOrientedSimplePopUpClick">
 
                     <Image>
                         <Image.Source>
@@ -264,11 +264,11 @@
                        Padding="0" 
                        Height="10" 
                        Width="10" 
-                       MouseEnter="Button_MouseEnter" 
-                       MouseLeave="Button_MouseLeave" 
-                       MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                       MouseLeftButtonUp="Button_MouseLeftButtonUp"
-                       Click="OrientedPencilePopUp_Click">
+                       MouseEnter="OnButtonMouseEnter" 
+                       MouseLeave="OnButtonMouseLeave" 
+                       MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                       MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                       Click="OnOrientedPencilPopUpClick">
 
                     <Image>
                         <Image.Source>
@@ -315,11 +315,11 @@
        Padding="0" 
        Height="10" 
        Width="10" 
-       MouseEnter="Button_MouseEnter" 
-       MouseLeave="Button_MouseLeave" 
-       MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-       MouseLeftButtonUp="Button_MouseLeftButtonUp"
-       Click="NonOrientedPopUp_Click">
+       MouseEnter="OnButtonMouseEnter" 
+       MouseLeave="OnButtonMouseLeave" 
+       MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+       MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+       Click="OnNonOrientedPopUpClick">
                     <Image>
                         <Image.Source>
                             <DrawingImage>
@@ -370,10 +370,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonSelect_Click">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnButtonSelectClick">
                     <Image>
                         <Image.Source>
                             <DrawingImage>
@@ -409,10 +409,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonAddNode_Click">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnButtonAddNodeClick">
                     <Button.Content>
                         <Image>
                             <Image.Source>
@@ -455,10 +455,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonAddEdge_Click">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnButtonAddEdgeClick">
 
                     <Image>
                         <Image.Source>
@@ -501,11 +501,11 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter"
-                MouseLeave="Button_MouseLeave"
-                MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                MouseLeftButtonUp="Button_MouseLeftButtonUp"
-                Click="DeleteButton_Click">
+                MouseEnter="OnButtonMouseEnter"
+                MouseLeave="OnButtonMouseLeave"
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                Click="OnDeleteButtonClick">
 
                     <Image>
                         <Image.Source>
@@ -543,10 +543,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60"
-                MouseEnter="Button_MouseEnter"
-                MouseLeave="Button_MouseLeave"
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                MouseEnter="OnButtonMouseEnter"
+                MouseLeave="OnButtonMouseLeave"
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
 
                     <Image>
                         <Image.Source>
@@ -602,10 +602,10 @@
                 Padding="0"
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
 
                     <Image>
                         <Image.Source>
@@ -651,10 +651,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter"
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Content="{DynamicResource ButtonGraphImage}" Click="ButtonGraph_Click"/>
+                MouseEnter="OnButtonMouseEnter"
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Content="{DynamicResource ButtonGraphImage}" Click="OnButtonGraphClick"/>
 
                 <Button Template="{StaticResource ButtonTemplate}" 
                 BorderThickness="0" 
@@ -664,10 +664,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave" 
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave" 
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
 
                     <Image>
                         <Image.Source>
@@ -721,10 +721,10 @@
                 Padding="0" 
                 Height="60" 
                 Width="60" 
-                MouseEnter="Button_MouseEnter" 
-                MouseLeave="Button_MouseLeave"
-                MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                MouseLeftButtonUp="Button_MouseLeftButtonUp" Click="ButtonMagicWond_Click">
+                MouseEnter="OnButtonMouseEnter" 
+                MouseLeave="OnButtonMouseLeave"
+                MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnButtonMagicWondClick">
 
                     <Image>
                         <Image.Source>
@@ -776,7 +776,7 @@
 
                 </Button>
             </Grid>
-            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="88" VerticalAlignment="Top"  Grid.Column="2" MouseDown="GraphsManagerGrid_MouseDown">
+            <Grid Name="GraphsManagerGrid"  Margin="0 20 20 0" Height="88" VerticalAlignment="Top"  Grid.Column="2" MouseDown="OnGraphsManagerGridMouseDown">
                 <Border Background="#E59370DB" CornerRadius="20" BorderThickness="4" BorderBrush="#FFAEA3D8">
                     <ScrollViewer x:Name="GraphsManagerScrollViewer" VerticalScrollBarVisibility="Hidden"  Margin="0 5 0 5">
 
@@ -807,11 +807,11 @@
                     Padding="0" 
                     Height="20" 
                     Width="20" 
-                    Click="CollapseWindowButton_Click"
-                    MouseEnter="Button_MouseEnter"
-                    MouseLeave="Button_MouseLeave"
-                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
+                    Click="OnCollapseWindowButtonClick"
+                    MouseEnter="OnButtonMouseEnter"
+                    MouseLeave="OnButtonMouseLeave"
+                    MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                    MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
                 <Image>
                     <Image.Source>
                         <DrawingImage>
@@ -847,11 +847,11 @@
             Padding="0" 
             Height="20" 
             Width="20" 
-            Click="MaximizeWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
+            Click="OnMaximizeWindowButtonClick"
+            MouseEnter="OnButtonMouseEnter"
+            MouseLeave="OnButtonMouseLeave"
+            MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+            MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
 
                 <Image>
                     <Image.Source>
@@ -909,11 +909,11 @@
             Padding="0" 
             Height="20" 
             Width="20" 
-            Click="CloseWindowButton_Click"
-            MouseEnter="Button_MouseEnter"
-            MouseLeave="Button_MouseLeave"
-            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-            MouseLeftButtonUp="Button_MouseLeftButtonUp">
+            Click="OnCloseWindowButtonClick"
+            MouseEnter="OnButtonMouseEnter"
+            MouseLeave="OnButtonMouseLeave"
+            MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+            MouseLeftButtonUp="OnButtonMouseLeftButtonUp">
 
                 <Image>
                     <Image.Source>

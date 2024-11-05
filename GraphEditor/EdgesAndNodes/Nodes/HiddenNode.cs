@@ -1,26 +1,22 @@
-﻿using GraphEditor.EdgesAndNodes.Nodes;
-using GraphEditor.GraphsManagerControls;
-using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace GraphEditor.EdgesAndNodes.Nodes
 {
+    /// <summary>
+    /// TODO: implement this class to link one edge to the center of another edge 
+    /// </summary>
     internal class HiddenNode : Node
     {
-        public HiddenNode(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id, IEdge edge) : base(CanvasLeft, CanvasTop, parent, window, id)
+        public HiddenNode(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id, IEdge edge) : base(canvasLeft, canvasTop, parent, window, id)
         {
             HideNode();
-            window.MagicWandOrder -= OnMagicWondOrder;
-
+            window.OnMagicWandOrder -= OnMagicWondOrder;
         }
 
         private void HideNode()
         {
-            ellipse.Visibility = Visibility.Hidden;
+            Ellipse.Visibility = Visibility.Hidden;
             _textBlock.Visibility = Visibility.Hidden;
         }
     }

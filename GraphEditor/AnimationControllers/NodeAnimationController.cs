@@ -25,8 +25,8 @@ namespace GraphEditor
         {
             foreach (Node node in _nodes)
             {
-                node.ellipse.SetValue(Canvas.TopProperty, (double)node.ellipse.GetValue(Canvas.TopProperty) + _dragDeltaY);
-                node.ellipse.SetValue(Canvas.LeftProperty, (double)node.ellipse.GetValue(Canvas.LeftProperty) + _dragDeltaX);
+                node.Ellipse.SetValue(Canvas.TopProperty, (double)node.GetPosTop() + _dragDeltaY);
+                node.Ellipse.SetValue(Canvas.LeftProperty, (double)node.GetPosLeft() + _dragDeltaX);
             }
         }
 

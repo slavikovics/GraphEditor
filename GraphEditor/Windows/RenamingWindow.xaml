@@ -8,7 +8,7 @@
         Background="#FF221B2F"
         Title="Graph Editor Information" Height="300" Width="500"
         ResizeMode="NoResize"
-        MouseDown="Grid_MouseDown" Loaded="Window_Loaded">
+        MouseDown="Grid_MouseDown" Loaded="OnWindowLoaded">
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
             <Setter Property="WindowChrome.WindowChrome">
@@ -267,7 +267,7 @@
             <Button Name="TextInput" Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold">
                 <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="35" FontWeight="Bold" Text="Hello|"/>
             </Button>
-            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" Opacity="0" LayoutUpdated="HiddenTextBox_LayoutUpdated"/>
+            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" Opacity="0" LayoutUpdated="OnHiddenTextBoxLayoutUpdated"/>
         </StackPanel>
         <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
             <Button Name="ApplyButton" 
@@ -281,9 +281,9 @@
                     Margin="30 30 0 30" 
                     Height="30" 
                     Width="80" 
-                    Click="ApplyButtonClick">
+                    Click="OnApplyButtonClick">
             </Button>
-            <Button Name="CancelButton" Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80" Click="CancelButtonClick"></Button>
+            <Button Name="CancelButton" Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80" Click="OnCancelButtonClick"></Button>
         </StackPanel>
     </Grid>
 </Window>

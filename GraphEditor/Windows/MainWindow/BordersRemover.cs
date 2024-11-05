@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace GraphEditor.Windows.MainWindow
 {
     internal class BordersRemover
     {
-        public static void RemoveAllBordersForNode(int nodeId, StackPanel GraphVisualTreeStackPanel)
+        public static void RemoveAllBordersForNode(int nodeId, StackPanel graphVisualTreeStackPanel)
         {
             List<GraphItemBorder> bordersToRemove = new List<GraphItemBorder>();
-            foreach (GraphItemBorder border in GraphVisualTreeStackPanel.Children)
+            foreach (GraphItemBorder border in graphVisualTreeStackPanel.Children)
             {
-                foreach (int node in border._nodesDependencies)
+                foreach (int node in border.NodesDependencies)
                 {
                     if (node == nodeId)
                     {
@@ -25,25 +21,25 @@ namespace GraphEditor.Windows.MainWindow
 
             foreach (GraphItemBorder border in bordersToRemove)
             {
-                GraphVisualTreeStackPanel.Children.Remove(border);
+                graphVisualTreeStackPanel.Children.Remove(border);
             }
         }
 
-        public static void RemoveAllBordersForEdge(int firstNodeId, int secondNodeId, StackPanel GraphVisualTreeStackPanel)
+        public static void RemoveAllBordersForEdge(int firstNodeId, int secondNodeId, StackPanel graphVisualTreeStackPanel)
         {
             GraphItemBorder borderToRemove = null;
-            foreach (GraphItemBorder border in GraphVisualTreeStackPanel.Children)
+            foreach (GraphItemBorder border in graphVisualTreeStackPanel.Children)
             {
-                if (border._nodesDependencies.Count == 2)
+                if (border.NodesDependencies.Count == 2)
                 {
-                    if ((firstNodeId == border._nodesDependencies[0] && secondNodeId == border._nodesDependencies[1]) || (secondNodeId == border._nodesDependencies[0] && firstNodeId == border._nodesDependencies[1]))
+                    if ((firstNodeId == border.NodesDependencies[0] && secondNodeId == border.NodesDependencies[1]) || (secondNodeId == border.NodesDependencies[0] && firstNodeId == border.NodesDependencies[1]))
                     {
                         borderToRemove = border;
                     }
                 }
             }
 
-            GraphVisualTreeStackPanel.Children.Remove(borderToRemove);
+            graphVisualTreeStackPanel.Children.Remove(borderToRemove);
         }
     }
 }

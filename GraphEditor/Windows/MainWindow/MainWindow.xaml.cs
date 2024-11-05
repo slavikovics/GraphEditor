@@ -1,6 +1,6 @@
 ﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.GraphsManager;
-using GraphEditor.GraphsManagerControls;
 using GraphEditor.GraphTabs;
 using GraphEditor.Windows.MainWindow;
 using System;
@@ -8,45 +8,37 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Button = System.Windows.Controls.Button;
 
-namespace GraphEditor 
+namespace GraphEditor
 {
     public partial class MainWindow : Window
     {
-        private const string OrientedSimple = "OrientedSimple";
-        private const string OrientedPencile = "OrientedPencile";
-        private const string NonOriented = "NonOriented";
+        public MainWindowStates MainWindowStates;
 
-        public MainWindowStates states;
+        private int _nodeId = 1;
 
-        int nodeId = 1;
+        public event Action OnKillAllSelections;
+        public event Action OnMagicWandOrder;
 
-        public event Action KillAllSelections;
-        public event Action MagicWandOrder;
+        private Edge.EdgeTypes _selectedEdgeType = Edge.EdgeTypes.OrientedSimple;
 
-        private string selectedEdgeType = OrientedSimple;
+        private List<Node> _nodes = new List<Node>();
+        private List<IEdge> _edges = new List<IEdge>();
 
-        List<Node> nodes = new List<Node>();
-        List<IEdge> edges = new List<IEdge>();
-
-        Ellipse ellipse;
-
-        private Point pointerPosition;
+        private Point _pointerPosition;
         private Node _firstSelected;
         private Node _secondSelected;
         private IEdge _selectedEdge;
-        private EdgeAnimationController edgeAnimationController;
-        private NodeAnimationController nodeAnimationController;
-        private GraphManager graphsManager;
+        private EdgeAnimationController _edgeAnimationController;
+        private NodeAnimationController _nodeAnimationController;
+        private GraphManager _graphsManager;
 
         public MainWindow()
         {
             InitializeComponent();
-            states = new MainWindowStates();
+            MainWindowStates = new MainWindowStates();
         }
 
         private void AddTabView()
@@ -57,44 +49,43 @@ namespace GraphEditor
             tabView.AddTabViewToMainWindow();
         }
 
-        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        private void OnButtonMouseEnter(object sender, MouseEventArgs e)
         {
-            VisualStateManager.GoToState(sender as System.Windows.Controls.Button, "MouseOver", true);
+            VisualStateManager.GoToState(sender as Button, "MouseOver", true);
         }
 
-        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        private void OnButtonMouseLeave(object sender, MouseEventArgs e)
         {
-            VisualStateManager.GoToState(sender as System.Windows.Controls.Button, "Normal", true);
+            VisualStateManager.GoToState(sender as Button, "Normal", true);
         }
 
-        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            VisualStateManager.GoToState(sender as System.Windows.Controls.Button, "Pressed", true);
+            VisualStateManager.GoToState(sender as Button, "Pressed", true);
         }
 
-        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnButtonMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            VisualStateManager.GoToState(sender as System.Windows.Controls.Button, "Normal", true);
+            VisualStateManager.GoToState(sender as Button, "Normal", true);
         }
 
-        private void ButtonAddNode_Click(object sender, RoutedEventArgs e)
+        private void OnButtonAddNodeClick(object sender, RoutedEventArgs e)
         {
-            states.MoveToNodeAddingState();
-            KillAllSelections?.Invoke();
+            MainWindowStates.MoveToNodeAddingState();
+            OnKillAllSelections?.Invoke();
             HidePopUpMenus();
         }
 
         public void OnNodeSelected(object sender, EventArgs e)
         {
             HidePopUpMenus();
-            if (states.shouldBeRemoved)
+            if (MainWindowStates.shouldBeRemoved)
             {
                 Node nodeToRemove = sender as Node;
-                //states.MoveToMovingState();
                 RemoveNode(nodeToRemove);
             }
 
-            if (!states.shouldEdgeBeAdded) return;
+            if (!MainWindowStates.shouldEdgeBeAdded) return;
 
             Node node = sender as Node;
 
@@ -111,7 +102,7 @@ namespace GraphEditor
                     {
                         _secondSelected = null;
                         return;
-                    } // edge can be only between two different nodes
+                    }
                     CreateEdge();
                 }
                 _firstSelected = null;
@@ -119,7 +110,7 @@ namespace GraphEditor
             }
         }
 
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)
         {
             HidePopUpMenus();
             Point currentMousePosition = e.GetPosition(sender as Window);
@@ -131,37 +122,36 @@ namespace GraphEditor
                 }
                 return;
             }
-            if (states.shouldNodeBeAdded)
+            if (MainWindowStates.shouldNodeBeAdded)
             {
-                Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
-                node.buttonSelected += OnNodeSelected;
+                Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
+                node.OnButtonSelected += OnNodeSelected;
                 GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);   
-                BordersInserter.InsertNodeBorder(node, graphsManager, GraphVisualTreeStackPanel);
-                nodes.Add(node);
+                BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
+                _nodes.Add(node);
 
-                if (edgeAnimationController == null)
+                if (_edgeAnimationController == null)
                 {
-                    edgeAnimationController = new EdgeAnimationController(node);
+                    _edgeAnimationController = new EdgeAnimationController(node);
                 }
-                if (nodeAnimationController == null)
+                if (_nodeAnimationController == null)
                 {
-                    nodeAnimationController = new NodeAnimationController();
+                    _nodeAnimationController = new NodeAnimationController();
                 }
-                nodeAnimationController.AddNode(node);
-                nodeId++;
+                _nodeAnimationController.AddNode(node);
+                _nodeId++;
             }
             else
             {
-                if (!states.shouldNodeBeMoved)
+                if (!MainWindowStates.shouldNodeBeMoved)
                 {
-                    //states.MoveToMovingState();
                     return;
                 }
-                else if (states.shouldNodeBeMoved)
+                else if (MainWindowStates.shouldNodeBeMoved)
                 {
-                    states.MoveToDraggingState();
+                    MainWindowStates.MoveToDraggingState();
                 }
-                pointerPosition = currentMousePosition;
+                _pointerPosition = currentMousePosition;
             }    
         }
 
@@ -169,10 +159,10 @@ namespace GraphEditor
         {
             IEdge edge;
 
-            switch(selectedEdgeType)
+            switch(_selectedEdgeType)
             {
-                case NonOriented: edge = new NonOrientedEdge(_firstSelected, _secondSelected, this, MainCanvas); break;
-                case OrientedSimple: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
+                case Edge.EdgeTypes.NonOriented: edge = new NonOrientedEdge(_firstSelected, _secondSelected, this, MainCanvas); break;
+                case Edge.EdgeTypes.OrientedSimple: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
                 default: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
             RegisterEdge(edge);
@@ -182,21 +172,21 @@ namespace GraphEditor
         private void RegisterEdge(IEdge edge)
         {
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
-            BordersInserter.InsertEdgeBorder(edge, graphsManager, selectedEdgeType, GraphVisualTreeStackPanel, NonOriented);
-            edgeAnimationController.AddEdge(edge);
-            edges.Add(edge);
+            BordersInserter.InsertEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);
+            _edgeAnimationController.AddEdge(edge);
+            _edges.Add(edge);
         }
 
-        private void ButtonMagicWond_Click(object sender, RoutedEventArgs e)
+        private void OnButtonMagicWondClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
-            MagicWandOrder?.Invoke();
-            states.MoveToMagicState();
+            OnMagicWandOrder?.Invoke();
+            MainWindowStates.MoveToMagicState();
         }
 
-        private void ButtonAddEdge_Click(object sender, RoutedEventArgs e)
+        private void OnButtonAddEdgeClick(object sender, RoutedEventArgs e)
         {
-            states.MoveToEdgeAddingState();
+            MainWindowStates.MoveToEdgeAddingState();
             _firstSelected = null;
             _secondSelected = null;
             ShowAddEdgePopUpMenu();
@@ -234,90 +224,90 @@ namespace GraphEditor
             OrientedPencilePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
         }
 
-        private void ButtonSelect_Click(object sender, RoutedEventArgs e)
+        private void OnButtonSelectClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
-            states.MoveToMovingState();
-            if (nodeAnimationController != null)
+            MainWindowStates.MoveToMovingState();
+            if (_nodeAnimationController != null)
             {
-                nodeAnimationController.EndMovementAnimations();
+                _nodeAnimationController.EndMovementAnimations();
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
+            _graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
             InsertGraphBorder();
             AddTabView();
         }
 
         private void InsertGraphBorder()
         {
-            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddGraph("Graph"));
+            GraphVisualTreeStackPanel.Children.Add(_graphsManager.AddGraph("Graph"));
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
         }
 
-        private void CollapseWindowButton_Click(object sender, RoutedEventArgs e)
+        private void OnCollapseWindowButtonClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
             this.WindowState = WindowState.Minimized;
         }
 
-        private void MaximizeWindowButton_Click(object sender, RoutedEventArgs e)
+        private void OnMaximizeWindowButtonClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
             if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
             else this.WindowState = WindowState.Normal;
         }
 
-        private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
+        private void OnCloseWindowButtonClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
             this.Close();
         }
 
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnGridMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HidePopUpMenus();
             this.DragMove();
         }
 
-        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        private void OnWindowMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (states.shouldBeDragged) states.MoveToMovingState();
+            if (MainWindowStates.shouldBeDragged) MainWindowStates.MoveToMovingState();
         }
 
-        private void WindowMouseMove(object sender, MouseEventArgs e)
+        private void OnWindowMouseMove(object sender, MouseEventArgs e)
         {
-            if (!states.shouldBeDragged) return;
+            if (!MainWindowStates.shouldBeDragged) return;
             Point newPosition = e.GetPosition(sender as Window);
-            double dragDeltaX = newPosition.X - pointerPosition.X;
-            double dragDeltaY = newPosition.Y - pointerPosition.Y;
+            double dragDeltaX = newPosition.X - _pointerPosition.X;
+            double dragDeltaY = newPosition.Y - _pointerPosition.Y;
 
             dragDeltaX /= 2;
 
-            pointerPosition = newPosition;
+            _pointerPosition = newPosition;
 
-            if (nodeAnimationController != null)
+            if (_nodeAnimationController != null)
             {
-                nodeAnimationController.SetDragParameters(dragDeltaX, dragDeltaY);
-                nodeAnimationController.Drag();
+                _nodeAnimationController.SetDragParameters(dragDeltaX, dragDeltaY);
+                _nodeAnimationController.Drag();
 
-                if (edgeAnimationController != null)
+                if (_edgeAnimationController != null)
                 {
-                    edgeAnimationController.EdgesDragged(dragDeltaX, dragDeltaY);
+                    _edgeAnimationController.EdgesDragged(dragDeltaX, dragDeltaY);
                 }
             }
         }
 
-        private void ButtonGraph_Click(object sender, RoutedEventArgs e)
+        private void OnButtonGraphClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
             InformationWindow informationWindow = new InformationWindow();
             informationWindow.Show();
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OmWindowMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HidePopUpMenus();
         }
@@ -329,47 +319,47 @@ namespace GraphEditor
             OrientedPencilePopUp.Visibility = Visibility.Hidden;
         }
 
-        private void GraphsManagerGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnGraphsManagerGridMouseDown(object sender, MouseButtonEventArgs e)
         {
             HidePopUpMenus();
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             HidePopUpMenus();
         }
 
-        private void OrientedSimplePopUp_Click(object sender, RoutedEventArgs e)
+        private void OnOrientedSimplePopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (OrientedSimplePopUp.Content as Image).Source;
-            selectedEdgeType = OrientedSimple;
+            _selectedEdgeType = Edge.EdgeTypes.OrientedSimple;
             HidePopUpMenus();
         }
 
-        private void OrientedPencilePopUp_Click(object sender, RoutedEventArgs e)
+        private void OnOrientedPencilPopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (OrientedPencilePopUp.Content as Image).Source;
-            selectedEdgeType = OrientedPencile;
+            _selectedEdgeType = Edge.EdgeTypes.OrientedPencil;
             HidePopUpMenus();
         }
 
-        private void NonOrientedPopUp_Click(object sender, RoutedEventArgs e)
+        private void OnNonOrientedPopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (NonOrientedPopUp.Content as Image).Source;
-            selectedEdgeType = NonOriented;
+            _selectedEdgeType = Edge.EdgeTypes.NonOriented;
             HidePopUpMenus();
         }
 
         private void RemoveNode(Node nodeToRemove)
         {
             nodeToRemove.Remove();
-            nodeAnimationController.RemoveNode(nodeToRemove);
-            BordersRemover.RemoveAllBordersForNode(nodeToRemove._id, GraphVisualTreeStackPanel);
+            _nodeAnimationController.RemoveNode(nodeToRemove);
+            BordersRemover.RemoveAllBordersForNode(nodeToRemove.Id, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
 
-            foreach (IEdge edge in edges)
+            foreach (IEdge edge in _edges)
             {
-                if (edge.GetFirstNodeId() == nodeToRemove._id || edge.GetSecondNodeId() == nodeToRemove._id)
+                if (edge.GetFirstNodeId() == nodeToRemove.Id || edge.GetSecondNodeId() == nodeToRemove.Id)
                 {
                     RemoveEdge(edge);
                 }
@@ -379,14 +369,14 @@ namespace GraphEditor
         private void RemoveEdge(IEdge edgeToRemove)
         {
             edgeToRemove.Remove();
-            edgeAnimationController.RemoveEdge(edgeToRemove);
+            _edgeAnimationController.RemoveEdge(edgeToRemove);
             BordersRemover.RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1], GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            states.MoveToRemovingState();
+            MainWindowStates.MoveToRemovingState();
             _firstSelected = null;
             _secondSelected = null;
         }
@@ -394,7 +384,7 @@ namespace GraphEditor
         public void OnEdgeSelected(object sender, EventArgs e)
         {
             IEdge edge = sender as IEdge;
-            if (states.shouldBeRemoved)
+            if (MainWindowStates.shouldBeRemoved)
             {
                 RemoveEdge(edge);
             }

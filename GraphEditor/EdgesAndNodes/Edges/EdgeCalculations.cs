@@ -8,19 +8,19 @@ namespace GraphEditor.EdgesAndNodes.Edges
     {
         public static double CalculateEdgePositionBaseLeft(Node node)
         {
-            double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2;
+            double basePointLeft = (double)node.GetPosLeft() + node.GetEllipseDimensions() / 2;
             return basePointLeft;
         }
 
-        public static double CalculateEdgePositionBaseLeftWithArrow(Node node, int ArrowOffset)
+        public static double CalculateEdgePositionBaseLeftWithArrow(Node node, int arrowOffset)
         {
-            double basePointLeft = (double)node.ellipse.GetValue(Canvas.LeftProperty) + node.GetEllipseDimensions() / 2 + ArrowOffset;
+            double basePointLeft = (double)node.GetPosLeft() + node.GetEllipseDimensions() / 2 + arrowOffset;
             return basePointLeft;
         }
 
         public static double CalculateEdgePositionBaseTop(Node node)
         {
-            return (double)node.ellipse.GetValue(Canvas.TopProperty) + node.GetEllipseDimensions() / 2;
+            return (double)node.GetPosTop() + node.GetEllipseDimensions() / 2;
         }
 
         public static double CalculateDeltaX(Node node1, Node node2)
@@ -41,14 +41,14 @@ namespace GraphEditor.EdgesAndNodes.Edges
             return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
         }
 
-        public static double CalculateFinalWidth(Node node1, Node node2, int EdgeOffsetLeft)
+        public static double CalculateFinalWidth(Node node1, Node node2, int edgeOffsetLeft)
         {
-            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft;
+            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * edgeOffsetLeft;
         }
 
-        public static double CalculateFinalWidthWithArrow(Node node1, Node node2, int EdgeOffsetLeft, int ArrowOffset)
+        public static double CalculateFinalWidthWithArrow(Node node1, Node node2, int edgeOffsetLeft, int arrowOffset)
         {
-            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * EdgeOffsetLeft - ArrowOffset;
+            return CalculateLengthBetweenNodes(node1, node2) - node1.GetEllipseDimensions() - 2 * edgeOffsetLeft - arrowOffset;
         }
 
         public static double CalculateAngle(Node node1, Node node2)

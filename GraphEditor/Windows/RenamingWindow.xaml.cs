@@ -7,11 +7,11 @@ namespace GraphEditor
 {
     public partial class RenamingWindow : Window
     {
-        public event EventHandler<RenamingEventArgs> RenamingResult;
+        public event EventHandler<RenamingEventArgs> OnRenamingResult;
 
-        private DispatcherTimer timer;
+        private DispatcherTimer _timer;
 
-        string _textToEdit;
+        private string _textToEdit;
 
         public RenamingWindow(string textToEdit)
         {
@@ -57,26 +57,26 @@ namespace GraphEditor
             }
         }
 
-        bool renamingButtonIsSelected = false;
-        bool wasTextDeleted = false;
-        string renameNamePureText = "";
-        int renameNamePureCaretIndex = -1;
-        bool tick = true;
+        private bool _renamingButtonIsSelected = false;
+        private bool _wasTextDeleted = false;
+        private string _renameNamePureText = "";
+        private int _renameNamePureCaretIndex = -1;
+        private bool _tick = true;
 
         private void UpdateRenamedName()
         {
             int carretIndex = HiddenTextBox.CaretIndex;
 
-            if (renameNamePureText != HiddenTextBox.Text)
+            if (_renameNamePureText != HiddenTextBox.Text)
             {
                 RenamedName.Text = HiddenTextBox.Text;
-                renameNamePureText = HiddenTextBox.Text;
+                _renameNamePureText = HiddenTextBox.Text;
                 MoveCarret();
             }
-            if (carretIndex != renameNamePureCaretIndex)
+            if (carretIndex != _renameNamePureCaretIndex)
             {
                 MoveCarret();
-                renameNamePureCaretIndex = carretIndex;
+                _renameNamePureCaretIndex = carretIndex;
             }
         }
 
@@ -86,7 +86,7 @@ namespace GraphEditor
             RenamedName.Text = HiddenTextBox.Text.Insert(carretIndex, "|");
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             HiddenTextBox.Focus();
             RenamedName.Text = _textToEdit;
@@ -94,43 +94,43 @@ namespace GraphEditor
             HiddenTextBox.CaretIndex = HiddenTextBox.Text.Length;
             MoveCarret();
             UpdateRenamedName();
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += TimerTick;
-            timer.Start();
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(500);
+            _timer.Tick += OnTimerTick;
+            _timer.Start();
         }
 
-        private void TimerTick(object sender, EventArgs e)
+        private void OnTimerTick(object sender, EventArgs e)
         {
-            if (tick == true)
+            if (_tick == true)
             {
                 RenamedName.Text = RenamedName.Text.Remove(HiddenTextBox.CaretIndex, 1);
                 RenamedName.Text = RenamedName.Text.Insert(HiddenTextBox.CaretIndex, "|");
-                tick = false;
+                _tick = false;
             }
             else
             {
                 RenamedName.Text = RenamedName.Text.Remove(HiddenTextBox.CaretIndex, 1);
                 RenamedName.Text = RenamedName.Text.Insert(HiddenTextBox.CaretIndex, " ");
-                tick = true;
+                _tick = true;
             }
         }
 
-        private void ApplyButtonClick(object sender, RoutedEventArgs e)
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
         {
             RenamingEventArgs renamingEventArgs = new RenamingEventArgs(true, HiddenTextBox.Text);
-            RenamingResult?.Invoke(this, renamingEventArgs);
+            OnRenamingResult?.Invoke(this, renamingEventArgs);
             this.Close();
         }
 
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
+        private void OnCancelButtonClick(object sender, RoutedEventArgs e)
         {
             RenamingEventArgs renamingEventArgs = new RenamingEventArgs(false, "");
-            RenamingResult?.Invoke(this, renamingEventArgs);
+            OnRenamingResult?.Invoke(this, renamingEventArgs);
             this.Close();
         }
 
-        private void HiddenTextBox_LayoutUpdated(object sender, EventArgs e)
+        private void OnHiddenTextBoxLayoutUpdated(object sender, EventArgs e)
         {
             UpdateRenamedName();
         }

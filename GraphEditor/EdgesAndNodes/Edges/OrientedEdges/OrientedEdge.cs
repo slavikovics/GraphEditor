@@ -1,9 +1,6 @@
-﻿using GraphEditor.EdgesAndNodes;
-using GraphEditor.EdgesAndNodes.Edges;
+﻿using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.EdgesAndNodes.Edges.EdgesOriented;
-using GraphEditor.GraphsManagerControls;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,39 +14,41 @@ namespace GraphEditor
         public const int EdgeOffsetLeft = 5;
 
         private Image _arrow;
-        private bool _isPencile;
-        OrientedEdgeConfiguration edgeConfiguration;
+
+        private bool _isPencil;
+
+        private OrientedEdgeConfiguration _edgeConfiguration;
 
         private const int ArrowOffset = 5;
 
-        public OrientedEdge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow, bool isPencile) : base (firstNode, secondNode, window, mainCanvas)
+        public OrientedEdge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas, Image arrow, bool isPencil) : base (firstNode, secondNode, window, mainCanvas)
         {
-            _isPencile = isPencile;
-            edgeConfiguration = new OrientedEdgeConfiguration();
+            _isPencil = isPencil;
+            _edgeConfiguration = new OrientedEdgeConfiguration();
             SetUpEdgeVisualRepresentation();
             SetUpArrowVisualRepresentation(arrow.Source);
         }
 
         private void SetUpEdgeVisualRepresentation()
         {
-            if (_isPencile)
+            if (_isPencil)
             {
-                _edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
-                _edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
-                edgeConfiguration.Height = edgeConfiguration.PencileHeight;
+                _edgeVisualRepresentation.RadiusX = _edgeConfiguration.RadiusX;
+                _edgeVisualRepresentation.RadiusY = _edgeConfiguration.RadiusY;
+                _edgeConfiguration.Height = _edgeConfiguration.PencileHeight;
             }
             else
             {
                 _edgeVisualRepresentation.Fill = _edgeBrush;
             }
             _mainCanvas.Children.Insert(0, _edgeVisualRepresentation);
-            _edgeVisualRepresentation.Height = edgeConfiguration.Height;
-            _edgeVisualRepresentation.Width = edgeConfiguration.Width;
-            _edgeVisualRepresentation.RadiusX = edgeConfiguration.RadiusX;
-            _edgeVisualRepresentation.RadiusY = edgeConfiguration.RadiusY;
-            _edgeBrush = new SolidColorBrush(edgeConfiguration.StrokeColor);
+            _edgeVisualRepresentation.Height = _edgeConfiguration.Height;
+            _edgeVisualRepresentation.Width = _edgeConfiguration.Width;
+            _edgeVisualRepresentation.RadiusX = _edgeConfiguration.RadiusX;
+            _edgeVisualRepresentation.RadiusY = _edgeConfiguration.RadiusY;
+            _edgeBrush = new SolidColorBrush(_edgeConfiguration.StrokeColor);
             _edgeVisualRepresentation.Stroke = _edgeBrush;
-            _edgeVisualRepresentation.StrokeThickness = edgeConfiguration.StrokeThickness;
+            _edgeVisualRepresentation.StrokeThickness = _edgeConfiguration.StrokeThickness;
         }
 
         private void SetUpArrowVisualRepresentation(ImageSource arrowSource)
@@ -62,32 +61,31 @@ namespace GraphEditor
             _mainCanvas.Children.Insert(0, _arrow);
         }
 
-        protected override void EdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        protected override void OnEdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            ColorAnimation edgeHoverAnimation = EdgeAnimator.BuildEdgeHoverAnimationLeavePhase(edgeConfiguration);
+            ColorAnimation edgeHoverAnimation = EdgeAnimator.BuildEdgeHoverAnimationLeavePhase(_edgeConfiguration);
             _edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
 
-        protected override void EdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        protected override void OnEdgeVisualRepresentationMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             ColorAnimation edgeHoverAnimation = EdgeAnimator.BuildEdgeHoverAnimationEnterPhase();
             _edgeBrush.BeginAnimation(SolidColorBrush.ColorProperty, edgeHoverAnimation);
         }
 
-        protected override void EdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
+        protected override void OnEdgeVisualRepresentationRenderTransformUpdate(object sender, EventArgs e)
         {
-            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);       
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(_edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);       
             _edgeVisualRepresentation.RenderTransformOrigin = new Point(originLeft, 0.5);
 
             originLeft = EdgeCalculations.CalculateArrowRenderTransformOriginLeft(_arrow, _firstNode);
             _arrow.RenderTransformOrigin = new Point(originLeft, 0.5);
         }
 
-        protected override void EdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
+        protected override void OnEdgeVisualRepresentationLoaded(object sender, RoutedEventArgs e)
         {
             EdgePositioning(false);
-            _mainWindow.UpdateLayout();
-           
+            _mainWindow.UpdateLayout();          
             AnimateEdgeCreation();
         }
 
@@ -104,7 +102,7 @@ namespace GraphEditor
             if (isInGraph)
             {
                 if (_angle == angle) return;
-                if (edgeConfiguration.Width == width) return;
+                if (_edgeConfiguration.Width == width) return;
             }
 
             _edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, null);
@@ -121,12 +119,12 @@ namespace GraphEditor
                 return;
             }
 
-            edgeConfiguration.Width = width;
+            _edgeConfiguration.Width = width;
             _angle = angle;
             
-            _offsetTop = edgeConfiguration.Height / 2;
+            _offsetTop = _edgeConfiguration.Height / 2;
 
-            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);
+            double originLeft = EdgeCalculations.CalculateRenderTransformOriginLeftWithArrow(_edgeConfiguration.Width, _firstNode, _edgeVisualRepresentation, ArrowOffset);
 
             _edgeVisualRepresentation.SetValue(Canvas.LeftProperty, EdgeCalculations.CalculateEdgePositionBaseLeftWithArrow(_firstNode, ArrowOffset) + EdgeOffsetLeft + _firstNode.GetEllipseDimensions() / 2 );
             _edgeVisualRepresentation.SetValue(Canvas.TopProperty, EdgeCalculations.CalculateEdgePositionBaseTop(_firstNode) - _offsetTop);
@@ -157,18 +155,18 @@ namespace GraphEditor
 
         protected override void AnimateEdgeCreation()
         {
-            DoubleAnimation edgeWidthAnimation = EdgeAnimator.BuildEdgeCreationAnimation(edgeConfiguration);
+            DoubleAnimation edgeWidthAnimation = EdgeAnimator.BuildEdgeCreationAnimation(_edgeConfiguration);
             edgeWidthAnimation.Completed += EdgeWidthAnimationCompleted;
             _edgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
         }
 
         public override string ToString()
         {
-            if (_isPencile)
+            if (_isPencil)
             {
-                return "Edge " + _secondNode._id + " => " + _firstNode._id;
+                return "Edge " + _secondNode.Id + " => " + _firstNode.Id;
             }
-            return  "Edge " + _secondNode._id + " -> " + _firstNode._id;
+            return  "Edge " + _secondNode.Id + " -> " + _firstNode.Id;
         }
 
         public override void Rename(string newName)

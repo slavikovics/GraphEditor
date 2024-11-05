@@ -1,19 +1,19 @@
 ﻿using GraphEditor.EdgesAndNodes;
+using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.GraphsManager;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace GraphEditor.Windows.MainWindow
 {
     internal class BordersInserter
     {
-        public static void InsertEdgeBorder(IEdge edge, GraphManager graphsManager, string selectedEdgeType, StackPanel GraphVisualTreeStackPanel,
-            string NonOriented)
+        public static void InsertEdgeBorder(IEdge edge, GraphManager graphsManager, Edge.EdgeTypes selectedEdgeType, StackPanel graphVisualTreeStackPanel)
         {
             Border edgeBorder = graphsManager.AddEdge(edge, edge.GetNodesDependencies());
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
             int firstNodeId;
-            if (selectedEdgeType == NonOriented)
+            if (selectedEdgeType == Edge.EdgeTypes.NonOriented)
             {
                 firstNodeId = edge.GetFirstNodeId();
             }
@@ -22,7 +22,7 @@ namespace GraphEditor.Windows.MainWindow
                 firstNodeId = edge.GetSecondNodeId();
             }
             int i = 0;
-            foreach (UIElement uIElement in GraphVisualTreeStackPanel.Children)
+            foreach (UIElement uIElement in graphVisualTreeStackPanel.Children)
             {
                 i++;
                 if ((uIElement as Border)?.Name == "node" + firstNodeId.ToString())
@@ -31,12 +31,12 @@ namespace GraphEditor.Windows.MainWindow
                 }
             }
 
-            GraphVisualTreeStackPanel.Children.Insert(i, edgeBorder);
+            graphVisualTreeStackPanel.Children.Insert(i, edgeBorder);
         }
 
-        public static void InsertNodeBorder(Node node, GraphManager graphsManager, StackPanel GraphVisualTreeStackPanel)
+        public static void InsertNodeBorder(Node node, GraphManager graphsManager, StackPanel graphVisualTreeStackPanel)
         {
-            GraphVisualTreeStackPanel.Children.Add(graphsManager.AddNode(node, node.GetIdAsList()));
+            graphVisualTreeStackPanel.Children.Add(graphsManager.AddNode(node, node.GetIdAsList()));
         }
     }
 }

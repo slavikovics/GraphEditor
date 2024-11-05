@@ -1,5 +1,4 @@
-﻿using GraphEditor.EdgesAndNodes;
-using GraphEditor.GraphsManagerControls;
+﻿using GraphEditor.GraphsManagerControls;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,75 +8,75 @@ namespace GraphEditor
 {
     internal class GraphItemBorder : Border
     {
-        public StackPanel _innerStackPanel;
+        public StackPanel InnerStackPanel;
 
-        GraphItemNameLabel _graphItemNameLabel;
+        private GraphItemNameLabel _graphItemNameLabel;
 
-        public string _borderType;
+        public string BorderType;
 
-        public string _borderString;
+        public string BorderString;
 
-        public ControlTemplate _buttonTemplate;
+        public ControlTemplate ButtonTemplate;
 
-        public Image _buttonAddNodeContent;
+        public Image ButtonAddNodeContent;
 
-        public Image _buttonAddEdgeContent;
+        public Image ButtonAddEdgeContent;
 
-        public Image _buttonGraphImageContent;
+        public Image ButtonGraphImageContent;
 
         private IRenamable _renamable;
 
-        public List<int> _nodesDependencies;
+        public List<int> NodesDependencies;
 
         public GraphItemBorder(string borderName, string borderString, string borderType, 
             ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable, List<int> nodesDependencies)
         {
             Name = borderName;
-            _borderType = borderType;
-            _borderString = borderString;
-            _buttonTemplate = buttonTemplate;
-            _buttonAddNodeContent = buttonAddNodeContent;
-            _buttonAddEdgeContent = buttonAddEdgeContent;
-            _buttonGraphImageContent = buttonGraphImageContent;
+            BorderType = borderType;
+            BorderString = borderString;
+            ButtonTemplate = buttonTemplate;
+            ButtonAddNodeContent = buttonAddNodeContent;
+            ButtonAddEdgeContent = buttonAddEdgeContent;
+            ButtonGraphImageContent = buttonGraphImageContent;
             _renamable = renamable;
-            _nodesDependencies = nodesDependencies;
+            NodesDependencies = nodesDependencies;
 
             Height = 30;
             Margin = new Thickness(4);
             Background = new SolidColorBrush(Color.FromArgb(255, 153, 143, 199));
             CornerRadius = new CornerRadius(10);
 
-            _innerStackPanel = new StackPanel();
+            InnerStackPanel = new StackPanel();
             SetMargins();
-            _innerStackPanel.Orientation = Orientation.Horizontal;
+            InnerStackPanel.Orientation = Orientation.Horizontal;
 
             RenamingButton graphItemRenamingButton = new RenamingButton(buttonTemplate);
             SetContent(graphItemRenamingButton);
-            graphItemRenamingButton.Click += RenamingButtonClick;
+            graphItemRenamingButton.Click += OnRenamingButtonClick;
 
             _graphItemNameLabel = new GraphItemNameLabel(borderString);
 
-            _innerStackPanel.Children.Add(graphItemRenamingButton);
-            _innerStackPanel.Children.Add(_graphItemNameLabel);
+            InnerStackPanel.Children.Add(graphItemRenamingButton);
+            InnerStackPanel.Children.Add(_graphItemNameLabel);
 
-            Child = _innerStackPanel;
+            Child = InnerStackPanel;
         }
 
         public void SetMargins()
         {
-            switch (_borderType)
+            switch (BorderType)
             {
-                case "graph": _innerStackPanel.Margin = new Thickness(4, 0, 4, 0); break;
+                case "graph": InnerStackPanel.Margin = new Thickness(4, 0, 4, 0); break;
                 default:
                     Margin = new Thickness(20, 4, 4, 4);
-                    _innerStackPanel.Margin = new Thickness(4, 0, 4, 0);
+                    InnerStackPanel.Margin = new Thickness(4, 0, 4, 0);
                     break;
             }
         }
 
         public void SetContent(RenamingButton graphItemRenamingButton)
         {
-            switch (_borderType)
+            switch (BorderType)
             {
                 case "graph": GenerateGraphButtonContent(graphItemRenamingButton); break;
                 case "node": GenerateNodeButtonContent(graphItemRenamingButton); break;
@@ -88,37 +87,37 @@ namespace GraphEditor
         private void GenerateGraphButtonContent(Button graphButton)
         {
             Image graphButtonContentImage = new Image();
-            graphButtonContentImage.Source = _buttonGraphImageContent.Source;
+            graphButtonContentImage.Source = ButtonGraphImageContent.Source;
             graphButton.Content = graphButtonContentImage;
         }
 
         private void GenerateNodeButtonContent(Button nodeButton)
         {
             Image nodeContentImage = new Image();
-            nodeContentImage.Source = (_buttonAddNodeContent).Source;
+            nodeContentImage.Source = (ButtonAddNodeContent).Source;
             nodeButton.Content = nodeContentImage;
         }
 
         private void GenerateEdgeButtonContent(Button edgeButton)
         {
             Image edgeContentImage = new Image();
-            edgeContentImage.Source = (_buttonAddEdgeContent).Source;
+            edgeContentImage.Source = (ButtonAddEdgeContent).Source;
             edgeButton.Content = edgeContentImage;
         }
 
-        private void RenamingButtonClick(object sender, RoutedEventArgs e)
+        private void OnRenamingButtonClick(object sender, RoutedEventArgs e)
         {
             RenamingWindow renamingWindow = new RenamingWindow((string) _graphItemNameLabel.Content);
             renamingWindow.Show();
-            renamingWindow.RenamingResult += RenamingWindow_RenamingResult;
+            renamingWindow.OnRenamingResult += OnRenamingWindowRenamingResult;
         }
 
-        private void RenamingWindow_RenamingResult(object sender, RenamingEventArgs e)
+        private void OnRenamingWindowRenamingResult(object sender, RenamingEventArgs e)
         {
-            if (e._wasRenamed == true)
+            if (e.WasRenamed == true)
             {
-                _graphItemNameLabel.Content = e._newName;
-                _renamable?.Rename(e._newName);
+                _graphItemNameLabel.Content = e.NewName;
+                _renamable?.Rename(e.NewName);
             }
         }
     }

@@ -27,37 +27,37 @@ namespace GraphEditor.EdgesAndNodes.Nodes
             return ellipseAnimationTop;
         }
 
-        public static DoubleAnimation BuildEllipseArrivalAnimationWidth(int EllipseDimensions)
+        public static DoubleAnimation BuildEllipseArrivalAnimationWidth(int ellipseDimensions)
         {
             DoubleAnimation nodeWidthAnimation = new DoubleAnimation();
             nodeWidthAnimation.From = 5;
-            nodeWidthAnimation.To = EllipseDimensions;
+            nodeWidthAnimation.To = ellipseDimensions;
             nodeWidthAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return nodeWidthAnimation;
         }
 
-        public static DoubleAnimation BuildEllipseArrivalAnimationHeight(int EllipseDimensions)
+        public static DoubleAnimation BuildEllipseArrivalAnimationHeight(int ellipseDimensions)
         {
             DoubleAnimation nodeHeightAnimation = new DoubleAnimation();
             nodeHeightAnimation.From = 5;
-            nodeHeightAnimation.To = EllipseDimensions;
+            nodeHeightAnimation.To = ellipseDimensions;
             nodeHeightAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return nodeHeightAnimation;
         }
 
-        public static DoubleAnimation BuildEllipseArrivalAnimationLeft(Node node, int EllipseDimensions)
+        public static DoubleAnimation BuildEllipseArrivalAnimationLeft(Node node, int ellipseDimensions)
         {
             DoubleAnimation nodeMovingLeftAnimation = new DoubleAnimation();
-            nodeMovingLeftAnimation.From = node.GetPosLeft() + EllipseDimensions / 2;
+            nodeMovingLeftAnimation.From = node.GetPosLeft() + ellipseDimensions / 2;
             nodeMovingLeftAnimation.To = node.GetPosLeft();
             nodeMovingLeftAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return nodeMovingLeftAnimation;
         }
 
-        public static DoubleAnimation BuildEllipseArrivalAnimationTop(Node node, int EllipseDimensions)
+        public static DoubleAnimation BuildEllipseArrivalAnimationTop(Node node, int ellipseDimensions)
         {
             DoubleAnimation nodeMovingTopAnimation = new DoubleAnimation();
-            nodeMovingTopAnimation.From = node.GetPosTop() + EllipseDimensions / 2;
+            nodeMovingTopAnimation.From = node.GetPosTop() + ellipseDimensions / 2;
             nodeMovingTopAnimation.To = node.GetPosTop();
             nodeMovingTopAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return nodeMovingTopAnimation;

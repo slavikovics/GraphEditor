@@ -7,21 +7,26 @@ namespace GraphEditor.GraphTabs
 {
     internal class TabButton : RenamingButton
     {
-        public int _tabButtonId { get; private set; }
+        public int TabButtonId { get; private set; }
 
         public TabButton(ControlTemplate buttonTemplate, int id) : base(buttonTemplate)
         {
-            _tabButtonId = id;
+            TabButtonId = id;
             Height = 35;
-            if (id != 0)
-            {        
+            SetTabButtonWidth();
+            Margin = new Thickness(0, 15, 0, 0);
+        }
+
+        private void SetTabButtonWidth()
+        {
+            if (TabButtonId != 0)
+            {
                 Width = 90;
             }
             else
             {
                 Width = 35;
             }
-            Margin = new Thickness(0, 15, 0, 0);
         }
 
         public void AnimateButtonExpansion()

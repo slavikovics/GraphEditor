@@ -11,7 +11,7 @@ namespace GraphEditor
 {
     internal class Node : IRenamable
     {
-        public Button ellipse { get; private set; }
+        public Button Ellipse { get; private set; }
 
         private Canvas _canvas;
 
@@ -19,58 +19,58 @@ namespace GraphEditor
 
         private MainWindow _window;
 
-        private Random random;
+        private Random _random;
 
-        public int _id { get; private set; }
+        public int Id { get; private set; }
 
-        private bool isSelected = false;
+        private bool _isSelected = false;
 
-        private double movementDiffLeft;
+        private double _movementDiffLeft;
 
-        private double movementDiffTop;
+        private double _movementDiffTop;
 
-        private bool testWasMagicWondClicked = false;
+        private bool _testWasMagicWandClicked = false;
 
-        public event EventHandler buttonSelected;
+        public event EventHandler OnButtonSelected;
 
         public event EventHandler OnNodeMoved;
 
         public event Action OnNodesAnimated;
 
-        public Node(double CanvasLeft, double CanvasTop, Canvas parent, MainWindow window, int id)
+        public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id)
         {            
-            _id = id;
+            Id = id;
             _canvas = parent;
             _window = window;
 
-            random = new Random();
-            ellipse = new Button();
-            NodeSettings.SetUpEllipse(ellipse, _window);
-            PositionEllipse(CanvasLeft, CanvasTop);
-            _canvas.Children.Add(ellipse);
+            _random = new Random();
+            Ellipse = new Button();
+            NodeSettings.SetUpEllipse(Ellipse, _window);
+            PositionEllipse(canvasLeft, canvasTop);
+            _canvas.Children.Add(Ellipse);
 
             SetUpEvents();
             NodeAddingAnimation();
 
             _textBlock = new TextBlock();
-            NodeSettings.SetUpTextBlock(_textBlock, _id);
+            NodeSettings.SetUpTextBlock(_textBlock, Id);
             MoveTextBlock();
             _canvas.Children.Add(_textBlock);
         }
 
         private void SetUpEvents()
         {
-            (ellipse.Content as Image).MouseDown += OnMouseDown;
+            (Ellipse.Content as Image).MouseDown += OnMouseDown;
             _window.MouseMove += OnMouseMove;
-            _window.KillAllSelections += Unselect;
-            _window.MagicWandOrder += OnMagicWondOrder;
-            ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
+            _window.OnKillAllSelections += Unselect;
+            _window.OnMagicWandOrder += OnMagicWondOrder;
+            Ellipse.LayoutUpdated += Ellipse_LayoutUpdated;
         }
 
-        protected void PositionEllipse(double CanvasLeft, double CanvasTop)
+        protected void PositionEllipse(double canvasLeft, double canvasTop)
         {
-            SetPosLeft(NodeCalculations.CalculateEllipsePositionLeft(CanvasLeft, NodeConfiguration.UserInterfaceLeftSize, NodeConfiguration.EllipseDimensions));
-            SetPosTop(NodeCalculations.CalculateEllipsePositionTop(CanvasTop, NodeConfiguration.UserInterfaceTopSize, NodeConfiguration.EllipseDimensions));
+            SetPosLeft(NodeCalculations.CalculateEllipsePositionLeft(canvasLeft, NodeConfiguration.UserInterfaceLeftSize, NodeConfiguration.EllipseDimensions));
+            SetPosTop(NodeCalculations.CalculateEllipsePositionTop(canvasTop, NodeConfiguration.UserInterfaceTopSize, NodeConfiguration.EllipseDimensions));
         }
 
         public int GetEllipseDimensions()
@@ -86,26 +86,26 @@ namespace GraphEditor
 
         private void Unselect()
         {
-            isSelected = false;
+            _isSelected = false;
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            if (isSelected)
+            if (_isSelected)
             {
-                isSelected = false;
+                _isSelected = false;
             }
             else
             {            
-                buttonSelected?.Invoke(this, new EventArgs());
-                if (!_window.states.shouldNodeBeMoved) return;
+                OnButtonSelected?.Invoke(this, new EventArgs());
+                if (!_window.MainWindowStates.shouldNodeBeMoved) return;
 
-                isSelected = true;
-                //_window.states.MoveToMovingState();
+                _isSelected = true;
+                
                 Point currentMousePosition = e.GetPosition(sender as Window);
 
-                movementDiffLeft = currentMousePosition.X - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceLeftSize - GetPosLeft();
-                movementDiffTop = currentMousePosition.Y - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceTopSize - GetPosTop();
+                _movementDiffLeft = currentMousePosition.X - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceLeftSize - GetPosLeft();
+                _movementDiffTop = currentMousePosition.Y - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceTopSize - GetPosTop();
             }
         }
 
@@ -113,60 +113,60 @@ namespace GraphEditor
         {
             double canvasLeft = GetPosLeft();
             double canvasTop = GetPosTop();
-            NodeAnimator.StopEllipseAnimationOnProperty(ellipse, Canvas.LeftProperty);
-            NodeAnimator.StopEllipseAnimationOnProperty(ellipse, Canvas.TopProperty);
+            NodeAnimator.StopEllipseAnimationOnProperty(Ellipse, Canvas.LeftProperty);
+            NodeAnimator.StopEllipseAnimationOnProperty(Ellipse, Canvas.TopProperty);
             SetPosLeft(canvasLeft);
             SetPosTop(canvasTop);
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (!isSelected) return;
-            if (!_window.states.shouldNodeBeMoved) return;
+            if (!_isSelected) return;
+            if (!_window.MainWindowStates.shouldNodeBeMoved) return;
 
             EndMovementAnimations();
 
             Point currentMousePosition = e.GetPosition(sender as Window);
-            SetPosTop(currentMousePosition.Y - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceTopSize - movementDiffTop);
-            SetPosLeft(currentMousePosition.X - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceLeftSize - movementDiffLeft);
+            SetPosTop(currentMousePosition.Y - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceTopSize - _movementDiffTop);
+            SetPosLeft(currentMousePosition.X - NodeConfiguration.EllipseDimensions / 2 - NodeConfiguration.UserInterfaceLeftSize - _movementDiffLeft);
 
             OnNodeMoved?.Invoke(this, e);
         }
         
         public double GetPosLeft()
         {
-            return (double)ellipse.GetValue(Canvas.LeftProperty);
+            return (double)Ellipse.GetValue(Canvas.LeftProperty);
         }
 
         public double GetPosTop()
         {
-            return (double)ellipse.GetValue(Canvas.TopProperty);
+            return (double)Ellipse.GetValue(Canvas.TopProperty);
         }
 
-        private void SetPosLeft(double CanvasLeft)
+        private void SetPosLeft(double canvasLeft)
         {
-            ellipse.SetValue(Canvas.LeftProperty, CanvasLeft);
+            Ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
         }
 
-        private void SetPosTop(double CanvasTop)
+        private void SetPosTop(double canvasTop)
         {
-            ellipse.SetValue(Canvas.TopProperty, CanvasTop);
+            Ellipse.SetValue(Canvas.TopProperty, canvasTop);
         }
 
-        private void TextBlockSetPosLeft(double CanvasLeft)
+        private void TextBlockSetPosLeft(double canvasLeft)
         {
-            _textBlock.SetValue(Canvas.LeftProperty, CanvasLeft);
+            _textBlock.SetValue(Canvas.LeftProperty, canvasLeft);
         }
 
-        private void TextBlockSetPosTop(double CanvasTop)
+        private void TextBlockSetPosTop(double canvasTop)
         {
-            _textBlock.SetValue(Canvas.TopProperty, CanvasTop);
+            _textBlock.SetValue(Canvas.TopProperty, canvasTop);
         }
 
         protected void OnMagicWondOrder()
         {
-            double leftTarget = random.Next(100) - 50;
-            double topTarget = random.Next(100) - 50;
+            double leftTarget = _random.Next(100) - 50;
+            double topTarget = _random.Next(100) - 50;
 
             double toLeft = GetPosLeft() + leftTarget;
             DoubleAnimation ellipseAnimationLeft = NodeAnimator.BuildEllipseMagicAnimationLeft(toLeft);
@@ -174,25 +174,25 @@ namespace GraphEditor
             double toTop = GetPosTop() + topTarget;
             DoubleAnimation ellipseAnimationTop = NodeAnimator.BuildEllipseMagicAnimationTop(toTop);
 
-            ellipse.BeginAnimation(Canvas.LeftProperty, ellipseAnimationLeft);
-            ellipse.BeginAnimation(Canvas.TopProperty, ellipseAnimationTop);
+            Ellipse.BeginAnimation(Canvas.LeftProperty, ellipseAnimationLeft);
+            Ellipse.BeginAnimation(Canvas.TopProperty, ellipseAnimationTop);
 
-            testWasMagicWondClicked = true;
+            _testWasMagicWandClicked = true;
         }
 
         private void NodeAddingAnimation()
         {
             DoubleAnimation nodeWidthAnimation = NodeAnimator.BuildEllipseArrivalAnimationWidth(NodeConfiguration.EllipseDimensions);
-            ellipse.BeginAnimation(Button.WidthProperty, nodeWidthAnimation);
+            Ellipse.BeginAnimation(Button.WidthProperty, nodeWidthAnimation);
 
             DoubleAnimation nodeMovingLeftAnimation = NodeAnimator.BuildEllipseArrivalAnimationLeft(this, NodeConfiguration.EllipseDimensions);
-            ellipse.BeginAnimation(Canvas.LeftProperty, nodeMovingLeftAnimation);
+            Ellipse.BeginAnimation(Canvas.LeftProperty, nodeMovingLeftAnimation);
 
             DoubleAnimation nodeMovingTopAnimation = NodeAnimator.BuildEllipseArrivalAnimationTop(this, NodeConfiguration.EllipseDimensions);
-            ellipse.BeginAnimation(Canvas.TopProperty, nodeMovingTopAnimation);
+            Ellipse.BeginAnimation(Canvas.TopProperty, nodeMovingTopAnimation);
 
             DoubleAnimation nodeHeightAnimation = NodeAnimator.BuildEllipseArrivalAnimationHeight(NodeConfiguration.EllipseDimensions);
-            ellipse.BeginAnimation(Button.HeightProperty, nodeHeightAnimation);
+            Ellipse.BeginAnimation(Button.HeightProperty, nodeHeightAnimation);
         }
 
         private void Ellipse_LayoutUpdated(object sender, EventArgs e)
@@ -203,7 +203,7 @@ namespace GraphEditor
 
         public override string ToString()
         {
-            return "Node " + _id;
+            return "Node " + Id;
         }
 
         public void Rename(string newName)
@@ -216,15 +216,15 @@ namespace GraphEditor
         {
             _canvas.Children.Remove(_textBlock);
             _window.MouseMove -= OnMouseMove;
-            _window.KillAllSelections -= Unselect;
-            _window.MagicWandOrder -= OnMagicWondOrder;
-            _canvas.Children.Remove(ellipse);
-            buttonSelected -= _window.OnNodeSelected;
+            _window.OnKillAllSelections -= Unselect;
+            _window.OnMagicWandOrder -= OnMagicWondOrder;
+            _canvas.Children.Remove(Ellipse);
+            OnButtonSelected -= _window.OnNodeSelected;
         }
 
         public List<int> GetIdAsList()
         {
-            return new List<int> { _id };
+            return new List<int> { Id };
         }
     }
 }

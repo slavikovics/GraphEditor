@@ -1,30 +1,29 @@
 ﻿using GraphEditor.GraphTabs;
 using System.Windows.Controls;
-using System.Xml.Linq;
 
 namespace GraphEditor.GraphTab
 {
     internal class Tab
     {
-        TabButton tabButton;
+        private TabButton _tabButton;
 
         public Tab(TextBlock name, ControlTemplate buttonTemplate, int id)
         {
-            tabButton = new TabButton(buttonTemplate, id);
-            tabButton.Content = name;
+            _tabButton = new TabButton(buttonTemplate, id);
+            _tabButton.Content = name;
         }
 
         public Tab(Image image, ControlTemplate buttonTemplate, int id)
         {
-            tabButton = new TabButton(buttonTemplate, id);
+            _tabButton = new TabButton(buttonTemplate, id);
             Image contentImage = new Image();
             contentImage.Source = image.Source;
-            tabButton.Content = contentImage;
+            _tabButton.Content = contentImage;
         }
 
         public TabButton GetTabAsTabButton()
         {
-            return tabButton;
+            return _tabButton;
         }
     }
 }
