@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Image x:Key="OrientedPencilPopUp">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.ClipGeometry>
+                                <RectangleGeometry Rect="0,0,400,400" />
+                            </DrawingGroup.ClipGeometry>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M245.05,134.79L293.72,125.49C300.82,124.13,306.41,131.48,303.21,137.96L281.27,182.39C277.57,189.88,266.49,188.43,264.84,180.24L261.68,164.52C261.15,161.89,259.44,159.65,257.05,158.43L242.74,151.19C235.29,147.42,236.84,136.35,245.05,134.78z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Transform="0.8191,-0.5737,0.5737,0.8191,-89.51,146.2">
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FFAEA3D8" Thickness="11" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="11.25" RadiusY="11.25" Rect="78,198,218,34" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+</ResourceDictionary>

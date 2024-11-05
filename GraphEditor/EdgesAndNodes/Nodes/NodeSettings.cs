@@ -20,8 +20,9 @@ namespace GraphEditor.EdgesAndNodes.Nodes
             ellipse.Width = NodeConfiguration.EllipseDimensions;
             ellipse.Height = NodeConfiguration.EllipseDimensions;
             ellipse.Template = window.ButtonMagicWond.Template;
-            ellipse.Content = new Image();
-            (ellipse.Content as Image).Source = ((Image)window.EllipseExample.Content).Source;
+            Image image = new Image();
+            image.Source = ((Image)window.EllipseExample.Content).Source;
+            ellipse.Content = image;
         }
     }
 }

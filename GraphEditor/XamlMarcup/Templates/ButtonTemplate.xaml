@@ -1,0 +1,41 @@
+﻿<ResourceDictionary x:Class="GraphEditor.ButtonTemplate"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+        <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="50" Background="MediumPurple">
+            <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="MediumPurple" 
+                            Duration="0:0:0.2" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="DarkOrchid" 
+                            Duration="0:0:0.3" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ColorAnimation 
+                            Storyboard.TargetName="BorderTemplate" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="Purple" 
+                            Duration="0:0:0.1" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Image x:Key="SaveButtonImage">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.ClipGeometry>
+                                <RectangleGeometry Rect="0,0,400,400" />
+                            </DrawingGroup.ClipGeometry>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M236.17,107L163.84,107C148.47,107,136.01,119.46,136.01,134.83L136.01,264.16C136.01,279.53,148.47,291.99,163.84,291.99L236.17,291.99C251.54,291.99,264,279.53,264,264.16L264,134.83C264,119.46,251.54,107,236.17,107z M247,148C247,151.31,244.31,154,241,154L160,154C156.69,154,154,151.31,154,148L154,136C154,132.69,156.69,130,160,130L241,130C244.31,130,247,132.69,247,136L247,148z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="7" RadiusY="7" Rect="163,274,14,41" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="7" RadiusY="7" Rect="183,274,14,41" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="7" RadiusY="7" Rect="203,274,14,41" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="7" RadiusY="7" Rect="223,274,14,41" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+</ResourceDictionary>

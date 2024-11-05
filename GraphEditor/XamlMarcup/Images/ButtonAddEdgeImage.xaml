@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Image x:Key="ButtonAddEdgeImage">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.ClipGeometry>
+                                <RectangleGeometry Rect="0,0,400,400" />
+                            </DrawingGroup.ClipGeometry>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Transform="0.8336,-0.5524,0.5524,0.8336,-78.31,144.72">
+                                <GeometryDrawing Brush="#FFAEA3D8">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="11" RadiusY="11" Rect="89.56,188.53,223,27.64" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M253.65,130.66L302.32,121.36C309.42,120,315.01,127.35,311.81,133.83L289.87,178.26C286.17,185.75,275.09,184.3,273.44,176.11L270.28,160.39C269.75,157.76,268.04,155.52,265.65,154.3L251.34,147.06C243.89,143.29,245.44,132.22,253.65,130.65z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+</ResourceDictionary>

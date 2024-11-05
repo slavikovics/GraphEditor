@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Image x:Key="ButtonGraphImage">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.ClipGeometry>
+                                <RectangleGeometry Rect="0,0,400,400" />
+                            </DrawingGroup.ClipGeometry>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="49.5" RadiusY="49.5" Center="150.09,119.44" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="49.5" RadiusY="49.5" Center="249.09,275.44" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Transform="0.5461,0.8377,-0.8377,0.5461,258.3,-76.87">
+                                <GeometryDrawing Brush="#FFAEA3D8">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="67.59,187.94,265,24" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+</ResourceDictionary>

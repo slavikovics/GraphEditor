@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Image x:Key="ButtonMagicWandImage">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.ClipGeometry>
+                                <RectangleGeometry Rect="0,0,400,400" />
+                            </DrawingGroup.ClipGeometry>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Transform="0.7833,-0.6217,0.6217,0.7833,-118.93,145.58">
+                                <GeometryDrawing Brush="#FFAEA3D8">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="9.82" RadiusY="9.82" Rect="72.24,231.06,154.11,24.56" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M188.3,209.65C176.75,201.86 165.2,194.07 153.66,186.27 164.01,185.37 174.36,184.48 184.71,183.58 187.01,172.18 189.31,160.77 191.61,149.37 198,159.87 204.38,170.38 210.77,180.88 223.01,174.94 235.24,169.01 247.48,163.07 242.43,174.4 237.39,185.73 232.34,197.06 241.6,205.76 250.87,214.46 260.13,223.16 244.87,220.75 229.62,218.34 214.36,215.93 211.69,226.07 209.03,236.21 206.36,246.35 200.34,234.11 194.31,221.87 188.29,209.64z" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M226.16,130.98L226.16,130.98 236.7,102.94 220.59,102.72" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M274.33,152.05L274.33,152.05 311.96,139.33 296.28,121.7" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFAEA3D8">
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry FillRule="Nonzero" Figures="M296.9,209.7L296.9,209.7 326.21,215.6 323.86,199.7" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+
+</ResourceDictionary>

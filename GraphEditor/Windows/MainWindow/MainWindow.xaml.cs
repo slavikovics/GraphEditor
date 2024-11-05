@@ -198,11 +198,11 @@ namespace GraphEditor
 
             OrientedSimplePopUp.Visibility = Visibility.Visible;
             NonOrientedPopUp.Visibility = Visibility.Visible;
-            OrientedPencilePopUp.Visibility = Visibility.Visible;
+            OrientedPencilPopUp.Visibility = Visibility.Visible;
 
             DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(ButtonAddPosition);
             DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(ButtonAddPosition);
-            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(ButtonAddPosition);
+            DoubleAnimation OrientedPencilPopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilPopUpTopAnimation(ButtonAddPosition);
             DoubleAnimation EdgePopUpLeftAnimation = MainWindowAnimator.BuildEdgePopUpLeftAnimation();
             DoubleAnimation arrowTypesWidthAnimation = MainWindowAnimator.BuildArrowTypesWidthAnimation();
 
@@ -212,16 +212,16 @@ namespace GraphEditor
             NonOrientedPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
             NonOrientedPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
 
-            OrientedPencilePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
-            OrientedPencilePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+            OrientedPencilPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+            OrientedPencilPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
 
             OrientedSimplePopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
             NonOrientedPopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
-            OrientedPencilePopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
+            OrientedPencilPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilPopUpTopAnimation);
 
             OrientedSimplePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
             NonOrientedPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
-            OrientedPencilePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+            OrientedPencilPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
         }
 
         private void OnButtonSelectClick(object sender, RoutedEventArgs e)
@@ -316,7 +316,7 @@ namespace GraphEditor
         {
             OrientedSimplePopUp.Visibility = Visibility.Hidden;
             NonOrientedPopUp.Visibility = Visibility.Hidden;
-            OrientedPencilePopUp.Visibility = Visibility.Hidden;
+            OrientedPencilPopUp.Visibility = Visibility.Hidden;
         }
 
         private void OnGraphsManagerGridMouseDown(object sender, MouseButtonEventArgs e)
@@ -338,7 +338,7 @@ namespace GraphEditor
 
         private void OnOrientedPencilPopUpClick(object sender, RoutedEventArgs e)
         {
-            (ButtonAddEdge.Content as Image).Source = (OrientedPencilePopUp.Content as Image).Source;
+            (ButtonAddEdge.Content as Image).Source = (OrientedPencilPopUp.Content as Image).Source;
             _selectedEdgeType = Edge.EdgeTypes.OrientedPencil;
             HidePopUpMenus();
         }

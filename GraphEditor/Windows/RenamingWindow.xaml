@@ -8,102 +8,35 @@
         Background="#FF221B2F"
         Title="Graph Editor Information" Height="300" Width="500"
         ResizeMode="NoResize"
-        MouseDown="Grid_MouseDown" Loaded="OnWindowLoaded">
-    <Window.Resources>
-        <Style x:Key="WindowStyle" TargetType="Window">
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome GlassFrameThickness="1" 
-                    ResizeBorderThickness="4"
-                    CaptionHeight="0"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
-            <Border x:Name="BorderTemplate" BorderThickness="0" CornerRadius="50" Background="MediumPurple">
-                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="MediumPurple" 
-                                        Duration="0:0:0.2" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="MouseOver">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="DarkOrchid" 
-                                        Duration="0:0:0.3" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="Purple" 
-                                        Duration="0:0:0.1" />
-                            </Storyboard>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Border>
-        </ControlTemplate>
+        MouseDown="OnGridMouseDown" Loaded="OnWindowLoaded">
 
-        <ControlTemplate x:Key="DialogButtonTemplate" TargetType="Button">
-            <Grid>
-                <Border x:Name="BorderTemplate" BorderThickness="2" BorderBrush="#FFAEA3D8" CornerRadius="10" Background="MediumPurple"/>
-                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="MediumPurple" 
-                                        Duration="0:0:0.2" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="MouseOver">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="DarkOrchid" 
-                                        Duration="0:0:0.3" />
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <Storyboard>
-                                <ColorAnimation 
-                                        Storyboard.TargetName="BorderTemplate" 
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                        To="Purple" 
-                                        Duration="0:0:0.1" />
-                            </Storyboard>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Grid>
-        </ControlTemplate>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\XamlMarcup\Templates\ButtonTemplate.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Templates\DialogButtonTemplate.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\GraphEditorWindowStyle.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\CloseWindowButtonImage.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\MaximizeWindowButtonImage.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\CollapseWindowButtonImage.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
+
     <Window.Style>
         <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
+
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
             <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
+
         <Grid Grid.Row="0">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="24"/>
@@ -111,179 +44,111 @@
                 <ColumnDefinition Width="24"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
+
             <Button x:Name="CollapseWindowButton" 
-                            Template="{StaticResource ButtonTemplate}" 
-                            BorderThickness="0" Background="Purple" 
-                            Grid.Column="1"
-                            Margin="2 11 2 2" 
-                            Padding="0" 
-                            Height="20" 
-                            Width="20" 
-                            Click="CollapseWindowButton_Click"
-                            MouseEnter="Button_MouseEnter"
-                            MouseLeave="Button_MouseLeave"
-                            MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                            MouseLeftButtonUp="Button_MouseLeftButtonUp">
-                <Image>
-                    <Image.Source>
-                        <DrawingImage>
-                            <DrawingImage.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup>
-                                        <DrawingGroup.ClipGeometry>
-                                            <RectangleGeometry Rect="0,0,400,400" />
-                                        </DrawingGroup.ClipGeometry>
-                                        <GeometryDrawing Brush="#FFAEA3D8">
-                                            <GeometryDrawing.Geometry>
-                                                <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                        <DrawingGroup Transform="0,1,-1,0,401.5,0.5">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="13" RadiusY="13" Rect="187.5,92.5,26,217" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingGroup>
-                                </DrawingGroup>
-                            </DrawingImage.Drawing>
-                        </DrawingImage>
-                    </Image.Source>
-                </Image>
-            </Button>
+                    Template="{StaticResource ButtonTemplate}" 
+                    Content="{DynamicResource CollapseWindowButtomImage}" 
+                    BorderThickness="0" Background="Purple" 
+                    Grid.Column="1"
+                    Margin="2 11 2 2" 
+                    Padding="0" 
+                    Height="20" 
+                    Width="20" 
+                    Click="OnCollapseWindowButtonClick"
+                    MouseEnter="OnButtonMouseEnter"
+                    MouseLeave="OnButtonMouseLeave"
+                    MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                    MouseLeftButtonUp="OnButtonMouseLeftButtonUp"/>
+
             <Button x:Name="MaximizeWindowButton" 
                     Template="{StaticResource ButtonTemplate}" 
+                    Content="{DynamicResource MaximizeWindowButtonImage}"
                     BorderThickness="0" Background="Purple" 
                     Grid.Column="2"
                     Margin="2 11 2 2"  
                     Padding="0" 
                     Height="20" 
                     Width="20" 
-                    MouseEnter="Button_MouseEnter"
-                    MouseLeave="Button_MouseLeave"
-                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
-                <Image>
-                    <Image.Source>
-                        <DrawingImage>
-                            <DrawingImage.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup>
-                                        <DrawingGroup.ClipGeometry>
-                                            <RectangleGeometry Rect="0,0,400,400" />
-                                        </DrawingGroup.ClipGeometry>
-                                        <GeometryDrawing Brush="#FFAEA3D8">
-                                            <GeometryDrawing.Geometry>
-                                                <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                        <DrawingGroup Transform="0,1,-1,0,341.62,-58.56">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="11.58" RadiusY="11.58" Rect="188.51,44.85,23.17,193.35" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                        <DrawingGroup Transform="0,1,-1,0,457.45,57.27">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="11.58" RadiusY="11.58" Rect="188.51,160.68,23.17,193.35" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                        <DrawingGroup Transform="-1,-0,0,-1,228.21,402.45">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="11.58" RadiusY="11.58" Rect="102.52,133.51,23.17,135.44" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                        <DrawingGroup Transform="-1,-0,0,-1,570.36,402.45">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="11.58" RadiusY="11.58" Rect="273.6,133.51,23.17,135.44" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingGroup>
-                                </DrawingGroup>
-                            </DrawingImage.Drawing>
-                        </DrawingImage>
-                    </Image.Source>
-                </Image>
-            </Button>
+                    MouseEnter="OnButtonMouseEnter"
+                    MouseLeave="OnButtonMouseLeave"
+                    MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                    MouseLeftButtonUp="OnButtonMouseLeftButtonUp"/>
+
             <Button x:Name="CloseWindowButton" 
                     Template="{StaticResource ButtonTemplate}" 
+                    Content="{DynamicResource CloseWindowButtonImage}"
                     BorderThickness="0" Background="Purple" 
                     Grid.Column="3"
                     Margin="2 11 2 2" 
                     Padding="0" 
                     Height="20" 
                     Width="20" 
-                    Click="CloseWindowButton_Click"
-                    MouseEnter="Button_MouseEnter"
-                    MouseLeave="Button_MouseLeave"
-                    MouseLeftButtonDown="Button_MouseLeftButtonDown"
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp">
-                <Image>
-                    <Image.Source>
-                        <DrawingImage>
-                            <DrawingImage.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup>
-                                        <DrawingGroup.ClipGeometry>
-                                            <RectangleGeometry Rect="0,0,400,400" />
-                                        </DrawingGroup.ClipGeometry>
-                                        <GeometryDrawing Brush="#FFAEA3D8">
-                                            <GeometryDrawing.Geometry>
-                                                <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                        <DrawingGroup Transform="-0.7071,0.7071,-0.7071,-0.7071,484.4,201.35">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="13" RadiusY="13" Rect="187.5,92.5,26,217" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                        <DrawingGroup Transform="-0.7071,-0.7071,0.7071,-0.7071,197.48,485.02">
-                                            <GeometryDrawing Brush="#FFAEA3D8">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry RadiusX="13" RadiusY="13" Rect="186.19,93.11,26,217" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingGroup>
-                                </DrawingGroup>
-                            </DrawingImage.Drawing>
-                        </DrawingImage>
-                    </Image.Source>
-                </Image>
-            </Button>
+                    Click="OnCloseWindowButtonClick"
+                    MouseEnter="OnButtonMouseEnter"
+                    MouseLeave="OnButtonMouseLeave"
+                    MouseLeftButtonDown="OnButtonMouseLeftButtonDown"
+                    MouseLeftButtonUp="OnButtonMouseLeftButtonUp"/>
+
         </Grid>
+
         <StackPanel Grid.Row="1">
-            <Label Content="Renaming" FontWeight="Bold" HorizontalAlignment="Center"  FontSize="30" Foreground="MediumPurple"/>
-            <Button Name="TextInput" Template="{StaticResource DialogButtonTemplate}" Height="60" Margin="10 20 10 0" FontWeight="Bold">
-                <TextBlock Name="RenamedName" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="35" FontWeight="Bold" Text="Hello|"/>
+
+            <Label Content="Renaming" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center"  
+                   FontSize="30" 
+                   Foreground="MediumPurple"/>
+
+            <Button Name="TextInput" 
+                    Template="{StaticResource DialogButtonTemplate}" 
+                    Height="60" 
+                    Margin="10 20 10 0" 
+                    FontWeight="Bold">
+
+                <TextBlock Name="RenamedName" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" 
+                           FontSize="35"
+                           FontWeight="Bold" 
+                           Text="Hello|"/>
+
             </Button>
-            <TextBox Name="HiddenTextBox"  Margin="10 10 10 10" Opacity="0" LayoutUpdated="OnHiddenTextBoxLayoutUpdated"/>
+
+            <TextBox Name="HiddenTextBox"  
+                     Margin="10 10 10 10" 
+                     Opacity="0" 
+                     LayoutUpdated="OnHiddenTextBoxLayoutUpdated"/>
+
         </StackPanel>
-        <StackPanel Height="90" Grid.Row="2" Orientation="Horizontal">
+
+        <StackPanel Height="90" 
+                    Grid.Row="2" 
+                    Orientation="Horizontal">
+
             <Button Name="ApplyButton" 
                     Template="{StaticResource DialogButtonTemplate}" 
                     Content="Apply" 
                     FontWeight="Bold" 
-                    MouseEnter="Button_MouseEnter" 
-                    MouseLeave="Button_MouseLeave" 
-                    MouseLeftButtonDown="Button_MouseLeftButtonDown" 
-                    MouseLeftButtonUp="Button_MouseLeftButtonUp" 
+                    MouseEnter="OnButtonMouseEnter" 
+                    MouseLeave="OnButtonMouseLeave" 
+                    MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                    MouseLeftButtonUp="OnButtonMouseLeftButtonUp" 
                     Margin="30 30 0 30" 
                     Height="30" 
                     Width="80" 
-                    Click="OnApplyButtonClick">
-            </Button>
-            <Button Name="CancelButton" Template="{StaticResource DialogButtonTemplate}" Content="Cancel" FontWeight="Bold" Margin="280 30 30 30" Height="30" Width="80" Click="OnCancelButtonClick"></Button>
+                    Click="OnApplyButtonClick"/>
+
+            <Button Name="CancelButton" 
+                    Template="{StaticResource DialogButtonTemplate}"
+                    Content="Cancel" 
+                    FontWeight="Bold"
+                    Margin="280 30 30 30" 
+                    Height="30"
+                    Width="80"
+                    Click="OnCancelButtonClick"/>
+
         </StackPanel>
+
     </Grid>
+
 </Window>
