@@ -63,7 +63,7 @@ namespace GraphEditor
             (Ellipse.Content as Image).MouseDown += OnMouseDown;
             _window.MouseMove += OnMouseMove;
             _window.OnKillAllSelections += OnUnselect;
-            _window.OnMagicWandOrder += OnMagicWondOrder;
+            _window.OnMagicWandOrder += OnMagicWandOrder;
             Ellipse.LayoutUpdated += OnEllipseLayoutUpdated;
         }
 
@@ -163,7 +163,7 @@ namespace GraphEditor
             _textBlock.SetValue(Canvas.TopProperty, canvasTop);
         }
 
-        protected void OnMagicWondOrder()
+        protected void OnMagicWandOrder()
         {
             if (!_canvas.Children.Contains(Ellipse)) return;
 
@@ -219,7 +219,7 @@ namespace GraphEditor
             _canvas.Children.Remove(_textBlock);
             _window.MouseMove -= OnMouseMove;
             _window.OnKillAllSelections -= OnUnselect;
-            _window.OnMagicWandOrder -= OnMagicWondOrder;
+            _window.OnMagicWandOrder -= OnMagicWandOrder;
             _canvas.Children.Remove(Ellipse);
             OnButtonSelected -= _window.OnNodeSelected;
         }
