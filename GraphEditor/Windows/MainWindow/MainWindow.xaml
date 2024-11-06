@@ -225,7 +225,7 @@
                         MouseEnter="OnButtonMouseEnter"
                         MouseLeave="OnButtonMouseLeave"
                         MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
-                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"/>
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnSaveButtonClick"/>
 
                 <Button Template="{StaticResource ButtonTemplate}"
                         Content="{StaticResource SettingsButtonImage}"

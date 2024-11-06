@@ -1,6 +1,7 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.GraphsManager;
+using GraphEditor.GraphsSavingAndLoading;
 using GraphEditor.GraphTabs;
 using GraphEditor.Windows.MainWindow;
 using System;
@@ -398,6 +399,11 @@ namespace GraphEditor
                 RemoveEdge(edge);
             }
             _selectedEdge = sender as IEdge;
+        }
+
+        private void OnSaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            FileInput fileInput = new FileInput();
         }
     }
 }
