@@ -34,6 +34,7 @@ namespace GraphEditor
         private EdgeAnimationController _edgeAnimationController;
         private NodeAnimationController _nodeAnimationController;
         private GraphManager _graphsManager;
+        private TabView _tabView;
 
         public MainWindow()
         {
@@ -45,8 +46,15 @@ namespace GraphEditor
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = "Graph 1";
-            TabView tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas, MainCanvas);
-            tabView.AddTabViewToMainWindow();
+            _tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), 
+            (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas, MainCanvas, GraphVisualTreeStackPanel, _graphsManager);
+            _tabView.TabLoaded += OnTabViewTabLoaded;
+            _tabView.AddTabViewToMainWindow();
+        }
+
+        private void OnTabViewTabLoaded()
+        {
+            _tabView.ResizeGraphsManagerGrid(GraphsManagerGrid);
         }
 
         private void OnButtonMouseEnter(object sender, MouseEventArgs e)
@@ -125,9 +133,9 @@ namespace GraphEditor
             if (MainWindowStates.shouldNodeBeAdded)
             {
                 Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
-                node.OnButtonSelected += OnNodeSelected;
-                GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);   
+                node.OnButtonSelected += OnNodeSelected;  
                 BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
+                GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
                 _nodes.Add(node);
 
                 if (_edgeAnimationController == null)
@@ -170,9 +178,9 @@ namespace GraphEditor
         }
 
         private void RegisterEdge(IEdge edge)
-        {
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+        {           
             BordersInserter.InsertEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);
+            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
             _edgeAnimationController.AddEdge(edge);
             _edges.Add(edge);
         }

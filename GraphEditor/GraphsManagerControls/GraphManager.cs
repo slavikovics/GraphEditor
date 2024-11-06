@@ -40,7 +40,7 @@ namespace GraphEditor.GraphsManager
 
         public GraphItemBorder AddGraph(string graphName)
         {
-            return GenerateGraphManagerGraphBorder("", "Graph", "graph", null, new List<int>());
+            return GenerateGraphManagerGraphBorder("", graphName, "graph", null, new List<int>());
         }
 
         public GraphItemBorder AddEdge(IEdge edge, List<int> nodesDependencies)

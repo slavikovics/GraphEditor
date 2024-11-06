@@ -292,7 +292,7 @@
             
             <Grid Name="GraphsManagerGrid"  
                   Margin="0 20 20 0" 
-                  Height="88" 
+                  Height="20" 
                   VerticalAlignment="Top"  
                   Grid.Column="2" 
                   MouseDown="OnGraphsManagerGridMouseDown">

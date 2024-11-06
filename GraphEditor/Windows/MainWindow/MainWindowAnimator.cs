@@ -55,7 +55,9 @@ namespace GraphEditor.Windows.MainWindow
         public static DoubleAnimation BuildGraphsManagerGridExpansion(StackPanel GraphVisualTreeStackPanel)
         {
             DoubleAnimation gridAnimation = new DoubleAnimation();
-            gridAnimation.To = 88 + GraphVisualTreeStackPanel.Children.Count * 38;
+            double targetCount = GraphVisualTreeStackPanel.Children.Count;
+            if (targetCount > 14) targetCount = 14;
+            gridAnimation.To = 50 + targetCount * 38;
             gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return gridAnimation;
         }
