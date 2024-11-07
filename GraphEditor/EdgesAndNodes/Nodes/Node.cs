@@ -73,7 +73,7 @@ namespace GraphEditor
             SetPosTop(NodeCalculations.CalculateEllipsePositionTop(canvasTop, NodeConfiguration.UserInterfaceTopSize, NodeConfiguration.EllipseDimensions));
         }
 
-        public int GetEllipseDimensions()
+        public virtual int GetEllipseDimensions()
         {
             return NodeConfiguration.EllipseDimensions;
         }
@@ -143,12 +143,12 @@ namespace GraphEditor
             return (double)Ellipse.GetValue(Canvas.TopProperty);
         }
 
-        private void SetPosLeft(double canvasLeft)
+        public void SetPosLeft(double canvasLeft)
         {
             Ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
         }
 
-        private void SetPosTop(double canvasTop)
+        public void SetPosTop(double canvasTop)
         {
             Ellipse.SetValue(Canvas.TopProperty, canvasTop);
         }

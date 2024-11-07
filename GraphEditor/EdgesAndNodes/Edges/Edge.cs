@@ -1,4 +1,5 @@
-﻿using GraphEditor.GraphsManagerControls;
+﻿using GraphEditor.EdgesAndNodes.Nodes;
+using GraphEditor.GraphsManagerControls;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace GraphEditor.EdgesAndNodes.Edges
         public Rectangle EdgeVisualRepresentation;
         protected Brush _edgeBrush;
 
+        protected HiddenNode _centerNode;
+
         public enum EdgeTypes
         {
             OrientedSimple,
@@ -33,6 +36,8 @@ namespace GraphEditor.EdgesAndNodes.Edges
             _mainWindow = window;
             _mainCanvas = mainCanvas;
             EdgeVisualRepresentation = new Rectangle();
+
+            _centerNode = new HiddenNode(100, 100, _mainCanvas, _mainWindow, 0);
 
             SetUpEvents();
         }
@@ -75,6 +80,10 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public virtual void EdgePositioning(bool isInGraph)
         {
+            double middlePointLeft = (_firstNode.GetPosLeft() + _secondNode.GetPosLeft()) / 2;
+            double middlePointTop = (_firstNode.GetPosTop() + _secondNode.GetPosTop()) / 2;
+            _centerNode.SetPosLeft(middlePointLeft);
+            _centerNode.SetPosTop(middlePointTop);
         }
 
         public virtual void EdgeDragged(double dragDeltaX, double dragDeltaY)
@@ -126,6 +135,11 @@ namespace GraphEditor.EdgesAndNodes.Edges
         public Rectangle GetEdgeVisualRepresentation()
         {
             return EdgeVisualRepresentation;
+        }
+
+        public HiddenNode GetEdgeCenterNode()
+        {
+            return _centerNode;
         }
     }
 }

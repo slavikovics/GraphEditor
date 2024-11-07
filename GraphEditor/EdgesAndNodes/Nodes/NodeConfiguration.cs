@@ -11,7 +11,7 @@ namespace GraphEditor.EdgesAndNodes.Nodes
         public static int TextBlockFontSize = 14;
         public static FontWeight TextBlockFontWeight = FontWeights.Bold;
         public static int TextBlockHeight = 30;
-        public static int TextBlockWidth = 100;
+        public static int TextBlockWidth = 300;
 
         public static int EllipseDimensions = 40;
         public static int EllipseHeight = 40;

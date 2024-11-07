@@ -62,6 +62,8 @@ namespace GraphEditor
 
         public override void EdgePositioning(bool isInGraph)
         {
+            base.EdgePositioning(isInGraph);
+
             double angle = EdgeCalculations.CalculateAngle(_firstNode, _secondNode);
             double width = EdgeCalculations.CalculateFinalWidth(_firstNode, _secondNode, _edgeConfiguration.EdgeOffsetLeft);
 

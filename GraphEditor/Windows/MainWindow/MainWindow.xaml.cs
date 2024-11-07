@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Xml.Linq;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
@@ -399,6 +400,9 @@ namespace GraphEditor
                 RemoveEdge(edge);
             }
             _selectedEdge = sender as IEdge;
+            Node node = ((sender as Edge).GetEdgeCenterNode() as Node);
+            node.OnButtonSelected += OnNodeSelected;
+            OnNodeSelected(node, e);
         }
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GraphEditor.EdgesAndNodes.Edges;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GraphEditor.EdgesAndNodes.Nodes
@@ -8,16 +9,24 @@ namespace GraphEditor.EdgesAndNodes.Nodes
     /// </summary>
     internal class HiddenNode : Node
     {
-        public HiddenNode(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id, IEdge edge) : base(canvasLeft, canvasTop, parent, window, id)
+        private const int HiddenNodeEllipseDimensions = 40;
+
+        public HiddenNode(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id) : base(canvasLeft, canvasTop, parent, window, id)
         {
             HideNode();
             window.OnMagicWandOrder -= OnMagicWandOrder;
+            EndMovementAnimations();
         }
 
         private void HideNode()
         {
             Ellipse.Visibility = Visibility.Hidden;
             _textBlock.Visibility = Visibility.Hidden;
+        }
+
+        public override int GetEllipseDimensions()
+        {
+            return HiddenNodeEllipseDimensions;
         }
     }
 }
