@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace GraphEditor.GraphsSavingAndLoading
@@ -20,7 +22,15 @@ namespace GraphEditor.GraphsSavingAndLoading
             if (dialogResult == DialogResult.OK)
             {
                 OpenFile(openFileDialog.FileName);
-            }
+                try
+                {
+                    ParseFile();
+                }
+                catch
+                { 
+                }             
+                PrintGraph();
+            }     
         }
 
         private void OpenFile(string fileName)
@@ -31,43 +41,83 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private void ParseFile()
         {
-            int searchIndex = 0;
             int unitStartIndex = 0;
             int unitEndIndex = 0;
 
-            string KeyNode = null;
+            string keyNode = null;
 
             //Content.Replace(" ", "");
-            //Content.Replace("\n", "");
-
-            GraphUnits.Add(new GraphUnit());
-
-            if (KeyNode == null)
-            {
-                unitEndIndex = Content.IndexOf(" ", searchIndex);
-                GraphUnits.Last().FirstNodeName = Content.Substring(unitStartIndex, unitEndIndex - unitEndIndex);
-                unitStartIndex = unitEndIndex + 1;
-            }
-            else
-            {
-                GraphUnits.Last().FirstNodeName = KeyNode;
-            }
             
+            Content.Replace("\r", "");
+            Content.Replace("\n", "");
+            Content = Regex.Replace(Content, @"\s+", " ").Trim();
 
-            if (CheckIfRelationHasName(unitStartIndex))
+            Console.WriteLine(Content);
+            // should work only with one space between elements
+
+            while (unitStartIndex <= Content.Length)
             {
-                unitEndIndex = Content.IndexOf(":", unitStartIndex);
-                GraphUnits.Last().RelationName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
+                GraphUnits.Add(new GraphUnit());
+
+                // finding first node to relation
+                if (keyNode == null)
+                {
+                    unitEndIndex = Content.IndexOf(" ", unitStartIndex);
+                    if (unitEndIndex == -1) return;
+                    GraphUnits.Last().FirstNodeName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
+                    unitStartIndex = unitEndIndex + 1;
+                    if (unitStartIndex > Content.Length) return;
+                }
+                else
+                {
+                    GraphUnits.Last().FirstNodeName = keyNode;
+                }
+
+                // finding relation type
+                unitEndIndex = Content.IndexOf(" ", unitStartIndex);
+                if (unitEndIndex == -1) return;
+                GraphUnits.Last().RelationType = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
                 unitStartIndex = unitEndIndex + 1;
-            }
-            else
-            {
-                GraphUnits.Last().RelationName = "";
+                if (unitStartIndex > Content.Length) return;
+
+                // finding relation name
+                if (CheckIfRelationHasName(unitStartIndex))
+                {
+                    unitEndIndex = Content.IndexOf(" ", unitStartIndex);
+                    if (unitEndIndex == -1) return;
+                    GraphUnits.Last().RelationName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
+                    unitStartIndex = unitEndIndex + 1;
+                    if (unitStartIndex > Content.Length) return;
+                }
+                else
+                {
+                    GraphUnits.Last().RelationName = "";
+                }
+
+                unitEndIndex = FindFirstIndexOfLineEnd(unitStartIndex);
+                if (unitEndIndex == -1) return;
+                GraphUnits.Last().SecondNodeName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex).Trim();
+                unitStartIndex = unitEndIndex;
+                if (unitStartIndex + 1 > Content.Length) return;
+
+                if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';' && Content[FindFirstIndexOfLineEnd(unitStartIndex) + 1] == ';')
+                {
+                    keyNode = null;
+                    unitStartIndex += 2;
+                    continue;
+                }
+                else if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';')
+                {
+                    keyNode = GraphUnits.Last().FirstNodeName;
+                    unitStartIndex++;
+                    continue;
+                }
+
+                keyNode = GraphUnits.Last().SecondNodeName;
+                unitStartIndex += 2;
             }
 
-            unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
-            GraphUnits.Last().RelationType = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
-
+            
         }
 
         private bool CheckFileExtension(string fileName)
@@ -77,18 +127,28 @@ namespace GraphEditor.GraphsSavingAndLoading
             else return false;
         }
 
+        private void PrintGraph()
+        {
+            foreach (GraphUnit graphUnit in GraphUnits)
+            {
+                Console.WriteLine($"{GraphUnits.IndexOf(graphUnit) + 1} {graphUnit.FirstNodeName} {graphUnit.RelationType} {graphUnit.RelationName} {graphUnit.SecondNodeName}");
+            }
+        }
+
+        private int FindFirstIndexOfLineEnd(int startIndex)
+        {
+            int unitEndIndex1 = Content.IndexOf(";", startIndex);
+            int unitEndIndex2 = Content.IndexOf("(", startIndex);
+            return Math.Min(unitEndIndex1, unitEndIndex2);
+        }
+
         private bool CheckIfRelationHasName(int unitStartIndex)
         {
-            int colonIndex = Content.IndexOf(":", unitStartIndex);
-            int arrowStartIndex1 = Content.IndexOf("=", unitStartIndex);
-            int arrowStartIndex2 = Content.IndexOf("<", unitStartIndex);
-            int arrowStartIndex3 = Content.IndexOf(">", unitStartIndex);
-            int arrowStartIndex4 = Content.IndexOf("(", unitStartIndex);
-            if (colonIndex < arrowStartIndex1 && colonIndex < arrowStartIndex2 && colonIndex < arrowStartIndex3 && colonIndex < arrowStartIndex4)
-            {
-                return true;
-            }
-            else return false;
+            if (unitStartIndex >= Content.Length) return false;
+            int index = Content.IndexOf(" ", unitStartIndex);
+            if (index == -1) return false;
+            if (Content.Substring(unitStartIndex, index - unitStartIndex).Contains(":")) return true;
+            else return false;      
         }
     }
 }
