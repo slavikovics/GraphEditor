@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -39,9 +40,11 @@ namespace GraphEditor.GraphsSavingAndLoading
 
             //Content.Replace(" ", "");
             //Content.Replace("\n", "");
+            // should work only with one space between elements
 
             GraphUnits.Add(new GraphUnit());
 
+            // finding first node to relation
             if (KeyNode == null)
             {
                 unitEndIndex = Content.IndexOf(" ", searchIndex);
@@ -52,11 +55,16 @@ namespace GraphEditor.GraphsSavingAndLoading
             {
                 GraphUnits.Last().FirstNodeName = KeyNode;
             }
-            
 
+            // finding relation type
+            unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
+            GraphUnits.Last().RelationType = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
+            unitStartIndex = unitEndIndex + 1;
+
+            // finding relation name
             if (CheckIfRelationHasName(unitStartIndex))
             {
-                unitEndIndex = Content.IndexOf(":", unitStartIndex);
+                unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
                 GraphUnits.Last().RelationName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
                 unitStartIndex = unitEndIndex + 1;
             }
@@ -65,8 +73,19 @@ namespace GraphEditor.GraphsSavingAndLoading
                 GraphUnits.Last().RelationName = "";
             }
 
-            unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
-            GraphUnits.Last().RelationType = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
+            if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';' && Content[FindFirstIndexOfLineEnd(unitStartIndex) + 1] == ';')
+            {
+                KeyNode = null;
+            }
+            else if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';')
+            {
+                KeyNode = GraphUnits.Last().FirstNodeName;
+            }
+            else
+            {
+                KeyNode = GraphUnits.Last().SecondNodeName;
+            }
+
 
         }
 
@@ -77,18 +96,17 @@ namespace GraphEditor.GraphsSavingAndLoading
             else return false;
         }
 
+        private int FindFirstIndexOfLineEnd(int startIndex)
+        {
+            int unitEndIndex1 = Content.IndexOf(";", startIndex);
+            int unitEndIndex2 = Content.IndexOf("(", startIndex);
+            return Math.Min(unitEndIndex1, unitEndIndex2);
+        }
+
         private bool CheckIfRelationHasName(int unitStartIndex)
         {
-            int colonIndex = Content.IndexOf(":", unitStartIndex);
-            int arrowStartIndex1 = Content.IndexOf("=", unitStartIndex);
-            int arrowStartIndex2 = Content.IndexOf("<", unitStartIndex);
-            int arrowStartIndex3 = Content.IndexOf(">", unitStartIndex);
-            int arrowStartIndex4 = Content.IndexOf("(", unitStartIndex);
-            if (colonIndex < arrowStartIndex1 && colonIndex < arrowStartIndex2 && colonIndex < arrowStartIndex3 && colonIndex < arrowStartIndex4)
-            {
-                return true;
-            }
-            else return false;
+            if (Content.Substring(unitStartIndex, Content.IndexOf(" ", unitStartIndex + 1)).Contains(":")) return true;
+            else return false;      
         }
     }
 }
