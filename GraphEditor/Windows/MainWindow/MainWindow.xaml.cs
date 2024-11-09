@@ -407,7 +407,7 @@ namespace GraphEditor
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)
         {
-            FileInput fileInput = new FileInput();
+            FileInput fileInput = new FileInput(MainCanvas);
         }
     }
 }

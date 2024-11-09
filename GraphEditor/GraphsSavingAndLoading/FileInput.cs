@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace GraphEditor.GraphsSavingAndLoading
 {
@@ -12,101 +16,91 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         public List<GraphUnit> GraphUnits { get; private set; }
 
-        public FileInput()
+        public FileInput(Canvas canvas)
         {
             GraphUnits = new List<GraphUnit>();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            DialogResult dialogResult = openFileDialog.ShowDialog();
 
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PNG Image|*.png";
+            saveFileDialog.Title = "Save an Image File";
+            DialogResult dialogResult = saveFileDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                OpenFile(openFileDialog.FileName);
+
+                RenderToPNGFile(canvas, saveFileDialog.FileName);
+                //OpenFile(saveFileDialog.FileName);
             }
         }
 
-        private void OpenFile(string fileName)
+        private const double defaultDpi = 300;
+
+        public static ImageSource RenderToPNGImageSource(Visual targetControl)
         {
-            if (!CheckFileExtension(fileName)) return;
-            Content = File.ReadAllText(fileName);
+            var renderTargetBitmap = GetRenderTargetBitmapFromControl(targetControl);
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+
+            var result = new BitmapImage();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                encoder.Save(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                result.BeginInit();
+                result.CacheOption = BitmapCacheOption.OnLoad;
+                result.StreamSource = memoryStream;
+                result.EndInit();
+            }
+
+            return result;
         }
 
-        private void ParseFile()
+        public static void RenderToPNGFile(Visual targetControl, string filename)
         {
-            int searchIndex = 0;
-            int unitStartIndex = 0;
-            int unitEndIndex = 0;
+            var renderTargetBitmap = GetRenderTargetBitmapFromControl(targetControl);
 
-            string KeyNode = null;
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
 
-            //Content.Replace(" ", "");
-            //Content.Replace("\n", "");
-            // should work only with one space between elements
+            var result = new BitmapImage();
 
-            GraphUnits.Add(new GraphUnit());
-
-            // finding first node to relation
-            if (KeyNode == null)
+            try
             {
-                unitEndIndex = Content.IndexOf(" ", searchIndex);
-                GraphUnits.Last().FirstNodeName = Content.Substring(unitStartIndex, unitEndIndex - unitEndIndex);
-                unitStartIndex = unitEndIndex + 1;
+                using (var fileStream = new FileStream(filename, FileMode.Create))
+                {
+                    encoder.Save(fileStream);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                GraphUnits.Last().FirstNodeName = KeyNode;
+                System.Diagnostics.Debug.WriteLine($"There was an error saving the file: {ex.Message}");
             }
-
-            // finding relation type
-            unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
-            GraphUnits.Last().RelationType = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
-            unitStartIndex = unitEndIndex + 1;
-
-            // finding relation name
-            if (CheckIfRelationHasName(unitStartIndex))
-            {
-                unitEndIndex = Content.IndexOf(" ", unitStartIndex + 1);
-                GraphUnits.Last().RelationName = Content.Substring(unitStartIndex, unitEndIndex - unitStartIndex);
-                unitStartIndex = unitEndIndex + 1;
-            }
-            else
-            {
-                GraphUnits.Last().RelationName = "";
-            }
-
-            if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';' && Content[FindFirstIndexOfLineEnd(unitStartIndex) + 1] == ';')
-            {
-                KeyNode = null;
-            }
-            else if (Content[FindFirstIndexOfLineEnd(unitStartIndex)] == ';')
-            {
-                KeyNode = GraphUnits.Last().FirstNodeName;
-            }
-            else
-            {
-                KeyNode = GraphUnits.Last().SecondNodeName;
-            }
-
-
         }
 
-        private bool CheckFileExtension(string fileName)
+        private static BitmapSource GetRenderTargetBitmapFromControl(Visual targetControl, double dpi = defaultDpi)
         {
-            FileInfo fileInfo = new FileInfo(fileName);
-            if (fileInfo.Extension == ".scs" || fileInfo.Extension == ".txt") return true;
-            else return false;
-        }
+            if (targetControl == null) return null;
 
-        private int FindFirstIndexOfLineEnd(int startIndex)
-        {
-            int unitEndIndex1 = Content.IndexOf(";", startIndex);
-            int unitEndIndex2 = Content.IndexOf("(", startIndex);
-            return Math.Min(unitEndIndex1, unitEndIndex2);
-        }
+            var bounds = VisualTreeHelper.GetDescendantBounds(targetControl);
+            var renderTargetBitmap = new RenderTargetBitmap((int)(bounds.Width * dpi / 96.0),
+                                                            (int)(bounds.Height * dpi / 96.0),
+                                                            dpi,
+                                                            dpi,
+                                                            PixelFormats.Pbgra32);
 
-        private bool CheckIfRelationHasName(int unitStartIndex)
-        {
-            if (Content.Substring(unitStartIndex, Content.IndexOf(" ", unitStartIndex + 1)).Contains(":")) return true;
-            else return false;      
+            var drawingVisual = new DrawingVisual();
+
+            using (var drawingContext = drawingVisual.RenderOpen())
+            {
+                var visualBrush = new VisualBrush(targetControl);
+                drawingContext.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
+            }
+
+            renderTargetBitmap.Render(drawingVisual);
+            return renderTargetBitmap;
         }
     }
 }
