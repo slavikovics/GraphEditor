@@ -16,6 +16,8 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public Color StrokeColor { get; set; }
 
+        public SolidColorBrush Fill { get; set; }
+
         public int StrokeThickness { get; set; }
 
         public int EdgeOffsetLeft { get; set; }

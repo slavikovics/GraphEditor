@@ -36,6 +36,7 @@ namespace GraphEditor
                 EdgeVisualRepresentation.RadiusX = _edgeConfiguration.RadiusX;
                 EdgeVisualRepresentation.RadiusY = _edgeConfiguration.RadiusY;
                 _edgeConfiguration.Height = _edgeConfiguration.PencileHeight;
+                EdgeVisualRepresentation.Fill = _edgeConfiguration.Fill;
             }
             else
             {

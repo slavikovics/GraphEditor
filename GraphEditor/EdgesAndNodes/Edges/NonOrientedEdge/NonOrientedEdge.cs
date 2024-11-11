@@ -26,6 +26,7 @@ namespace GraphEditor
             EdgeVisualRepresentation.RadiusX = _edgeConfiguration.RadiusX;
             EdgeVisualRepresentation.RadiusY = _edgeConfiguration.RadiusY;
             _edgeBrush = new SolidColorBrush(_edgeConfiguration.StrokeColor);
+            EdgeVisualRepresentation.Fill = _edgeConfiguration.Fill;
             EdgeVisualRepresentation.Stroke = _edgeBrush;
             EdgeVisualRepresentation.StrokeThickness = _edgeConfiguration.StrokeThickness;
         }
