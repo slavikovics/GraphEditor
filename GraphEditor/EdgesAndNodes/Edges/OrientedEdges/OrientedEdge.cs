@@ -15,7 +15,7 @@ namespace GraphEditor
 
         private Image _arrow;
 
-        private bool _isPencil;
+        public bool _isPencil;
 
         private OrientedEdgeConfiguration _edgeConfiguration;
 

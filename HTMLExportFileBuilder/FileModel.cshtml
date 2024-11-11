@@ -1,0 +1,142 @@
+﻿@model HTMLExportFileBuilder.FileModel
+
+<!DOCTYPE html>
+<html lang="en">
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgb(13, 1, 19); /* Medium purple background */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 80%;
+    margin-top: 3%;
+}
+
+.relation {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: flex-start;
+    height: 14%;
+}
+
+.main-image {
+    width: 100%;
+    max-height: 70%; /* Adjust as needed */
+    object-fit: contain;
+}
+
+.header {
+    color: #AEA3D8;
+    font-size: 500%;
+}
+
+table 
+{ 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: center; 
+} 
+td 
+{ 
+    height: fit-content;
+    padding: 10px; 
+    text-align: center;
+    margin: 10px;
+} 
+.circle 
+{ 
+    width: 50px; 
+    height: 50px; 
+    background-color: #AEA3D8; 
+    border-radius: 50%; 
+    display: inline-block; 
+    margin: auto;
+} 
+.innerCircle 
+{ 
+    width: 40px; 
+    height: 40px; 
+    background-color: #AEA3D8; 
+    border-radius: 50%; 
+    display: inline-block; 
+    margin: auto;
+} 
+
+.arrow, .firstNode, .relationName, .secondNode
+{ 
+    color: #AEA3D8; margin-right: 10px;
+    margin-left: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    transition: all 1s;
+}
+
+.arrow:hover, .firstNode:hover, .relationName:hover, .secondNode:hover
+{
+    color: #9370db;
+}
+
+
+.nodeItemGroup
+{
+    width: 20%;
+    text-align: center;
+}
+
+.node
+{
+    height: 50px;
+    width: 50px;
+}
+
+.edge
+{
+    height: 40px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+footer
+{
+    align-items: center;
+}
+
+.button 
+{ 
+    display: inline-block; 
+    padding: 10px 20px; 
+    margin: 20px; 
+    background-color: #AEA3D8; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: all 1s;
+}
+
+.button:hover
+{
+    background-color: #9370db;; 
+}
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>@Model.Content</body>
+</html>

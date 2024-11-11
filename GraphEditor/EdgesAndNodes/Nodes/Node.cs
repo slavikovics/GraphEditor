@@ -23,6 +23,8 @@ namespace GraphEditor
 
         public int Id { get; private set; }
 
+        public string Name { get; private set; }
+
         private bool _isSelected = false;
 
         private double _movementDiffLeft;
@@ -42,6 +44,7 @@ namespace GraphEditor
             Id = id;
             _canvas = parent;
             _window = window;
+            Name = ToString();
 
             _random = new Random();
             Ellipse = new Button();
@@ -212,6 +215,7 @@ namespace GraphEditor
         {
             _textBlock.Text = newName;
             MoveTextBlock();
+            Name = newName;
         }
 
         public void Remove()

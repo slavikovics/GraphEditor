@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Xml.Linq;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
@@ -134,22 +133,7 @@ namespace GraphEditor
             }
             if (MainWindowStates.shouldNodeBeAdded)
             {
-                Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
-                node.OnButtonSelected += OnNodeSelected;  
-                BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
-                GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
-                _nodes.Add(node);
-
-                if (_edgeAnimationController == null)
-                {
-                    _edgeAnimationController = new EdgeAnimationController(node, MainCanvas);
-                }
-                if (_nodeAnimationController == null)
-                {
-                    _nodeAnimationController = new NodeAnimationController(MainCanvas);
-                }
-                _nodeAnimationController.AddNode(node);
-                _nodeId++;
+                CreateNode(currentMousePosition);
             }
             else
             {
@@ -163,6 +147,26 @@ namespace GraphEditor
                 }
                 _pointerPosition = currentMousePosition;
             }    
+        }
+
+        private void CreateNode(Point currentMousePosition)
+        {
+            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
+            node.OnButtonSelected += OnNodeSelected;
+            BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
+            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _nodes.Add(node);
+
+            if (_edgeAnimationController == null)
+            {
+                _edgeAnimationController = new EdgeAnimationController(node, MainCanvas);
+            }
+            if (_nodeAnimationController == null)
+            {
+                _nodeAnimationController = new NodeAnimationController(MainCanvas);
+            }
+            _nodeAnimationController.AddNode(node);
+            _nodeId++;
         }
 
         private IEdge CreateEdge()
@@ -362,6 +366,7 @@ namespace GraphEditor
 
         private void RemoveNode(Node nodeToRemove)
         {
+            _nodes.Remove(nodeToRemove);
             nodeToRemove.Remove();
             _nodeAnimationController.RemoveNode(nodeToRemove);
             BordersRemover.RemoveAllBordersForNode(nodeToRemove.Id, GraphVisualTreeStackPanel);
@@ -378,6 +383,7 @@ namespace GraphEditor
 
         private void RemoveEdge(IEdge edgeToRemove)
         {
+            _edges.Remove(edgeToRemove);
             edgeToRemove.Remove();
             _edgeAnimationController.RemoveEdge(edgeToRemove);
             BordersRemover.RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1], GraphVisualTreeStackPanel);
@@ -407,7 +413,7 @@ namespace GraphEditor
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)
         {
-            FileInput fileInput = new FileInput(MainCanvas);
+            FileInput fileInput = new FileInput(MainCanvas, _nodes, _edges);
         }
     }
 }

@@ -13,12 +13,13 @@ namespace GraphEditor.EdgesAndNodes.Edges
     {
         protected double _offsetTop;
         protected double _angle;
-        protected Node _firstNode;
-        protected Node _secondNode;
+        public Node _firstNode { get; private set; }
+        public Node _secondNode { get; private set; }
         protected MainWindow _mainWindow;
         protected Canvas _mainCanvas;
         public Rectangle EdgeVisualRepresentation;
         protected Brush _edgeBrush;
+        public string Name { get; private set; }
 
         protected HiddenNode _centerNode;
 
@@ -36,6 +37,7 @@ namespace GraphEditor.EdgesAndNodes.Edges
             _mainWindow = window;
             _mainCanvas = mainCanvas;
             EdgeVisualRepresentation = new Rectangle();
+            Name = ToString();
 
             _centerNode = new HiddenNode(100, 100, _mainCanvas, _mainWindow, 0);
 
@@ -116,7 +118,7 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public virtual void Rename(string newName)
         {
-
+            Name = newName;
         }
 
         public virtual void Remove()
