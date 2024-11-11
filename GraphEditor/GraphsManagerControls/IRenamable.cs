@@ -1,6 +1,6 @@
 ﻿namespace GraphEditor.GraphsManagerControls
 {
-    internal interface IRenamable
+    public interface IRenamable
     {
         void Rename(string newName);
     }

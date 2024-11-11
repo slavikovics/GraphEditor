@@ -239,7 +239,7 @@
                         MouseEnter="OnButtonMouseEnter" 
                         MouseLeave="OnButtonMouseLeave" 
                         MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
-                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"/>
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="SettingsButton_Click"/>
 
                 <Button x:Name="ButtonGraph"  
                         Template="{StaticResource ButtonTemplate}" 

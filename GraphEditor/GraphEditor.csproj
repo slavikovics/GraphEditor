@@ -104,8 +104,8 @@
     <Compile Include="GraphsManagerControls\RenamingButton.cs" />
     <Compile Include="GraphsManagerControls\RenamingButtonConfiguration.cs" />
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
-    <Compile Include="GraphsSavingAndLoading\FileInput.cs" />
-    <Compile Include="GraphsSavingAndLoading\FileOutput.cs" />
+    <Compile Include="GraphsSavingAndLoading\HtmlExport.cs" />
+    <Compile Include="GraphsSavingAndLoading\HtmlImport.cs" />
     <Compile Include="GraphTabs\Tab.cs" />
     <Compile Include="GraphTabs\TabButton.cs" />
     <Compile Include="GraphTabs\TabView.cs" />

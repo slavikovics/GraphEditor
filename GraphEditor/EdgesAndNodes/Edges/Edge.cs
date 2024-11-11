@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace GraphEditor.EdgesAndNodes.Edges
 {
-    internal class Edge : IEdge, IRenamable
+    public class Edge : IEdge, IRenamable
     {
         protected double _offsetTop;
         protected double _angle;

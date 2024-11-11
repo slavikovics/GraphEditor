@@ -5,7 +5,7 @@ using System.Windows.Shapes;
 
 namespace GraphEditor.EdgesAndNodes
 {
-    internal interface IEdge : IRenamable
+    public interface IEdge : IRenamable
     {
         void OnNodePositionChanged(object sender, EventArgs e);
 

@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace GraphEditor.GraphsSavingAndLoading
 {
-    internal class FileInput
+    internal class HtmlExport
     {
         public string Content { get; private set; }
 
@@ -19,7 +19,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         public List<IEdge> Edges { get; private set; }
 
-        public FileInput(Canvas canvas, List<Node> nodes, List<IEdge> edges)
+        public HtmlExport(Canvas canvas, List<Node> nodes, List<IEdge> edges)
         {
             Nodes = nodes;
             Edges = edges;

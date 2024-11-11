@@ -7,7 +7,7 @@ namespace GraphEditor.EdgesAndNodes.Nodes
     /// <summary>
     /// TODO: implement this class to link one edge to the center of another edge 
     /// </summary>
-    internal class HiddenNode : Node
+    public class HiddenNode : Node
     {
         private const int HiddenNodeEllipseDimensions = 40;
 

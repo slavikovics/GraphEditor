@@ -26,8 +26,8 @@ namespace GraphEditor
 
         private Edge.EdgeTypes _selectedEdgeType = Edge.EdgeTypes.OrientedSimple;
 
-        private List<Node> _nodes = new List<Node>();
-        private List<IEdge> _edges = new List<IEdge>();
+        public List<Node> _nodes = new List<Node>();
+        public List<IEdge> _edges = new List<IEdge>();
 
         private Point _pointerPosition;
         private Node _firstSelected;
@@ -113,7 +113,7 @@ namespace GraphEditor
                         _secondSelected = null;
                         return;
                     }
-                    CreateEdge();
+                    CreateEdge(_firstSelected, _secondSelected, _selectedEdgeType);
                 }
                 _firstSelected = null;
                 _secondSelected = null;
@@ -150,7 +150,7 @@ namespace GraphEditor
             }    
         }
 
-        private void CreateNode(Point currentMousePosition)
+        public Node CreateNode(Point currentMousePosition)
         {
             Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
             node.OnButtonSelected += OnNodeSelected;
@@ -168,17 +168,18 @@ namespace GraphEditor
             }
             _nodeAnimationController.AddNode(node);
             _nodeId++;
+            return node;
         }
 
-        private IEdge CreateEdge()
+        public IEdge CreateEdge(Node firstSelected, Node secondSelected, Edge.EdgeTypes edgeTypes)
         {
             IEdge edge;
 
-            switch(_selectedEdgeType)
+            switch(edgeTypes)
             {
-                case Edge.EdgeTypes.NonOriented: edge = new NonOrientedEdge(_firstSelected, _secondSelected, this, MainCanvas); break;
-                case Edge.EdgeTypes.OrientedSimple: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
-                default: edge = new OrientedEdge(_secondSelected, _firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
+                case Edge.EdgeTypes.NonOriented: edge = new NonOrientedEdge(firstSelected, secondSelected, this, MainCanvas); break;
+                case Edge.EdgeTypes.OrientedSimple: edge = new OrientedEdge(secondSelected, firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
+                default: edge = new OrientedEdge(secondSelected, firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
             RegisterEdge(edge);
             return edge;
@@ -192,7 +193,7 @@ namespace GraphEditor
             _edges.Add(edge);
         }
 
-        private void OnButtonMagicWondClick(object sender, RoutedEventArgs e)
+        public void OnButtonMagicWondClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
             OnMagicWandOrder?.Invoke();
@@ -423,7 +424,12 @@ namespace GraphEditor
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)
         {
-            FileInput fileInput = new FileInput(MainCanvas, _nodes, _edges);
+            HtmlExport fileInput = new HtmlExport(MainCanvas, _nodes, _edges);
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            HtmlImport htmlImport = new HtmlImport(this);
         }
     }
 }

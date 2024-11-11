@@ -9,7 +9,7 @@ using System.Windows.Media.Animation;
 
 namespace GraphEditor
 {
-    internal class Node : IRenamable
+    public class Node : IRenamable
     {
         public Button Ellipse { get; private set; }
 
