@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Button = System.Windows.Controls.Button;
@@ -372,13 +373,22 @@ namespace GraphEditor
             BordersRemover.RemoveAllBordersForNode(nodeToRemove.Id, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
 
-            foreach (IEdge edge in _edges)
+            for (int i = 0; i < _edges.Count; i++)
             {
-                if (edge.GetFirstNodeId() == nodeToRemove.Id || edge.GetSecondNodeId() == nodeToRemove.Id)
+                if (_edges[i].GetFirstNodeId() == nodeToRemove.Id || _edges[i].GetSecondNodeId() == nodeToRemove.Id)
                 {
-                    RemoveEdge(edge);
+                    RemoveEdge(_edges[i]);
+                    i--;
                 }
             }
+
+            //foreach (IEdge edge in _edges)
+            //{
+            //    if (edge.GetFirstNodeId() == nodeToRemove.Id || edge.GetSecondNodeId() == nodeToRemove.Id)
+            //    {
+            //        RemoveEdge(edge);
+            //    }
+            //}
         }
 
         private void RemoveEdge(IEdge edgeToRemove)
