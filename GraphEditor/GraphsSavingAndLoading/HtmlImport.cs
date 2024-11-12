@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GraphEditor.EdgesAndNodes;
+using GraphEditor.Properties;
 
 namespace GraphEditor.GraphsSavingAndLoading
 {
@@ -20,84 +23,141 @@ namespace GraphEditor.GraphsSavingAndLoading
         private async void ImportFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "HTML Files|*.html;*.htm|All Files|*.*";
+            openFileDialog.Filter = Resources.OpenFileDialogFilter;
             DialogResult dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
-            {
-                _mainWindow.MainCanvas.Children.Clear();
-                _mainWindow._edges.Clear();
-                _mainWindow._nodes.Clear();
-               await ParseHtmlString(File.ReadAllText(openFileDialog.FileName));
-            }
+            
+            if (dialogResult != DialogResult.OK) return;
+            _mainWindow.MainCanvas.Children.Clear();
+            _mainWindow._edges.Clear();
+            _mainWindow._nodes.Clear();
+            await ParseHtmlString(File.ReadAllText(openFileDialog.FileName));
         }
 
         private void FindNextFirstNode(string content, ref int i1)
         {
-            i1 = content.IndexOf("\"firstNode\"", i1);
+            i1 = content.IndexOf("\"firstNode\"", i1, StringComparison.Ordinal);
         }
 
         private void FindNextSecondNode(string content, ref int i1)
         {
-            i1 = content.IndexOf("\"secondNode\"", i1);
+            i1 = content.IndexOf("\"secondNode\"", i1, StringComparison.Ordinal);
         }
 
         private string FindNextFirstNodeName(string content, ref int i1)
         {
             int i2 = 0;
-            i1 = content.IndexOf(">", i1) + 1;
-            i2 = content.IndexOf("<", i1);
+            i1 = content.IndexOf(">", i1, StringComparison.Ordinal) + 1;
+            i2 = content.IndexOf("<", i1, StringComparison.Ordinal);
             return content.Substring(i1, i2 - i1);
         }
 
         private string FindNextSecondNodeName(string content, ref int i1)
         {
-            int i2 = 0;
-            i1 = content.IndexOf(">", i1) + 1;
-            i2 = content.IndexOf("<", i1);
+            i1 = content.IndexOf(">", i1, StringComparison.Ordinal) + 1;
+            int i2 = content.IndexOf("<", i1, StringComparison.Ordinal);
             return content.Substring(i1, i2 - i1);
         }
 
         private string FindNextRelationType(string content, ref int i1)
         {
             int i2 = 0;
-            i1 = content.IndexOf("\"relationName\"", i1);
-            i1 = content.IndexOf("class", i1);
-            i1 = content.IndexOf("\"", i1) + 1;
-            i2 = content.IndexOf("\"", i1);
+            i1 = content.IndexOf("\"relationName\"", i1, StringComparison.Ordinal);
+            i1 = content.IndexOf("class", i1, StringComparison.Ordinal);
+            i1 = content.IndexOf("\"", i1, StringComparison.Ordinal) + 1;
+            i2 = content.IndexOf("\"", i1, StringComparison.Ordinal);
             return content.Substring(i1, i2 - i1);
         }
 
         private string FindNextRelationName(string content, ref int i1)
         {
             int i2 = 0;
-            i1 = content.IndexOf(">", i1) + 1;
-            i2 = content.IndexOf("<", i1);
+            i1 = content.IndexOf(">", i1, StringComparison.Ordinal) + 1;
+            i2 = content.IndexOf("<", i1, StringComparison.Ordinal);
             return content.Substring(i1, i2 - i1);
         }
 
         private string FindNextId(string content, ref int i1)
         {
             int i2 = 0;
-            i1 = content.IndexOf("id", i1);
-            i1 = content.IndexOf("\"", i1) + 1;
-            i2 = content.IndexOf("\"", i1);
-            i1--;
+            i1 = content.IndexOf("id", i1, StringComparison.Ordinal);
+            i1 = content.IndexOf("\"", i1, StringComparison.Ordinal) + 1;
+            i2 = content.IndexOf("\"", i1, StringComparison.Ordinal);
             return content.Substring(i1, i2 - i1);
         }
 
-        private async Task CheckNodesExistance(RelationDataModel relationDataModel)
+        private void CheckNodesExistence(RelationDataModel relationDataModel)
         {
             foreach (var node in _mainWindow._nodes)
             {
-                if (node.Name == relationDataModel.FirstNodeName)
+                if (node.Id == relationDataModel.FirstNodeId)
                 {
                     relationDataModel.ShouldFirstNodeBeCreated = false;
                     relationDataModel.FirstNode = node;
                 }
-                else if (node.Name == relationDataModel.SecondNodeName)
-                {
+                if (node.Id == relationDataModel.SecondNodeId)
+                { 
                     relationDataModel.ShouldSecondNodeBeCreated = false;
                     relationDataModel.SecondNode = node;
+                }
+            }
+        }
+
+        private async Task AddRelation(RelationDataModel relationDataModel)
+        {
+            Random random = new Random();
+            if (relationDataModel.ShouldFirstNodeBeCreated)
+            {
+                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(800), random.Next(800)));
+                relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
+                relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
+                await Task.Delay(300);
+            }
+            if (relationDataModel.ShouldSecondNodeBeCreated)
+            {
+                relationDataModel.SecondNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600), random.Next(600)));
+                relationDataModel.SecondNode.Rename(relationDataModel.SecondNodeName);
+                relationDataModel.SecondNode.Id = relationDataModel.SecondNodeId;
+                await Task.Delay(300);
+            }
+
+            switch (relationDataModel.RelationType)
+            {
+                case "nonOriented": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.NonOriented); break;
+                case "orientedSimple": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedSimple); break;
+                case "orientedPencil": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedPencil); break;
+            }
+            
+            Console.WriteLine(relationDataModel.FirstNodeId + " - " + relationDataModel.SecondNodeId);
+            await Task.Delay(300);
+        }
+
+        private void FillRelationDataModel(RelationDataModel relationDataModel, string content, ref int i1)
+        {
+            FindNextFirstNode(content, ref i1);
+            relationDataModel.FirstNodeId = FindNextId(content, ref i1);
+            relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
+            relationDataModel.RelationType = FindNextRelationType(content, ref i1);
+            relationDataModel.RelationId = FindNextId(content, ref i1);
+            relationDataModel.RelationName = FindNextRelationName(content, ref i1);
+            FindNextSecondNode(content, ref i1);
+            relationDataModel.SecondNodeId = FindNextId(content, ref i1);
+            relationDataModel.SecondNodeName = FindNextSecondNodeName(content, ref i1);
+        }
+
+        private void FindExistingNodes(RelationDataModel relationDataModel)
+        {
+            foreach (Edge edge in _mainWindow._edges)
+            {
+                if (relationDataModel.FirstNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.FirstNodeId.Contains(edge.GetSecondNodeId()))
+                {
+                    relationDataModel.ShouldFirstNodeBeCreated = false;
+                    relationDataModel.FirstNode = edge.GetEdgeCenterNode();
+                }
+
+                if (relationDataModel.SecondNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.SecondNodeId.Contains(edge.GetSecondNodeId()))
+                {
+                    relationDataModel.ShouldSecondNodeBeCreated = false;
+                    relationDataModel.SecondNode = edge.GetEdgeCenterNode();
                 }
             }
         }
@@ -105,8 +165,6 @@ namespace GraphEditor.GraphsSavingAndLoading
         private async Task ParseHtmlString(string content)
         {
             int i1 = 0;
-            int i2 = 0;
-            Random random = new Random();
             List<RelationDataModel> plannedRelations = new List<RelationDataModel>();
             int animationIndex = 0;
 
@@ -114,43 +172,20 @@ namespace GraphEditor.GraphsSavingAndLoading
             {
                 RelationDataModel relationDataModel = new RelationDataModel();
 
-                FindNextFirstNode(content, ref i1);
-                relationDataModel.FirstNodeId = FindNextId(content, ref i1);
-                relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
-                relationDataModel.RelationType = FindNextRelationType(content, ref i1);
-                relationDataModel.RelationId = FindNextId(content, ref i1);
-                relationDataModel.RelationName = FindNextRelationName(content, ref i1);
-                FindNextSecondNode(content, ref i1);
-                relationDataModel.SecondNodeId = FindNextId(content, ref i1);
-                relationDataModel.SecondNodeName = FindNextSecondNodeName(content, ref i1);
-
-                await CheckNodesExistance(relationDataModel);
+                FillRelationDataModel(relationDataModel, content, ref i1);
+                CheckNodesExistence(relationDataModel);
 
                 if (relationDataModel.FirstNodeId.Contains("hn:") || relationDataModel.SecondNodeId.Contains("hn:"))
                 {
                     plannedRelations.Add(relationDataModel);
+                    //Console.WriteLine(relationDataModel.FirstNode + " " + relationDataModel.RelationName + " " + relationDataModel.SecondNode);
+                    if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
+                    continue;
                 }
 
-                if (relationDataModel.ShouldFirstNodeBeCreated)
-                {
-                    relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(1000), random.Next(1000)));
-                    relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
-                    await Task.Delay(100);
-                }
-                if (relationDataModel.ShouldSecondNodeBeCreated)
-                {
-                    relationDataModel.SecondNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(1000), random.Next(1000)));
-                    relationDataModel.SecondNode.Rename(relationDataModel.SecondNodeName);
-                    await Task.Delay(100);
-                }
+                await AddRelation(relationDataModel);
 
-                switch (relationDataModel.RelationType)
-                {
-                    case "nonOriented": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.NonOriented); break;
-                    case "orientedSimple": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedSimple); break;
-                    case "orientedPencil": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedPencil); break;
-                }
-                Console.WriteLine(relationDataModel.FirstNode + " " + relationDataModel.RelationName + " " + relationDataModel.SecondNode);
+                //Console.WriteLine(relationDataModel.FirstNode + " " + relationDataModel.RelationName + " " + relationDataModel.SecondNode);
                 
                 if (animationIndex == 3)
                 {
@@ -160,9 +195,33 @@ namespace GraphEditor.GraphsSavingAndLoading
                 {
                     _mainWindow.OnButtonMagicWondClick(null, null);
                 }
-                await Task.Delay(100);                
-                if (content.IndexOf("firstNode", i1) == -1) return;
+                await Task.Delay(200);                
+                if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
                 animationIndex++;
+            }
+
+            Random random = new Random();
+            
+            while (true)
+            {
+                if (content.IndexOf("firstNode", i1, StringComparison.Ordinal) == -1) break;
+                
+                RelationDataModel relationDataModel = new RelationDataModel();
+                FindNextFirstNode(content, ref i1);
+                relationDataModel.FirstNodeId = FindNextId(content, ref i1);
+                relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
+                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(800), random.Next(800)));
+                relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
+                relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
+            }
+
+            foreach (RelationDataModel relationDataModel in plannedRelations)
+            {
+                //CheckNodesExistence(relationDataModel);
+                FindExistingNodes(relationDataModel);
+                await AddRelation(relationDataModel);
+                _mainWindow.OnButtonMagicWondClick(null, null);
+                await Task.Delay(200); 
             }
         }
     }

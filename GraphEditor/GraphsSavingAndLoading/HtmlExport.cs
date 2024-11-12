@@ -40,7 +40,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 string graphName = System.IO.Path.GetFileName(saveFileDialog.FileName).Replace(".png", "");
                 string fileDialogImagePath = fileDialogFolderName + "\\graph.png";
                 Directory.CreateDirectory(fileDialogFolderName);
-                RenderToPNGFile(canvas, fileDialogImagePath);
+                RenderToPngFile(canvas, fileDialogImagePath);
                 GenerateHtml(fileDialogImagePath.Replace(".png", ".html"), graphName);
             }            
         }
@@ -91,15 +91,15 @@ namespace GraphEditor.GraphsSavingAndLoading
             return edgeContent;
         }
 
-        public string BuildBody()
+        private string BuildBody()
         {
             string body = "";
             foreach (IEdge edge in Edges)
             {
                 body += "<div class=\"relation\">";
-                body += BuildNodeContent((edge as Edge)._firstNode, true);
+                body += BuildNodeContent((edge as Edge)._secondNode, true);
                 body += BuildEdgeContent((edge as Edge));
-                body += BuildNodeContent((edge as Edge)._secondNode, false);
+                body += BuildNodeContent((edge as Edge)._firstNode, false);
                 body += "</div>\r\n";
             }
             return body;
@@ -107,7 +107,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private const double defaultDpi = 300;
 
-        public static ImageSource RenderToPNGImageSource(Visual targetControl)
+        public static ImageSource RenderToPngImageSource(Visual targetControl)
         {
             var renderTargetBitmap = GetRenderTargetBitmapFromControl(targetControl);
 
@@ -130,7 +130,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             return result;
         }
 
-        public static void RenderToPNGFile(Visual targetControl, string filename)
+        private static void RenderToPngFile(Visual targetControl, string filename)
         {
             var renderTargetBitmap = GetRenderTargetBitmapFromControl(targetControl);
 

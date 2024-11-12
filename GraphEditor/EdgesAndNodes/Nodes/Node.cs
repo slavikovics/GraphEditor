@@ -21,7 +21,7 @@ namespace GraphEditor
 
         private Random _random;
 
-        public string Id { get; protected set; }
+        public string Id { get; set; }
 
         public string Name { get; private set; }
 

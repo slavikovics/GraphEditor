@@ -16,20 +16,12 @@
 
         public string SecondNodeId { get; set; }
 
-        public bool ShouldFirstNodeBeCreated { get; set; }
+        public bool ShouldFirstNodeBeCreated { get; set; } = true;
 
-        public bool ShouldSecondNodeBeCreated { get; set; }
+        public bool ShouldSecondNodeBeCreated { get; set; } = true;
 
         public Node FirstNode { get; set; }
 
         public Node SecondNode { get; set; }
-
-        public RelationDataModel()
-        {
-            ShouldFirstNodeBeCreated = true;
-            ShouldSecondNodeBeCreated = true;
-            FirstNode = null;
-            SecondNode = null;
-        }
     }
 }
