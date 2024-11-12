@@ -11,9 +11,10 @@ namespace GraphEditor.EdgesAndNodes.Nodes
     {
         private const int HiddenNodeEllipseDimensions = 40;
 
-        public HiddenNode(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id) : base(canvasLeft, canvasTop, parent, window, id)
+        public HiddenNode(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, string id) : base(canvasLeft, canvasTop, parent, window, 0)
         {
             HideNode();
+            Id = BuildIdString(id);
             window.OnMagicWandOrder -= OnMagicWandOrder;
             EndMovementAnimations();
         }
@@ -27,6 +28,11 @@ namespace GraphEditor.EdgesAndNodes.Nodes
         public override int GetEllipseDimensions()
         {
             return HiddenNodeEllipseDimensions;
+        }
+
+        protected override string BuildIdString(string idBase)
+        {
+            return "hn:" + idBase;
         }
     }
 }

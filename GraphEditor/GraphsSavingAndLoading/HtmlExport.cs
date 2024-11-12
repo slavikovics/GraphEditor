@@ -1,5 +1,6 @@
 ﻿using GraphEditor.EdgesAndNodes;
 using GraphEditor.EdgesAndNodes.Edges;
+using GraphEditor.EdgesAndNodes.Nodes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,7 +59,16 @@ namespace GraphEditor.GraphsSavingAndLoading
                 nodeClass = "secondNode";
             }
 
-            string result = "<div class=\"nodeItemGroup\">\r\n            <svg class=\"node\" id=\"_Слой_1\" data-name=\"Слой 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 56 56\">\r\n                <defs>\r\n                  <style>\r\n                    .cls-1 {\r\n                      fill: none;\r\n                      stroke: #aea3d8;\r\n                      stroke-miterlimit: 10;\r\n                      stroke-width: 10px;\r\n                    }\r\n                  </style>\r\n                </defs>\r\n                <circle class=\"cls-1\" cx=\"28\" cy=\"28\" r=\"23\"/>\r\n              </svg>\r\n            <span class=\"" + nodeClass + "\">"+ node.Name +"</span>\r\n        </div>";
+            string name = node.Name;
+            string id = node.Id;
+
+            if (node is HiddenNode)
+            {
+                name = (node as HiddenNode).Id;
+                id = (node as HiddenNode).Id;
+            }
+
+            string result = "<div class=\"nodeItemGroup\">\r\n            <svg class=\"node\" id=\"_Слой_1\" data-name=\"Слой 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 56 56\">\r\n                <defs>\r\n                  <style>\r\n                    .cls-1 {\r\n                      fill: none;\r\n                      stroke: #aea3d8;\r\n                      stroke-miterlimit: 10;\r\n                      stroke-width: 10px;\r\n                    }\r\n                  </style>\r\n                </defs>\r\n                <circle class=\"cls-1\" cx=\"28\" cy=\"28\" r=\"23\"/>\r\n              </svg>\r\n            <span class=\"" + nodeClass + "\" id=\"" + id + "\">"+ name +"</span>\r\n        </div>";
 
             return result;
         }
@@ -77,7 +87,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 edgeContent = "<svg class=\"edge\" id=\"_Слой_1\" data-name=\"Слой 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 482 85\">\r\n            <defs>\r\n              <style>\r\n                .cls-1 {\r\n                  fill: none;\r\n                  stroke: #aea3d8;\r\n                  stroke-miterlimit: 10;\r\n                  stroke-width: 20px;\r\n                }\r\n              </style>\r\n            </defs>\r\n            <rect class=\"cls-1\" x=\"10\" y=\"10\" width=\"462\" height=\"65\" rx=\"32.5\" ry=\"32.5\"/>\r\n          </svg>";
                 edgeType = "nonOriented";
             }
-            edgeContent += "<span class=\"relationName\" class=\"" + edgeType + "\">" + (edge as Edge).Name + "</span>";
+            edgeContent += "<span class=\"relationName\" class=\"" + edgeType + "\" id=\"" + (edge as Edge).ToString() + "\">" + (edge as Edge).Name + "</span>";
             return edgeContent;
         }
 

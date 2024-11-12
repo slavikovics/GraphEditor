@@ -106,6 +106,7 @@
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
     <Compile Include="GraphsSavingAndLoading\HtmlExport.cs" />
     <Compile Include="GraphsSavingAndLoading\HtmlImport.cs" />
+    <Compile Include="GraphsSavingAndLoading\RelationDataModel.cs" />
     <Compile Include="GraphTabs\Tab.cs" />
     <Compile Include="GraphTabs\TabButton.cs" />
     <Compile Include="GraphTabs\TabView.cs" />

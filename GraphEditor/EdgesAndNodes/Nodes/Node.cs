@@ -21,7 +21,7 @@ namespace GraphEditor
 
         private Random _random;
 
-        public int Id { get; private set; }
+        public string Id { get; protected set; }
 
         public string Name { get; private set; }
 
@@ -41,7 +41,7 @@ namespace GraphEditor
 
         public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id)
         {            
-            Id = id;
+            Id = BuildIdString(id.ToString());
             _canvas = parent;
             _window = window;
             Name = ToString();
@@ -211,6 +211,11 @@ namespace GraphEditor
             return "Node " + Id;
         }
 
+        protected virtual string BuildIdString(string id)
+        {
+            return "n" + id;
+        }
+
         public void Rename(string newName)
         {
             _textBlock.Text = newName;
@@ -228,9 +233,9 @@ namespace GraphEditor
             OnButtonSelected -= _window.OnNodeSelected;
         }
 
-        public List<int> GetIdAsList()
+        public List<string> GetIdAsList()
         {
-            return new List<int> { Id };
+            return new List<string> { Id };
         }
     }
 }

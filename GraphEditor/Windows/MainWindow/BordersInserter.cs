@@ -12,7 +12,7 @@ namespace GraphEditor.Windows.MainWindow
         {
             Border edgeBorder = graphsManager.AddEdge(edge, edge.GetNodesDependencies());
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
-            int firstNodeId;
+            string firstNodeId;
             if (selectedEdgeType == Edge.EdgeTypes.NonOriented)
             {
                 firstNodeId = edge.GetFirstNodeId();

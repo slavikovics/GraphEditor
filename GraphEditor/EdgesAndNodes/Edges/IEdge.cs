@@ -13,13 +13,13 @@ namespace GraphEditor.EdgesAndNodes
 
         void EdgeDragged(double dragDeltaX, double dragDeltaY);
 
-        int GetFirstNodeId();
+        string GetFirstNodeId();
 
-        int GetSecondNodeId();
+        string GetSecondNodeId();
 
         void Remove();
 
-        List<int> GetNodesDependencies();
+        List<string> GetNodesDependencies();
 
         Rectangle GetEdgeVisualRepresentation();
 

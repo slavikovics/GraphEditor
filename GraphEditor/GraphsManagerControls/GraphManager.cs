@@ -31,7 +31,7 @@ namespace GraphEditor.GraphsManager
             _edges = new List<IEdge>();
         }
 
-        public GraphItemBorder AddNode(Node node, List<int> nodesDependencies)
+        public GraphItemBorder AddNode(Node node, List<string> nodesDependencies)
         {
             GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node.Id.ToString(), node.ToString(), "node", node, nodesDependencies);
             _nodes.Add(node);
@@ -40,17 +40,17 @@ namespace GraphEditor.GraphsManager
 
         public GraphItemBorder AddGraph(string graphName)
         {
-            return GenerateGraphManagerGraphBorder("", graphName, "graph", null, new List<int>());
+            return GenerateGraphManagerGraphBorder("", graphName, "graph", null, new List<string>());
         }
 
-        public GraphItemBorder AddEdge(IEdge edge, List<int> nodesDependencies)
+        public GraphItemBorder AddEdge(IEdge edge, List<string> nodesDependencies)
         {
             GraphItemBorder border = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge", edge, nodesDependencies);
             _edges.Add(edge);
             return border;
         }
 
-        private GraphItemBorder GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable, List<int> nodesDependencies)
+        private GraphItemBorder GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable, List<string> nodesDependencies)
         {
             GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType,
                 ButtonTemplate, ButtonAddNodeContent, ButtonAddEdgeContent, ButtonAddGraphContent, renamable, nodesDependencies);

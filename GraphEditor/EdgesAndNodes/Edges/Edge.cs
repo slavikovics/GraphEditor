@@ -39,7 +39,7 @@ namespace GraphEditor.EdgesAndNodes.Edges
             EdgeVisualRepresentation = new Rectangle();
             Name = ToString();
 
-            _centerNode = new HiddenNode(100, 100, _mainCanvas, _mainWindow, 0);
+            _centerNode = new HiddenNode(100, 100, _mainCanvas, _mainWindow, BuildHiddenNodeId());
 
             SetUpEvents();
         }
@@ -96,12 +96,12 @@ namespace GraphEditor.EdgesAndNodes.Edges
         {
         }
 
-        public int GetFirstNodeId()
+        public string GetFirstNodeId()
         {
             return _firstNode.Id;
         }
 
-        public int GetSecondNodeId()
+        public string GetSecondNodeId()
         {
             return _secondNode.Id;
         }
@@ -109,6 +109,11 @@ namespace GraphEditor.EdgesAndNodes.Edges
         protected void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             EdgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;
+        }
+
+        protected string BuildHiddenNodeId()
+        {
+            return _firstNode.Id + "-" + _secondNode.Id;
         }
 
         public override string ToString()
@@ -126,9 +131,9 @@ namespace GraphEditor.EdgesAndNodes.Edges
             _mainCanvas.Children.Remove(EdgeVisualRepresentation);
         }
 
-        public List<int> GetNodesDependencies()
+        public List<string> GetNodesDependencies()
         {
-            List<int> dependencies = new List<int>();
+            List<string> dependencies = new List<string>();
             dependencies.Add(GetFirstNodeId());
             dependencies.Add(GetSecondNodeId());
             return dependencies;

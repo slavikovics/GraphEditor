@@ -26,10 +26,10 @@ namespace GraphEditor
 
         private IRenamable _renamable;
 
-        public List<int> NodesDependencies;
+        public List<string> NodesDependencies;
 
         public GraphItemBorder(string borderName, string borderString, string borderType, 
-            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable, List<int> nodesDependencies)
+            ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable, List<string> nodesDependencies)
         {
             Name = borderName;
             BorderType = borderType;

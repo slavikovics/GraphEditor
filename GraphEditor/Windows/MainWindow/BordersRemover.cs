@@ -5,12 +5,12 @@ namespace GraphEditor.Windows.MainWindow
 {
     internal class BordersRemover
     {
-        public static void RemoveAllBordersForNode(int nodeId, StackPanel graphVisualTreeStackPanel)
+        public static void RemoveAllBordersForNode(string nodeId, StackPanel graphVisualTreeStackPanel)
         {
             List<GraphItemBorder> bordersToRemove = new List<GraphItemBorder>();
             foreach (GraphItemBorder border in graphVisualTreeStackPanel.Children)
             {
-                foreach (int node in border.NodesDependencies)
+                foreach (string node in border.NodesDependencies)
                 {
                     if (node == nodeId)
                     {
@@ -25,7 +25,7 @@ namespace GraphEditor.Windows.MainWindow
             }
         }
 
-        public static void RemoveAllBordersForEdge(int firstNodeId, int secondNodeId, StackPanel graphVisualTreeStackPanel)
+        public static void RemoveAllBordersForEdge(string firstNodeId, string secondNodeId, StackPanel graphVisualTreeStackPanel)
         {
             GraphItemBorder borderToRemove = null;
             foreach (GraphItemBorder border in graphVisualTreeStackPanel.Children)

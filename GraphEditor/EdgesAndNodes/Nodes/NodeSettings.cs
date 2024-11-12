@@ -4,7 +4,7 @@ namespace GraphEditor.EdgesAndNodes.Nodes
 {
     internal class NodeSettings
     {
-        public static void SetUpTextBlock(TextBlock textBlock, int id)
+        public static void SetUpTextBlock(TextBlock textBlock, string id)
         {
             textBlock.TextAlignment = NodeConfiguration.TextBlockTextAlignment;
             textBlock.Foreground = NodeConfiguration.TextBlockForeground;
