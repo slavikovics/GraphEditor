@@ -18,7 +18,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         public List<Node> Nodes { get; private set; }
 
-        public List<IEdge> Edges { get; private set; }
+        private List<IEdge> Edges { get; set; }
 
         public HtmlExport(Canvas canvas, List<Node> nodes, List<IEdge> edges)
         {
@@ -97,9 +97,9 @@ namespace GraphEditor.GraphsSavingAndLoading
             foreach (IEdge edge in Edges)
             {
                 body += "<div class=\"relation\">";
-                body += BuildNodeContent((edge as Edge)._secondNode, true);
+                body += BuildNodeContent((edge as Edge).SecondNode, true);
                 body += BuildEdgeContent((edge as Edge));
-                body += BuildNodeContent((edge as Edge)._firstNode, false);
+                body += BuildNodeContent((edge as Edge).FirstNode, false);
                 body += "</div>\r\n";
             }
             return body;

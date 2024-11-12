@@ -88,13 +88,13 @@ namespace GraphEditor
         public void OnNodeSelected(object sender, EventArgs e)
         {
             HidePopUpMenus();
-            if (MainWindowStates.shouldBeRemoved)
+            if (MainWindowStates.ShouldBeRemoved)
             {
                 Node nodeToRemove = sender as Node;
                 RemoveNode(nodeToRemove);
             }
 
-            if (!MainWindowStates.shouldEdgeBeAdded) return;
+            if (!MainWindowStates.ShouldEdgeBeAdded) return;
 
             Node node = sender as Node;
 
@@ -131,17 +131,17 @@ namespace GraphEditor
                 }
                 return;
             }
-            if (MainWindowStates.shouldNodeBeAdded)
+            if (MainWindowStates.ShouldNodeBeAdded)
             {
                 CreateNode(currentMousePosition);
             }
             else
             {
-                if (!MainWindowStates.shouldNodeBeMoved)
+                if (!MainWindowStates.ShouldNodeBeMoved)
                 {
                     return;
                 }
-                else if (MainWindowStates.shouldNodeBeMoved)
+                else if (MainWindowStates.ShouldNodeBeMoved)
                 {
                     MainWindowStates.MoveToDraggingState();
                 }
@@ -289,12 +289,12 @@ namespace GraphEditor
 
         private void OnWindowMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (MainWindowStates.shouldBeDragged) MainWindowStates.MoveToMovingState();
+            if (MainWindowStates.ShouldBeDragged) MainWindowStates.MoveToMovingState();
         }
 
         private void OnWindowMouseMove(object sender, MouseEventArgs e)
         {
-            if (!MainWindowStates.shouldBeDragged) return;
+            if (!MainWindowStates.ShouldBeDragged) return;
             Point newPosition = e.GetPosition(sender as Window);
             double dragDeltaX = newPosition.X - _pointerPosition.X;
             double dragDeltaY = newPosition.Y - _pointerPosition.Y;
@@ -381,14 +381,6 @@ namespace GraphEditor
                     i--;
                 }
             }
-
-            //foreach (IEdge edge in _edges)
-            //{
-            //    if (edge.GetFirstNodeId() == nodeToRemove.Id || edge.GetSecondNodeId() == nodeToRemove.Id)
-            //    {
-            //        RemoveEdge(edge);
-            //    }
-            //}
         }
 
         private void RemoveEdge(IEdge edgeToRemove)
@@ -411,7 +403,7 @@ namespace GraphEditor
         public void OnEdgeSelected(object sender, EventArgs e)
         {
             IEdge edge = sender as IEdge;
-            if (MainWindowStates.shouldBeRemoved)
+            if (MainWindowStates.ShouldBeRemoved)
             {
                 RemoveEdge(edge);
             }
