@@ -22,7 +22,7 @@ namespace GraphEditor.EdgesAndNodes.Nodes
         private void HideNode()
         {
             Ellipse.Visibility = Visibility.Hidden;
-            _textBlock.Visibility = Visibility.Hidden;
+            TextBlock.Visibility = Visibility.Hidden;
         }
 
         public override int GetEllipseDimensions()

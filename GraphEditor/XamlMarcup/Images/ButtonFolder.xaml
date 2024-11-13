@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Image x:Key="ButtonOpenFolder">
+        <Image.Source>
+            <DrawingImage>
+                <DrawingImage.Drawing>
+                    <DrawingGroup>
+<DrawingGroup>
+ <DrawingGroup.ClipGeometry>
+  <RectangleGeometry Rect="0,0,400,400" />
+ </DrawingGroup.ClipGeometry>
+ <DrawingGroup>
+  <GeometryDrawing Brush="#FFB9B4D6">
+   <GeometryDrawing.Geometry>
+    <RectangleGeometry RadiusX="27" RadiusY="27" Rect="91,111,106.68,88.72" />
+   </GeometryDrawing.Geometry>
+  </GeometryDrawing>
+  <GeometryDrawing Brush="#FFB9B4D6">
+   <GeometryDrawing.Geometry>
+    <PathGeometry FillRule="Nonzero" Figures="M170.68,111.5C185.29,111.5,197.18,123.39,197.18,138L197.18,172.72C197.18,187.33,185.29,199.22,170.68,199.22L118,199.22C103.39,199.22,91.5,187.33,91.5,172.72L91.5,138C91.5,123.39,103.39,111.5,118,111.5L170.68,111.5 M170.68,110.5L118,110.5C102.81,110.5,90.5,122.81,90.5,138L90.5,172.72C90.5,187.91,102.81,200.22,118,200.22L170.68,200.22C185.87,200.22,198.18,187.91,198.18,172.72L198.18,138C198.18,122.81,185.87,110.5,170.68,110.5L170.68,110.5z" />
+   </GeometryDrawing.Geometry>
+  </GeometryDrawing>
+ </DrawingGroup>
+ <DrawingGroup>
+  <GeometryDrawing Brush="#FFAEA3D8">
+   <GeometryDrawing.Geometry>
+    <PathGeometry FillRule="Nonzero" Figures="M116.18,128.98L285.12,128.98C299.02,128.98,310.3,140.26,310.3,154.16L310.3,258.83C310.3,272.73,299.02,284.01,285.12,284.01L116.18,284.01C102.28,284.01,91,272.73,91,258.83L91,154.16C91,140.26,102.28,128.98,116.18,128.98z" />
+   </GeometryDrawing.Geometry>
+  </GeometryDrawing>
+  <GeometryDrawing Brush="#FFAEA3D8">
+   <GeometryDrawing.Geometry>
+    <PathGeometry FillRule="Nonzero" Figures="M285.12,129.48C298.73,129.48,309.8,140.55,309.8,154.16L309.8,258.83C309.8,272.44,298.73,283.51,285.12,283.51L116.18,283.51C102.57,283.51,91.5,272.44,91.5,258.83L91.5,154.16C91.5,140.55,102.57,129.48,116.18,129.48L285.12,129.48 M285.12,128.48L116.18,128.48C102,128.48,90.5,139.98,90.5,154.16L90.5,258.83C90.5,273.01,102,284.51,116.18,284.51L285.12,284.51C299.3,284.51,310.8,273.01,310.8,258.83L310.8,154.16C310.8,139.98,299.3,128.48,285.12,128.48L285.12,128.48z" />
+   </GeometryDrawing.Geometry>
+  </GeometryDrawing>
+ </DrawingGroup>
+ <GeometryDrawing Brush="#FFAEA3D8">
+  <GeometryDrawing.Geometry>
+   <PathGeometry FillRule="Nonzero" Figures="M200,0C89.54,0 0,89.54 0,200 0,310.46 89.54,400 200,400 310.46,400 400,310.46 400,200 400,89.54 310.46,0 200,0z M200,371C105.56,371 29,294.44 29,200 29,105.56 105.56,29 200,29 294.44,29 371,105.56 371,200 371,294.44 294.44,371 200,371z" />
+  </GeometryDrawing.Geometry>
+ </GeometryDrawing>
+</DrawingGroup>
+</DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </Image.Source>
+    </Image>
+</ResourceDictionary>

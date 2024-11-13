@@ -11,17 +11,17 @@ namespace GraphEditor.EdgesAndNodes.Edges
 {
     public class Edge : IEdge, IRenamable
     {
-        protected double _offsetTop;
-        protected double _angle;
-        public Node _firstNode { get; private set; }
-        public Node _secondNode { get; private set; }
-        protected MainWindow _mainWindow;
-        protected Canvas _mainCanvas;
+        protected double OffsetTop;
+        protected double Angle;
+        public Node FirstNode { get; private set; }
+        public Node SecondNode { get; private set; }
+        protected MainWindow MainWindow;
+        protected Canvas MainCanvas;
         public Rectangle EdgeVisualRepresentation;
-        protected Brush _edgeBrush;
+        protected Brush EdgeBrush;
         public string Name { get; private set; }
 
-        protected HiddenNode _centerNode;
+        private readonly HiddenNode _centerNode;
 
         public enum EdgeTypes
         {
@@ -30,24 +30,24 @@ namespace GraphEditor.EdgesAndNodes.Edges
             NonOriented
         }
 
-        public Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
+        protected Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {
-            _firstNode = firstNode;
-            _secondNode = secondNode;
-            _mainWindow = window;
-            _mainCanvas = mainCanvas;
+            FirstNode = firstNode;
+            SecondNode = secondNode;
+            MainWindow = window;
+            MainCanvas = mainCanvas;
             EdgeVisualRepresentation = new Rectangle();
             Name = ToString();
 
-            _centerNode = new HiddenNode(100, 100, _mainCanvas, _mainWindow, BuildHiddenNodeId());
+            _centerNode = new HiddenNode(100, 100, MainCanvas, MainWindow, BuildHiddenNodeId());
 
             SetUpEvents();
         }
 
-        protected void SetUpEvents()
+        private void SetUpEvents()
         {
-            _firstNode.OnNodeMoved += OnNodePositionChanged;
-            _secondNode.OnNodeMoved += OnNodePositionChanged;
+            FirstNode.OnNodeMoved += OnNodePositionChanged;
+            SecondNode.OnNodeMoved += OnNodePositionChanged;
             EdgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;
             EdgeVisualRepresentation.MouseEnter += OnEdgeVisualRepresentationMouseEnter;
             EdgeVisualRepresentation.MouseLeave += OnEdgeVisualRepresentationMouseLeave;
@@ -55,9 +55,9 @@ namespace GraphEditor.EdgesAndNodes.Edges
             EdgeVisualRepresentation.Loaded += OnEdgeVisualRepresentationLoaded;
         }
 
-        protected void OnEdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnEdgeVisualRepresentationMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            _mainWindow.OnEdgeSelected(this, e);
+            MainWindow.OnEdgeSelected(this, e);
         }
 
         protected virtual void OnEdgeVisualRepresentationMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -82,8 +82,8 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public virtual void EdgePositioning(bool isInGraph)
         {
-            double middlePointLeft = (_firstNode.GetPosLeft() + _secondNode.GetPosLeft()) / 2;
-            double middlePointTop = (_firstNode.GetPosTop() + _secondNode.GetPosTop()) / 2;
+            double middlePointLeft = (FirstNode.GetPosLeft() + SecondNode.GetPosLeft()) / 2;
+            double middlePointTop = (FirstNode.GetPosTop() + SecondNode.GetPosTop()) / 2;
             _centerNode.SetPosLeft(middlePointLeft);
             _centerNode.SetPosTop(middlePointTop);
         }
@@ -98,12 +98,12 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public string GetFirstNodeId()
         {
-            return _firstNode.Id;
+            return FirstNode.Id;
         }
 
         public string GetSecondNodeId()
         {
-            return _secondNode.Id;
+            return SecondNode.Id;
         }
 
         protected void EdgeWidthAnimationCompleted(object sender, EventArgs e)
@@ -111,14 +111,14 @@ namespace GraphEditor.EdgesAndNodes.Edges
             EdgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;
         }
 
-        protected string BuildHiddenNodeId()
+        private string BuildHiddenNodeId()
         {
-            return _firstNode.Id + "-" + _secondNode.Id;
+            return FirstNode.Id + "-" + SecondNode.Id;
         }
 
         public override string ToString()
         {
-            return "Edge " + _firstNode.Id + " - " + _secondNode.Id;
+            return "Edge " + FirstNode.Id + " - " + SecondNode.Id;
         }
 
         public virtual void Rename(string newName)
@@ -128,7 +128,7 @@ namespace GraphEditor.EdgesAndNodes.Edges
 
         public virtual void Remove()
         {
-            _mainCanvas.Children.Remove(EdgeVisualRepresentation);
+            MainCanvas.Children.Remove(EdgeVisualRepresentation);
         }
 
         public List<string> GetNodesDependencies()

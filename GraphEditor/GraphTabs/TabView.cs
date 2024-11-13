@@ -130,15 +130,15 @@ namespace GraphEditor.GraphTabs
         {
             EmptyCanvasChildren(_canvasTabViewUI);
 
-            double CanvasLeft = 0;
-            double CanvasTop = 0;
-            double Margin = 10;
+            double canvasLeft = 0;
+            double canvasTop = 0;
+            double margin = 10;
 
             foreach(TabButton renamingButton in _tabViewButtons)
             {
-                renamingButton.SetValue(Canvas.LeftProperty, CanvasLeft);
-                renamingButton.SetValue(Canvas.TopProperty, CanvasTop);
-                CanvasLeft += renamingButton.Width + Margin;
+                renamingButton.SetValue(Canvas.LeftProperty, canvasLeft);
+                renamingButton.SetValue(Canvas.TopProperty, canvasTop);
+                canvasLeft += renamingButton.Width + margin;
                 _canvasTabViewUI.Children.Add(renamingButton);
             }
         }

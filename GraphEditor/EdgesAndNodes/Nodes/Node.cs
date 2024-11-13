@@ -15,13 +15,13 @@ namespace GraphEditor
 
         private Canvas _canvas;
 
-        protected TextBlock _textBlock;
+        protected TextBlock TextBlock;
 
         private MainWindow _window;
 
         private Random _random;
 
-        public string Id { get; protected set; }
+        public string Id { get; set; }
 
         public string Name { get; private set; }
 
@@ -55,10 +55,10 @@ namespace GraphEditor
             SetUpEvents();
             NodeAddingAnimation();
 
-            _textBlock = new TextBlock();
-            NodeSettings.SetUpTextBlock(_textBlock, Id);
+            TextBlock = new TextBlock();
+            NodeSettings.SetUpTextBlock(TextBlock, Id);
             MoveTextBlock();
-            _canvas.Children.Add(_textBlock);
+            _canvas.Children.Add(TextBlock);
         }
 
         private void SetUpEvents()
@@ -83,7 +83,7 @@ namespace GraphEditor
 
         private void MoveTextBlock()
         {
-            TextBlockSetPosLeft(NodeCalculations.CalculateTextBlockCanvasLeft(this, _textBlock, NodeConfiguration.EllipseDimensions));
+            TextBlockSetPosLeft(NodeCalculations.CalculateTextBlockCanvasLeft(this, TextBlock, NodeConfiguration.EllipseDimensions));
             TextBlockSetPosTop(NodeCalculations.CalculateTextBlockCanvasTop(this, NodeConfiguration.EllipseDimensions));
         }
 
@@ -101,7 +101,7 @@ namespace GraphEditor
             else
             {            
                 OnButtonSelected?.Invoke(this, new EventArgs());
-                if (!_window.MainWindowStates.shouldNodeBeMoved) return;
+                if (!_window.MainWindowStates.ShouldNodeBeMoved) return;
 
                 _isSelected = true;
                 
@@ -125,7 +125,7 @@ namespace GraphEditor
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!_isSelected) return;
-            if (!_window.MainWindowStates.shouldNodeBeMoved) return;
+            if (!_window.MainWindowStates.ShouldNodeBeMoved) return;
 
             EndMovementAnimations();
 
@@ -158,12 +158,12 @@ namespace GraphEditor
 
         private void TextBlockSetPosLeft(double canvasLeft)
         {
-            _textBlock.SetValue(Canvas.LeftProperty, canvasLeft);
+            TextBlock.SetValue(Canvas.LeftProperty, canvasLeft);
         }
 
         private void TextBlockSetPosTop(double canvasTop)
         {
-            _textBlock.SetValue(Canvas.TopProperty, canvasTop);
+            TextBlock.SetValue(Canvas.TopProperty, canvasTop);
         }
 
         protected void OnMagicWandOrder()
@@ -218,14 +218,14 @@ namespace GraphEditor
 
         public void Rename(string newName)
         {
-            _textBlock.Text = newName;
+            TextBlock.Text = newName;
             MoveTextBlock();
             Name = newName;
         }
 
         public void Remove()
         {
-            _canvas.Children.Remove(_textBlock);
+            _canvas.Children.Remove(TextBlock);
             _window.MouseMove -= OnMouseMove;
             _window.OnKillAllSelections -= OnUnselect;
             _window.OnMagicWandOrder -= OnMagicWandOrder;

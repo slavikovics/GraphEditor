@@ -2,25 +2,25 @@
 {
     public class MainWindowStates
     {
-        public bool shouldNodeBeMoved;
+        public bool ShouldNodeBeMoved;
 
-        public bool shouldBeDragged;
+        public bool ShouldBeDragged;
 
-        public bool shouldNodeBeAdded;
+        public bool ShouldNodeBeAdded;
 
-        public bool shouldEdgeBeAdded;
+        public bool ShouldEdgeBeAdded;
 
-        public bool shouldBeRemoved;
+        public bool ShouldBeRemoved;
 
-        public bool shouldFileBeLoaded;
+        public bool ShouldFileBeLoaded;
 
-        public bool shouldSettingsBeOpened;
+        public bool ShouldSettingsBeOpened;
 
-        public bool shouldTaskBeDone;
+        public bool ShouldTaskBeDone;
 
-        public bool shouldConsoleBeOpened;
+        public bool ShouldConsoleBeOpened;
 
-        public bool shouldBeMagicallyAnimated;
+        public bool ShouldBeMagicallyAnimated;
 
         public MainWindowStates() 
         {
@@ -29,156 +29,156 @@
 
         public void MoveToMovingState()
         {
-            shouldNodeBeMoved = true;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = true;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToDraggingState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = true;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = true;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToNodeAddingState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = true;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = true;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToEdgeAddingState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = true;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = true;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToRemovingState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = true;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = true;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToFileLoadingState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = true;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = true;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToSettingsState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = true;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = true;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToTaskState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = true;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = true;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToConsoleState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = true;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = true;
+            ShouldBeMagicallyAnimated = false;
         }
 
         public void MoveToMagicState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = true;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = true;
         }
 
         public void MoveToEmptyState()
         {
-            shouldNodeBeMoved = false;
-            shouldBeDragged = false;
-            shouldNodeBeAdded = false;
-            shouldEdgeBeAdded = false;
-            shouldBeRemoved = false;
-            shouldFileBeLoaded = false;
-            shouldSettingsBeOpened = false;
-            shouldTaskBeDone = false;
-            shouldConsoleBeOpened = false;
-            shouldBeMagicallyAnimated = false;
+            ShouldNodeBeMoved = false;
+            ShouldBeDragged = false;
+            ShouldNodeBeAdded = false;
+            ShouldEdgeBeAdded = false;
+            ShouldBeRemoved = false;
+            ShouldFileBeLoaded = false;
+            ShouldSettingsBeOpened = false;
+            ShouldTaskBeDone = false;
+            ShouldConsoleBeOpened = false;
+            ShouldBeMagicallyAnimated = false;
         }
     }
 }
