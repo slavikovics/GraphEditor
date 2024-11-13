@@ -41,6 +41,7 @@
                 <ResourceDictionary Source="\XamlMarcup\Images\OrientedSimplePopUp.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\SaveButtonImage.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\SettingsButtonImage.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\ButtonFolder.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -228,7 +229,7 @@
                         MouseLeftButtonUp="OnButtonMouseLeftButtonUp" Click="OnSaveButtonClick"/>
 
                 <Button Template="{StaticResource ButtonTemplate}"
-                        Content="{StaticResource SettingsButtonImage}"
+                        Content="{StaticResource ButtonOpenFolder}"
                         x:Name="SettingsButton"
                         BorderThickness="0" 
                         Background="Purple" 

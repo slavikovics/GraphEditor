@@ -140,6 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\ButtonFolder.xaml" />
     <Page Include="XamlMarcup\Images\ButtonGraphImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
