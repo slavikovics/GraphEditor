@@ -342,6 +342,13 @@ namespace GraphEditor
         private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             HidePopUpMenus();
+            if (GraphVisualTreeStackPanel == null || GraphsManagerGrid == null || _graphsManager == null) return;
+            UpdateGraphsManagerHeight();
+        }
+
+        private void UpdateGraphsManagerHeight()
+        {
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
         }
 
         private void OnOrientedSimplePopUpClick(object sender, RoutedEventArgs e)
