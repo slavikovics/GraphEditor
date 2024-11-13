@@ -117,4 +117,278 @@
   <data name="OpenFileDialogFilter" xml:space="preserve">
     <value>HTML Files|*.html;*.htm|All Files|*.*</value>
   </data>
+  <data name="SaveFileDialogPngFileFilter" xml:space="preserve">
+    <value>PNG Image|*.png</value>
+  </data>
+  <data name="SaveFileDialogTitle" xml:space="preserve">
+    <value>Save the graph folder</value>
+  </data>
+  <data name="HtmlBeginWithCssStyles" xml:space="preserve">
+    <value>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;style&gt;
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgb(13, 1, 19); /* Medium purple background */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 2%;
+}
+
+.relation {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: flex-start;
+      margin-top: 5%;}
+
+.main-image {
+    width: 40%;
+    height: 40%; /* Adjust as needed */
+    object-fit: contain;
+}
+
+.header {
+    color: #AEA3D8;
+    font-size: 8vw;
+}
+
+table 
+{ 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: center; 
+} 
+td 
+{ 
+    height: fit-content;
+    padding: 10px; 
+    text-align: center;
+    margin: 10px;
+} 
+.circle 
+{ 
+    width: 50px; 
+    height: 50px; 
+    background-color: #AEA3D8; 
+    border-radius: 50%; 
+    display: inline-block; 
+    margin: auto;
+} 
+.innerCircle 
+{ 
+    width: 40px; 
+    height: 40px; 
+    background-color: #AEA3D8; 
+    border-radius: 50%; 
+    display: inline-block; 
+    margin: auto;
+} 
+
+.arrow, .firstNode, .relationName, .secondNode
+{ 
+  width: 20vw; 
+  color: #AEA3D8; margin-right: 10px;
+    margin-left: 20px;
+    font-size: 2vw;
+    font-weight: bold;
+    transition: all 1s;
+}
+
+.arrow:hover, .firstNode:hover, .relationName:hover, .secondNode:hover
+{
+    color: #9370db;
+}
+
+
+.nodeItemGroup
+{
+    width: 40%;
+    text-align: center;
+}
+
+.node
+{
+      height: 3vw;
+    width: 3vw;}
+
+.edge
+{
+    height: 40px;
+        width: 10vw;
+    object-fit: contain;
+}
+
+footer
+{
+ margin-top: 8%;  
+   align-items: center;
+}
+
+.button 
+{ 
+    display: inline-block; 
+    padding: 10px 20px; 
+    margin: 20px; 
+    background-color: #AEA3D8; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 15px; 
+        font-size: 0.5vw; 
+    cursor: pointer; 
+    transition: all 1s;
+}
+
+.button:hover
+{
+    background-color: #9370db;; 
+}
+
+    &lt;/style&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;</value>
+  </data>
+  <data name="HtmlEnd" xml:space="preserve">
+      <value>  &lt;footer&gt;
+        &lt;span class="arrow"&gt;Generated in GraphEditor&lt;/span&gt;
+        &lt;a class="button" href="https://github.com/slavikovics/GraphEditor"&gt;GitHub&lt;/a&gt; 
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+  </data>
+  <data name="HtmlMiddleWithImagePath" xml:space="preserve">
+      <value>&lt;/title&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;img src="graph.png" alt="Graph Image" class="main-image"&gt;
+        &lt;h1 class="header"&gt;</value>
+  </data>
+  <data name="HtmlImageDivEnd" xml:space="preserve">
+      <value>&lt;/h1&gt;
+    &lt;/div&gt;
+  </value>
+  </data>
+  <data name="NodeItemGroupStart" xml:space="preserve">
+      <value>&lt;div class="nodeItemGroup"&gt;
+            &lt;svg class="node" id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56"&gt;
+                &lt;defs&gt;
+                  &lt;style&gt;
+                    .cls-1 {
+                      fill: none;
+                      stroke: #aea3d8;
+                      stroke-miterlimit: 10;
+                      stroke-width: 10px;
+                    }
+                  &lt;/style&gt;
+                &lt;/defs&gt;
+                &lt;circle class="cls-1" cx="28" cy="28" r="23"/&gt;
+              &lt;/svg&gt;
+            &lt;span class="</value>
+  </data>
+  <data name="NodeItemGroupIdTag" xml:space="preserve">
+      <value>" id="</value>
+  </data>
+  <data name="EndOfTag" xml:space="preserve">
+      <value>"&gt;</value>
+  </data>
+  <data name="SpanAndDivEnd" xml:space="preserve">
+      <value>&lt;/span&gt;
+        &lt;/div&gt;</value>
+  </data>
+  <data name="OrientedSimpleSvg" xml:space="preserve">
+      <value>&lt;svg class="edge" id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 44.25"&gt;
+            &lt;defs&gt;
+              &lt;style&gt;
+                .cls-1 {
+                  fill: #9370db;
+                  stroke-width: 0px;
+                }
+              &lt;/style&gt;
+            &lt;/defs&gt;
+            &lt;path class="cls-1" d="m496.52,16.51l-31.81-15.82c-5.36-2.67-11.05,2.97-8.44,8.36l3.9,8.03H5c-2.76,0-5,2.24-5,5s2.24,5,5,5h455.23l-3.95,8.14c-2.62,5.39,3.08,11.03,8.44,8.36l31.81-15.82c4.64-2.31,4.64-8.93,0-11.24Z"/&gt;
+          &lt;/svg&gt;</value>
+  </data>
+  <data name="OrientedPencilSvg" xml:space="preserve">
+      <value>&lt;svg class="edge" id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.97 40.61"&gt;
+            &lt;defs&gt;
+              &lt;style&gt;
+                .cls-1 {
+                  fill: #aea3d8;
+                  stroke-width: 0px;
+                }
+          
+                .cls-2 {
+                  fill: none;
+                  stroke: #aea3d8;
+                  stroke-miterlimit: 10;
+                  stroke-width: 11px;
+                }
+              &lt;/style&gt;
+            &lt;/defs&gt;
+            &lt;path class="cls-1" d="m465.59.63l29.19,14.52c4.26,2.12,4.26,8.19,0,10.31l-29.19,14.52c-4.92,2.45-10.15-2.73-7.74-7.67l4.61-9.49c.77-1.59.77-3.44,0-5.03l-4.61-9.49c-2.4-4.94,2.83-10.12,7.74-7.67Z"/&gt;
+            &lt;rect class="cls-2" x="5.5" y="9.43" width="461.78" height="22.37" rx="11.19" ry="11.19"/&gt;
+          &lt;/svg&gt;</value>
+  </data>
+  <data name="NonOrientedSvg" xml:space="preserve">
+      <value>&lt;svg class="edge" id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 482 85"&gt;
+            &lt;defs&gt;
+              &lt;style&gt;
+                .cls-1 {
+                  fill: none;
+                  stroke: #aea3d8;
+                  stroke-miterlimit: 10;
+                  stroke-width: 20px;
+                }
+              &lt;/style&gt;
+            &lt;/defs&gt;
+            &lt;rect class="cls-1" x="10" y="10" width="462" height="65" rx="32.5" ry="32.5"/&gt;
+          &lt;/svg&gt;</value>
+  </data>
+  <data name="SpanRelationStart" xml:space="preserve">
+    <value>&lt;span class="relationName" class="</value>
+  </data>
+  <data name="SpanRelationEnd" xml:space="preserve">
+    <value>&lt;/span&gt;</value>
+  </data>
+  <data name="TagClosing" xml:space="preserve">
+    <value>"&gt;</value>
+  </data>
+  <data name="DivRelationStart" xml:space="preserve">
+    <value>&lt;div class="relation"&gt;</value>
+  </data>
+  <data name="DivRelationEnd" xml:space="preserve">
+    <value>&lt;/div&gt;
+</value>
+  </data>
+  <data name="firstNode" xml:space="preserve">
+    <value>firstNode</value>
+  </data>
+  <data name="secondNode" xml:space="preserve">
+    <value>secondNode</value>
+  </data>
+  <data name="orientedSimple" xml:space="preserve">
+    <value>orientedSimple</value>
+  </data>
+  <data name="orientedPencil" xml:space="preserve">
+    <value>orientedPencil</value>
+  </data>
+  <data name="nonOriented" xml:space="preserve">
+    <value>nonOriented</value>
+  </data>
 </root>
