@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using GraphEditor.Properties;
 
@@ -55,13 +56,20 @@ namespace GraphEditor.GraphsSavingAndLoading
             return content.Substring(i1, i2 - i1);
         }
 
-        private static string FindNextRelationType(string content, ref int i1)
+        private static EdgeTypes FindNextRelationType(string content, ref int i1)
         {
             i1 = content.IndexOf("\"relationName\"", i1, StringComparison.Ordinal);
             i1 = content.IndexOf("class", i1, StringComparison.Ordinal);
             i1 = content.IndexOf("\"", i1, StringComparison.Ordinal) + 1;
             int i2 = content.IndexOf("\"", i1, StringComparison.Ordinal);
-            return content.Substring(i1, i2 - i1);
+
+            switch (content.Substring(i1, i2 - i1))
+            {
+                case "nonOriented": return EdgeTypes.NonOriented;
+                case "orientedSimple": return EdgeTypes.OrientedSimple;
+                case "orientedPencil": return EdgeTypes.OrientedPencil;
+                default: return EdgeTypes.NonOriented;
+            }
         }
 
         private static string FindNextRelationName(string content, ref int i1)
@@ -96,32 +104,33 @@ namespace GraphEditor.GraphsSavingAndLoading
             }
         }
 
+        private static Point GetRandomPoint()
+        {
+            Random random = new Random();
+            return new Point(random.Next(600) + 200, random.Next(400) + 150);
+        }
+
         private async Task AddRelation(RelationDataModel relationDataModel)
         {
             Random random = new Random();
             if (relationDataModel.ShouldFirstNodeBeCreated)
             {
-                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(800), random.Next(800)));
+                relationDataModel.FirstNode = _mainWindow.CreateNode(GetRandomPoint());
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
-                await Task.Delay(300);
+                await Task.Delay(150);
             }
             if (relationDataModel.ShouldSecondNodeBeCreated)
             {
-                relationDataModel.SecondNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600), random.Next(600)));
+                relationDataModel.SecondNode = _mainWindow.CreateNode(GetRandomPoint());
                 relationDataModel.SecondNode.Rename(relationDataModel.SecondNodeName);
                 relationDataModel.SecondNode.Id = relationDataModel.SecondNodeId;
-                await Task.Delay(300);
+                await Task.Delay(150);
             }
+            
+            _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType);
 
-            switch (relationDataModel.RelationType)
-            {
-                case "nonOriented": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.NonOriented); break;
-                case "orientedSimple": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedSimple); break;
-                case "orientedPencil": _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, Edge.EdgeTypes.OrientedPencil); break;
-            }
-
-            await Task.Delay(300);
+            await Task.Delay(150);
         }
 
         private static void FillRelationDataModel(RelationDataModel relationDataModel, string content, ref int i1)
@@ -185,7 +194,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 {
                     _mainWindow.OnButtonMagicWondClick(null, null);
                 }
-                await Task.Delay(200);                
+                await Task.Delay(150);                
                 if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
                 animationIndex++;
             }
@@ -200,7 +209,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 FindNextFirstNode(content, ref i1);
                 relationDataModel.FirstNodeId = FindNextId(content, ref i1);
                 relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
-                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(800), random.Next(800)));
+                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150));
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
             }

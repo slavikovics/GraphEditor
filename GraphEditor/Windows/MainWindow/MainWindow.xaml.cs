@@ -23,7 +23,7 @@ namespace GraphEditor
         public event Action OnKillAllSelections;
         public event Action OnMagicWandOrder;
 
-        private Edge.EdgeTypes _selectedEdgeType = Edge.EdgeTypes.OrientedSimple;
+        private EdgeTypes _selectedEdgeType = EdgeTypes.OrientedSimple;
 
         public List<Node> _nodes = new List<Node>();
         public List<IEdge> _edges = new List<IEdge>();
@@ -170,14 +170,14 @@ namespace GraphEditor
             return node;
         }
 
-        public IEdge CreateEdge(Node firstSelected, Node secondSelected, Edge.EdgeTypes edgeTypes)
+        public IEdge CreateEdge(Node firstSelected, Node secondSelected, EdgeTypes edgeTypes)
         {
             IEdge edge;
 
             switch(edgeTypes)
             {
-                case Edge.EdgeTypes.NonOriented: edge = new NonOrientedEdge(firstSelected, secondSelected, this, MainCanvas); break;
-                case Edge.EdgeTypes.OrientedSimple: edge = new OrientedEdge(secondSelected, firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
+                case EdgeTypes.NonOriented: edge = new NonOrientedEdge(firstSelected, secondSelected, this, MainCanvas); break;
+                case EdgeTypes.OrientedSimple: edge = new OrientedEdge(secondSelected, firstSelected, this, MainCanvas, EdgeOrientedArrow, false); break;
                 default: edge = new OrientedEdge(secondSelected, firstSelected, this, MainCanvas, EdgeOrientedArrow, true); break;
             }
             RegisterEdge(edge);
@@ -347,21 +347,21 @@ namespace GraphEditor
         private void OnOrientedSimplePopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (OrientedSimplePopUp.Content as Image).Source;
-            _selectedEdgeType = Edge.EdgeTypes.OrientedSimple;
+            _selectedEdgeType = EdgeTypes.OrientedSimple;
             HidePopUpMenus();
         }
 
         private void OnOrientedPencilPopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (OrientedPencilPopUp.Content as Image).Source;
-            _selectedEdgeType = Edge.EdgeTypes.OrientedPencil;
+            _selectedEdgeType = EdgeTypes.OrientedPencil;
             HidePopUpMenus();
         }
 
         private void OnNonOrientedPopUpClick(object sender, RoutedEventArgs e)
         {
             (ButtonAddEdge.Content as Image).Source = (NonOrientedPopUp.Content as Image).Source;
-            _selectedEdgeType = Edge.EdgeTypes.NonOriented;
+            _selectedEdgeType = EdgeTypes.NonOriented;
             HidePopUpMenus();
         }
 

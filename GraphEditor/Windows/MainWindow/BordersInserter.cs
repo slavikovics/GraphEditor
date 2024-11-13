@@ -8,12 +8,12 @@ namespace GraphEditor.Windows.MainWindow
 {
     internal class BordersInserter
     {
-        public static void InsertEdgeBorder(IEdge edge, GraphManager graphsManager, Edge.EdgeTypes selectedEdgeType, StackPanel graphVisualTreeStackPanel)
+        public static void InsertEdgeBorder(IEdge edge, GraphManager graphsManager, EdgeTypes selectedEdgeType, StackPanel graphVisualTreeStackPanel)
         {
             Border edgeBorder = graphsManager.AddEdge(edge, edge.GetNodesDependencies());
             edgeBorder.Margin = new Thickness(40, 4, 4, 4);
             string firstNodeId;
-            if (selectedEdgeType == Edge.EdgeTypes.NonOriented)
+            if (selectedEdgeType == EdgeTypes.NonOriented)
             {
                 firstNodeId = edge.GetFirstNodeId();
             }

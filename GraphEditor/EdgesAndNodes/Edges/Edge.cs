@@ -9,6 +9,13 @@ using System.Windows.Shapes;
 
 namespace GraphEditor.EdgesAndNodes.Edges
 {
+    public enum EdgeTypes
+    {
+        OrientedSimple,
+        OrientedPencil,
+        NonOriented
+    }
+    
     public class Edge : IEdge, IRenamable
     {
         protected double OffsetTop;
@@ -22,13 +29,6 @@ namespace GraphEditor.EdgesAndNodes.Edges
         public string Name { get; private set; }
 
         private readonly HiddenNode _centerNode;
-
-        public enum EdgeTypes
-        {
-            OrientedSimple,
-            OrientedPencil,
-            NonOriented
-        }
 
         protected Edge(Node firstNode, Node secondNode, MainWindow window, Canvas mainCanvas)
         {

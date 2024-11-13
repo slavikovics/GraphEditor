@@ -1,4 +1,6 @@
-﻿namespace GraphEditor.GraphsSavingAndLoading
+﻿using GraphEditor.EdgesAndNodes.Edges;
+
+namespace GraphEditor.GraphsSavingAndLoading
 {
     internal class RelationDataModel
     {
@@ -8,7 +10,7 @@
 
         public string RelationName { get; set; }
 
-        public string RelationType { get; set; }
+        public  EdgeTypes RelationType  { get; set; }
         
         public string RelationId { get; set; }
 
