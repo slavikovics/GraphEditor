@@ -154,7 +154,7 @@ namespace GraphEditor
             Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
             node.OnButtonSelected += OnNodeSelected;
             BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
             CurrentGraph.AddNode(node);
 
             if (_edgeAnimationController == null)
@@ -187,7 +187,7 @@ namespace GraphEditor
         private void RegisterEdge(IEdge edge)
         {           
             BordersInserter.InsertEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
             _edgeAnimationController.AddEdge(edge);
             CurrentGraph.AddEdge(edge);
         }
@@ -259,7 +259,7 @@ namespace GraphEditor
         private void InsertGraphBorder()
         {
             GraphVisualTreeStackPanel.Children.Add(_graphsManager.AddGraph("Graph"));
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
         }
 
         private void OnCollapseWindowButtonClick(object sender, RoutedEventArgs e)
@@ -371,7 +371,7 @@ namespace GraphEditor
             nodeToRemove.Remove();
             _nodeAnimationController.RemoveNode(nodeToRemove);
             BordersRemover.RemoveAllBordersForNode(nodeToRemove.Id, GraphVisualTreeStackPanel);
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
 
             for (int i = 0; i < CurrentGraph.GetEdgesCount(); i++)
             {
@@ -389,7 +389,7 @@ namespace GraphEditor
             edgeToRemove.Remove();
             _edgeAnimationController.RemoveEdge(edgeToRemove);
             BordersRemover.RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1], GraphVisualTreeStackPanel);
-            GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
         }
 
         private void OnDeleteButtonClick(object sender, RoutedEventArgs e)

@@ -102,7 +102,8 @@ namespace GraphEditor.GraphTabs
 
         public void ResizeGraphsManagerGrid(Grid graphsManagerGrid)
         {
-            GraphManager.AnimateGraphsManagerGridExpansion(_stackPanelGraphManager, graphsManagerGrid);
+            
+            _graphManager.AnimateGraphsManagerGridExpansion(_stackPanelGraphManager, graphsManagerGrid);
         }
 
         private double CalculatePosition()

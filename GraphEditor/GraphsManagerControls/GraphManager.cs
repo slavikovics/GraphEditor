@@ -73,10 +73,10 @@ namespace GraphEditor.GraphsManager
             return graphItemBorder;
         }
 
-        public static void AnimateGraphsManagerGridExpansion(StackPanel graphVisualTreeStackPanel, Grid graphsManagerGrid) 
+        public void AnimateGraphsManagerGridExpansion(StackPanel graphVisualTreeStackPanel, Grid graphsManagerGrid) 
         {
-            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(graphVisualTreeStackPanel);
-            if (gridAnimation.To >= 600 && graphsManagerGrid.Height < gridAnimation.To) return;
+            DoubleAnimation gridAnimation = MainWindowAnimator.BuildGraphsManagerGridExpansion(graphVisualTreeStackPanel, _mainWindow.Height);
+            //if (gridAnimation.To >= 600 && graphsManagerGrid.Height < gridAnimation.To) return;
             graphsManagerGrid.BeginAnimation(Grid.HeightProperty, gridAnimation);
         }
     }
