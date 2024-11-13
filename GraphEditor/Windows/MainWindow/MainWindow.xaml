@@ -230,7 +230,7 @@
 
                 <Button Template="{StaticResource ButtonTemplate}"
                         Content="{StaticResource ButtonOpenFolder}"
-                        x:Name="SettingsButton"
+                        x:Name="ButtonOpenFolder"
                         BorderThickness="0" 
                         Background="Purple" 
                         Grid.Row="5" Margin="5" 
