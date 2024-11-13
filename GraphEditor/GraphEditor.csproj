@@ -97,6 +97,7 @@
     <Compile Include="EdgesAndNodes\Nodes\NodeCalculations.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeSettings.cs" />
+    <Compile Include="GraphLogic\Graph.cs" />
     <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
     <Compile Include="GraphsManagerControls\GraphManager.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="GraphsManagerControls\RenamingEventArgs.cs" />
     <Compile Include="GraphsSavingAndLoading\HtmlExport.cs" />
     <Compile Include="GraphsSavingAndLoading\HtmlImport.cs" />
+    <Compile Include="GraphsSavingAndLoading\ImportEventArgs.cs" />
     <Compile Include="GraphsSavingAndLoading\RelationDataModel.cs" />
     <Compile Include="GraphTabs\Tab.cs" />
     <Compile Include="GraphTabs\TabButton.cs" />

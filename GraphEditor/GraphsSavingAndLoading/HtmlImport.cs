@@ -12,29 +12,39 @@ namespace GraphEditor.GraphsSavingAndLoading
     public class HtmlImport
     {
         private readonly MainWindow _mainWindow;
+        
+        public event EventHandler<ImportEventArgs> OnImportStarting;
 
         public HtmlImport(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
-            ImportFile();
         }
 
-        private async void ImportFile()
+        public async void ImportFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = Resources.OpenFileDialogFilter;
             DialogResult dialogResult = openFileDialog.ShowDialog();
             
             if (dialogResult != DialogResult.OK) return;
+            string content = File.ReadAllText(openFileDialog.FileName);
+            OnImportStarting?.Invoke(this, new ImportEventArgs(content));
             _mainWindow.MainCanvas.Children.Clear();
-            _mainWindow._edges.Clear();
-            _mainWindow._nodes.Clear();
-            await ParseHtmlString(File.ReadAllText(openFileDialog.FileName));
+            _mainWindow.CurrentGraph.ClearGraph();
+            await ParseHtmlString(content);
         }
 
         private static void FindNextFirstNode(string content, ref int i1)
         {
             i1 = content.IndexOf("\"firstNode\"", i1, StringComparison.Ordinal);
+        }
+
+        private static string FindGraphName(string content)
+        {
+            int i1 = content.IndexOf("<title>", 0, StringComparison.Ordinal);
+            i1 = content.IndexOf(">", i1, StringComparison.Ordinal) + 1;
+            int i2 = content.IndexOf("<", i1, StringComparison.Ordinal);
+            return content.Substring(i1, i2 - i1);
         }
 
         private static void FindNextSecondNode(string content, ref int i1)
@@ -89,7 +99,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private void CheckNodesExistence(RelationDataModel relationDataModel)
         {
-            foreach (Node node in _mainWindow._nodes)
+            foreach (Node node in _mainWindow.CurrentGraph.Nodes)
             {
                 if (relationDataModel.FirstNode == null && node.Id == relationDataModel.FirstNodeId)
                 {
@@ -148,7 +158,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private void FindExistingNodes(RelationDataModel relationDataModel)
         {
-            foreach (Edge edge in _mainWindow._edges)
+            foreach (Edge edge in _mainWindow.CurrentGraph.Edges)
             {
                 if (relationDataModel.FirstNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.FirstNodeId.Contains(edge.GetSecondNodeId()))
                 {

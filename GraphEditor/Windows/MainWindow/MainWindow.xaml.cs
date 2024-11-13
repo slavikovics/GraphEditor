@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using GraphEditor.GraphLogic;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
@@ -24,9 +25,8 @@ namespace GraphEditor
         public event Action OnMagicWandOrder;
 
         private EdgeTypes _selectedEdgeType = EdgeTypes.OrientedSimple;
-
-        public List<Node> _nodes = new List<Node>();
-        public List<IEdge> _edges = new List<IEdge>();
+        
+        public Graph CurrentGraph = new Graph();
 
         private Point _pointerPosition;
         private Node _firstSelected;
@@ -48,7 +48,7 @@ namespace GraphEditor
             TextBlock textBlock = new TextBlock();
             textBlock.Text = "Graph 1";
             _tabView = new TabView(textBlock, (Image)ButtonAddNode.Content, (ControlTemplate)FindResource("ButtonTemplate"), 
-            (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas, MainCanvas, GraphVisualTreeStackPanel, _graphsManager);
+            (ControlTemplate)FindResource("DialogButtonTemplate"), TabViewCanvas, MainCanvas, GraphVisualTreeStackPanel, _graphsManager, this);
             _tabView.TabLoaded += OnTabViewTabLoaded;
             _tabView.AddTabViewToMainWindow();
         }
@@ -155,7 +155,7 @@ namespace GraphEditor
             node.OnButtonSelected += OnNodeSelected;
             BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
-            _nodes.Add(node);
+            CurrentGraph.AddNode(node);
 
             if (_edgeAnimationController == null)
             {
@@ -189,7 +189,7 @@ namespace GraphEditor
             BordersInserter.InsertEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
             _edgeAnimationController.AddEdge(edge);
-            _edges.Add(edge);
+            CurrentGraph.AddEdge(edge);
         }
 
         public void OnButtonMagicWondClick(object sender, RoutedEventArgs e)
@@ -251,7 +251,7 @@ namespace GraphEditor
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            _graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content);
+            _graphsManager = new GraphManager((ControlTemplate)FindResource("ButtonTemplate"), (Image)ButtonAddNode.Content, (Image)ButtonAddEdge.Content, (Image)ButtonGraph.Content, this);
             InsertGraphBorder();
             AddTabView();
         }
@@ -346,38 +346,38 @@ namespace GraphEditor
 
         private void OnOrientedSimplePopUpClick(object sender, RoutedEventArgs e)
         {
-            (ButtonAddEdge.Content as Image).Source = (OrientedSimplePopUp.Content as Image).Source;
+            ((Image)ButtonAddEdge.Content).Source = (OrientedSimplePopUp.Content as Image)?.Source;
             _selectedEdgeType = EdgeTypes.OrientedSimple;
             HidePopUpMenus();
         }
 
         private void OnOrientedPencilPopUpClick(object sender, RoutedEventArgs e)
         {
-            (ButtonAddEdge.Content as Image).Source = (OrientedPencilPopUp.Content as Image).Source;
+            ((Image)ButtonAddEdge.Content).Source = (OrientedPencilPopUp.Content as Image)?.Source;
             _selectedEdgeType = EdgeTypes.OrientedPencil;
             HidePopUpMenus();
         }
 
         private void OnNonOrientedPopUpClick(object sender, RoutedEventArgs e)
         {
-            (ButtonAddEdge.Content as Image).Source = (NonOrientedPopUp.Content as Image).Source;
+            ((Image)ButtonAddEdge.Content).Source = (NonOrientedPopUp.Content as Image)?.Source;
             _selectedEdgeType = EdgeTypes.NonOriented;
             HidePopUpMenus();
         }
 
         private void RemoveNode(Node nodeToRemove)
         {
-            _nodes.Remove(nodeToRemove);
+            CurrentGraph.RemoveNode(nodeToRemove);
             nodeToRemove.Remove();
             _nodeAnimationController.RemoveNode(nodeToRemove);
             BordersRemover.RemoveAllBordersForNode(nodeToRemove.Id, GraphVisualTreeStackPanel);
             GraphManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
 
-            for (int i = 0; i < _edges.Count; i++)
+            for (int i = 0; i < CurrentGraph.GetEdgesCount(); i++)
             {
-                if (_edges[i].GetFirstNodeId() == nodeToRemove.Id || _edges[i].GetSecondNodeId() == nodeToRemove.Id)
+                if (CurrentGraph.Edges[i].GetFirstNodeId() == nodeToRemove.Id || CurrentGraph.Edges[i].GetSecondNodeId() == nodeToRemove.Id)
                 {
-                    RemoveEdge(_edges[i]);
+                    RemoveEdge(CurrentGraph.Edges[i]);
                     i--;
                 }
             }
@@ -385,7 +385,7 @@ namespace GraphEditor
 
         private void RemoveEdge(IEdge edgeToRemove)
         {
-            _edges.Remove(edgeToRemove);
+            CurrentGraph.RemoveEdge(edgeToRemove);
             edgeToRemove.Remove();
             _edgeAnimationController.RemoveEdge(edgeToRemove);
             BordersRemover.RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1], GraphVisualTreeStackPanel);
@@ -408,19 +408,27 @@ namespace GraphEditor
                 RemoveEdge(edge);
             }
             _selectedEdge = sender as IEdge;
-            Node node = ((sender as Edge).GetEdgeCenterNode() as Node);
+            Node node = (((Edge)sender).GetEdgeCenterNode() as Node);
             node.OnButtonSelected += OnNodeSelected;
             OnNodeSelected(node, e);
         }
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)
         {
-            HtmlExport fileInput = new HtmlExport(MainCanvas, _nodes, _edges);
+            HtmlExport fileInput = new HtmlExport(MainCanvas, CurrentGraph.Nodes, CurrentGraph.Edges);
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             HtmlImport htmlImport = new HtmlImport(this);
+            htmlImport.OnImportStarting += _graphsManager.OnImportStarting;
+            htmlImport.ImportFile();
+        }
+
+        public void UpdateGraphVisualTreeStackPanelAfterImport()
+        {
+            GraphVisualTreeStackPanel.Children.Clear();
+            GraphVisualTreeStackPanel.Children.Add(_graphsManager.GraphName);
         }
     }
 }

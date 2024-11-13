@@ -4,6 +4,7 @@ using GraphEditor.Windows.MainWindow;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using GraphEditor.GraphsSavingAndLoading;
 
 namespace GraphEditor.GraphsManager
 {
@@ -12,23 +13,36 @@ namespace GraphEditor.GraphsManager
         private List<Node> _nodes;
 
         private List<IEdge> _edges;
+        
+        private MainWindow _mainWindow;
 
-        public ControlTemplate ButtonTemplate;
+        private readonly ControlTemplate _buttonTemplate;
 
-        public Image ButtonAddNodeContent;
+        public GraphItemBorder GraphName;
 
-        public Image ButtonAddEdgeContent;
+        private readonly Image _buttonAddNodeContent;
 
-        public Image ButtonAddGraphContent;
+        private readonly Image _buttonAddEdgeContent;
 
-        public GraphManager(ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonAddGraphContent) 
+        private readonly Image _buttonAddGraphContent;
+
+        public GraphManager(ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonAddGraphContent, MainWindow mainWindow) 
         {
-            ButtonTemplate = buttonTemplate;
-            ButtonAddNodeContent = buttonAddNodeContent;
-            ButtonAddEdgeContent = buttonAddEdgeContent;
-            ButtonAddGraphContent = buttonAddGraphContent;
+            _buttonTemplate = buttonTemplate;
+            _buttonAddNodeContent = buttonAddNodeContent;
+            _buttonAddEdgeContent = buttonAddEdgeContent;
+            _buttonAddGraphContent = buttonAddGraphContent;
             _nodes = new List<Node>();
             _edges = new List<IEdge>();
+            _mainWindow = mainWindow;
+        }
+
+        public void OnImportStarting(object sender, ImportEventArgs e)
+        {
+            _nodes.Clear();
+            _edges.Clear();
+            AddGraph(e.GraphName);
+            _mainWindow.UpdateGraphVisualTreeStackPanelAfterImport();
         }
 
         public GraphItemBorder AddNode(Node node, List<string> nodesDependencies)
@@ -40,7 +54,8 @@ namespace GraphEditor.GraphsManager
 
         public GraphItemBorder AddGraph(string graphName)
         {
-            return GenerateGraphManagerGraphBorder("", graphName, "graph", null, new List<string>());
+            GraphName = GenerateGraphManagerGraphBorder("", graphName, "graph", null, new List<string>());
+            return GraphName;
         }
 
         public GraphItemBorder AddEdge(IEdge edge, List<string> nodesDependencies)
@@ -53,7 +68,7 @@ namespace GraphEditor.GraphsManager
         private GraphItemBorder GenerateGraphManagerGraphBorder(string borderName, string borderString, string borderType, IRenamable renamable, List<string> nodesDependencies)
         {
             GraphItemBorder graphItemBorder = new GraphItemBorder(borderName, borderString, borderType,
-                ButtonTemplate, ButtonAddNodeContent, ButtonAddEdgeContent, ButtonAddGraphContent, renamable, nodesDependencies);
+                _buttonTemplate, _buttonAddNodeContent, _buttonAddEdgeContent, _buttonAddGraphContent, renamable, nodesDependencies);
 
             return graphItemBorder;
         }

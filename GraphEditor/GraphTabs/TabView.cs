@@ -4,16 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using GraphEditor.GraphLogic;
+using GraphEditor.GraphsSavingAndLoading;
 
 namespace GraphEditor.GraphTabs
 {
     internal class TabView
     {
+        private MainWindow _mainWindow;
+        
         private List<TabButton> _tabViewButtons;
 
         private List<List<UIElement>> _uiElementsCollections;
 
         private List<List<UIElement>> _graphManagerCollections;
+        
+        private List<Graph> _graphsCollection;
 
         private int _selectedTabId;
 
@@ -33,14 +39,15 @@ namespace GraphEditor.GraphTabs
 
         public TabView(TextBlock tabContent, Image addNewTabContent, ControlTemplate buttonAddTemplate, 
             ControlTemplate tabButtonTemplate, Canvas canvasTabViewUI, Canvas canvasMainCanvas, 
-            StackPanel stackPanelGraphManager, GraphManager graphManager)
+            StackPanel stackPanelGraphManager, GraphManager graphManager, MainWindow mainWindow)
         {
             InitializeTabView(canvasTabViewUI, tabButtonTemplate, canvasMainCanvas, stackPanelGraphManager, graphManager);
             SetUpAddNewTabButton(addNewTabContent, buttonAddTemplate);
             CreateTab(tabContent);
             AddTabViewToMainWindow();
+            _mainWindow = mainWindow;
         }
-
+        
         private void SetUpAddNewTabButton(Image addNewTabContent, ControlTemplate buttonAddTemplate)
         {
             Tab addNewTab = new Tab(addNewTabContent, buttonAddTemplate, 0);
@@ -53,6 +60,7 @@ namespace GraphEditor.GraphTabs
         {
             _uiElementsCollections.Add(new List<UIElement>());
             _graphManagerCollections.Add(new List<UIElement>());
+            _graphsCollection.Add(new Graph());
             Tab tab = new Tab(tabContent, _tabButtonTemplate, _maxId);
             _maxId++;
             TabButton tabAsButton = tab.GetTabAsTabButton();
@@ -70,6 +78,7 @@ namespace GraphEditor.GraphTabs
             _selectedTabId = 1;
             _uiElementsCollections = new List<List<UIElement>>();
             _graphManagerCollections = new List<List<UIElement>>();
+            _graphsCollection = new List<Graph>();
             _tabViewButtons = new List<TabButton>();
             _graphManager = graphManager;
         }
@@ -108,7 +117,7 @@ namespace GraphEditor.GraphTabs
             int senderId = tabButton.TabButtonId;
             SwitchTab(senderId);
 
-            foreach(TabButton button in _tabViewButtons)
+            foreach (TabButton button in _tabViewButtons)
             {
                 if (button != tabButton && button.TabButtonId != 0)
                 {
@@ -149,6 +158,7 @@ namespace GraphEditor.GraphTabs
             EmptyCanvasChildren(_canvasMain);
             EmptyStackPanelChildren(_stackPanelGraphManager);
             AddChildrenToCanvas(targetId);
+            _mainWindow.CurrentGraph = _graphsCollection[targetId - 1];
             _selectedTabId = targetId;
         }
 
