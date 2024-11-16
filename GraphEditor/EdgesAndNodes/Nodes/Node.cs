@@ -39,12 +39,17 @@ namespace GraphEditor
 
         public event Action OnNodesAnimated;
 
-        public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id)
+        public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id): 
+            this(canvasLeft, canvasTop, parent, window)
         {            
             Id = BuildIdString(id.ToString());
-            _canvas = parent;
             _window = window;
             Name = ToString();
+        }
+
+        protected Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window)
+        {
+            _canvas = parent;
 
             _random = new Random();
             Ellipse = new Button();
@@ -59,6 +64,13 @@ namespace GraphEditor
             NodeSettings.SetUpTextBlock(TextBlock, Id);
             MoveTextBlock();
             _canvas.Children.Add(TextBlock);
+        }
+
+        public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, string id) :
+            this(canvasLeft, canvasTop, parent, window)
+        {
+            Id = id;
+            Name = id;
         }
 
         private void SetUpEvents()
