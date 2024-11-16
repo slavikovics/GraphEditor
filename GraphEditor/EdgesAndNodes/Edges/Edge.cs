@@ -106,6 +106,11 @@ namespace GraphEditor.EdgesAndNodes.Edges
             return SecondNode.Id;
         }
 
+        public Node GetCenterNode()
+        {
+            return _centerNode;
+        }
+
         protected void EdgeWidthAnimationCompleted(object sender, EventArgs e)
         {
             EdgeVisualRepresentation.LayoutUpdated += OnEdgeVisualRepresentationRenderTransformUpdate;

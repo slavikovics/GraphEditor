@@ -43,14 +43,17 @@ namespace GraphEditor
             this(canvasLeft, canvasTop, parent, window)
         {            
             Id = BuildIdString(id.ToString());
-            _window = window;
             Name = ToString();
+            TextBlock = new TextBlock();
+            NodeSettings.SetUpTextBlock(TextBlock, Id);
+            MoveTextBlock();
+            _canvas.Children.Add(TextBlock);
         }
 
         protected Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window)
         {
             _canvas = parent;
-
+            _window = window;
             _random = new Random();
             Ellipse = new Button();
             NodeSettings.SetUpEllipse(Ellipse, _window);
@@ -59,11 +62,6 @@ namespace GraphEditor
 
             SetUpEvents();
             NodeAddingAnimation();
-
-            TextBlock = new TextBlock();
-            NodeSettings.SetUpTextBlock(TextBlock, Id);
-            MoveTextBlock();
-            _canvas.Children.Add(TextBlock);
         }
 
         public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, string id) :
@@ -71,6 +69,10 @@ namespace GraphEditor
         {
             Id = id;
             Name = id;
+            TextBlock = new TextBlock();
+            NodeSettings.SetUpTextBlock(TextBlock, Name);
+            MoveTextBlock();
+            _canvas.Children.Add(TextBlock);
         }
 
         private void SetUpEvents()

@@ -125,19 +125,20 @@ namespace GraphEditor.GraphsSavingAndLoading
             Random random = new Random();
             if (relationDataModel.ShouldFirstNodeBeCreated)
             {
-                relationDataModel.FirstNode = _mainWindow.CreateNode(GetRandomPoint());
+                relationDataModel.FirstNode = _mainWindow.CreateNode(GetRandomPoint(), true, relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
                 await Task.Delay(150);
             }
             if (relationDataModel.ShouldSecondNodeBeCreated)
             {
-                relationDataModel.SecondNode = _mainWindow.CreateNode(GetRandomPoint());
+                relationDataModel.SecondNode = _mainWindow.CreateNode(GetRandomPoint(), true, relationDataModel.SecondNodeName);
                 relationDataModel.SecondNode.Rename(relationDataModel.SecondNodeName);
                 relationDataModel.SecondNode.Id = relationDataModel.SecondNodeId;
                 await Task.Delay(150);
             }
             
+            _mainWindow.SetSelectedEdgeType(relationDataModel.RelationType);
             _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType);
 
             await Task.Delay(150);
@@ -219,7 +220,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 FindNextFirstNode(content, ref i1);
                 relationDataModel.FirstNodeId = FindNextId(content, ref i1);
                 relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
-                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150));
+                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150), true, relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
             }

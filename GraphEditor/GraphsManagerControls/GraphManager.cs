@@ -4,6 +4,7 @@ using GraphEditor.Windows.MainWindow;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.GraphsSavingAndLoading;
 
 namespace GraphEditor.GraphsManager
@@ -47,7 +48,7 @@ namespace GraphEditor.GraphsManager
 
         public GraphItemBorder AddNode(Node node, List<string> nodesDependencies)
         {
-            GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node.Id.ToString(), node.ToString(), "node", node, nodesDependencies);
+            GraphItemBorder border = GenerateGraphManagerGraphBorder("node" + node.Id.ToString(), node.Name, "node", node, nodesDependencies);
             _nodes.Add(node);
             return border;
         }
@@ -60,7 +61,7 @@ namespace GraphEditor.GraphsManager
 
         public GraphItemBorder AddEdge(IEdge edge, List<string> nodesDependencies)
         {
-            GraphItemBorder border = GenerateGraphManagerGraphBorder("", edge.ToString(), "edge", edge, nodesDependencies);
+            GraphItemBorder border = GenerateGraphManagerGraphBorder("", (edge as Edge).Name, "edge", edge, nodesDependencies);
             _edges.Add(edge);
             return border;
         }

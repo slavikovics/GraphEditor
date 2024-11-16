@@ -14,6 +14,8 @@ namespace GraphEditor
 
         public string BorderType;
 
+        public string BorderName;
+
         public string BorderString;
 
         public ControlTemplate ButtonTemplate;
@@ -31,7 +33,7 @@ namespace GraphEditor
         public GraphItemBorder(string borderName, string borderString, string borderType, 
             ControlTemplate buttonTemplate, Image buttonAddNodeContent, Image buttonAddEdgeContent, Image buttonGraphImageContent, IRenamable renamable, List<string> nodesDependencies)
         {
-            Name = borderName;
+            BorderName = borderName;
             BorderType = borderType;
             BorderString = borderString;
             ButtonTemplate = buttonTemplate;

@@ -25,7 +25,7 @@ namespace GraphEditor.Windows.MainWindow
             foreach (UIElement uIElement in graphVisualTreeStackPanel.Children)
             {
                 i++;
-                if ((uIElement as Border)?.Name == "node" + firstNodeId.ToString())
+                if ((uIElement as GraphItemBorder)?.BorderName == "node" + firstNodeId.ToString())
                 {
                     break;
                 }

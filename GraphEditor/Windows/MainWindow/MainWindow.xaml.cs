@@ -133,7 +133,7 @@ namespace GraphEditor
             }
             if (MainWindowStates.ShouldNodeBeAdded)
             {
-                CreateNode(currentMousePosition);
+                CreateNode(currentMousePosition, false, "");
             }
             else
             {
@@ -149,9 +149,12 @@ namespace GraphEditor
             }    
         }
 
-        public Node CreateNode(Point currentMousePosition)
+        public Node CreateNode(Point currentMousePosition, bool isImported, string nodeId)
         {
-            Node node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
+            Node node;
+            if (isImported) node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, nodeId);
+            else node = new Node(currentMousePosition.X, currentMousePosition.Y, MainCanvas, this, _nodeId);
+            
             node.OnButtonSelected += OnNodeSelected;
             BordersInserter.InsertNodeBorder(node, _graphsManager, GraphVisualTreeStackPanel);
             _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
@@ -393,10 +396,22 @@ namespace GraphEditor
         private void RemoveEdge(IEdge edgeToRemove)
         {
             CurrentGraph.RemoveEdge(edgeToRemove);
+            RemoveNode((edgeToRemove as Edge).GetCenterNode());
             edgeToRemove.Remove();
             _edgeAnimationController.RemoveEdge(edgeToRemove);
             BordersRemover.RemoveAllBordersForEdge(edgeToRemove.GetNodesDependencies()[0], edgeToRemove.GetNodesDependencies()[1], GraphVisualTreeStackPanel);
             _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
+        }
+
+        public void SetSelectedEdgeType(EdgeTypes edgeType)
+        {
+            _selectedEdgeType = edgeType;
+            switch (edgeType)
+            {
+                case EdgeTypes.OrientedSimple: ButtonAddEdge.Content = new Image() { Source = (OrientedSimplePopUp.Content as Image).Source }; break;
+                case EdgeTypes.NonOriented: ButtonAddEdge.Content = new Image() { Source = (NonOrientedPopUp.Content as Image).Source }; break;
+                case EdgeTypes.OrientedPencil: ButtonAddEdge.Content = new Image() { Source = (OrientedPencilPopUp.Content as Image).Source }; break;
+            }
         }
 
         private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
