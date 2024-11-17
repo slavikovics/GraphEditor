@@ -153,14 +153,20 @@ namespace GraphEditor.GraphTabs
             }
         }
 
-        public void SwitchTab(int targetId)
+        private void SwitchTab(int targetId)
         {
+            SaveGraph();
             SaveCanvasChildren();
             EmptyCanvasChildren(_canvasMain);
             EmptyStackPanelChildren(_stackPanelGraphManager);
             AddChildrenToCanvas(targetId);
             _mainWindow.CurrentGraph = _graphsCollection[targetId - 1];
             _selectedTabId = targetId;
+        }
+
+        private void SaveGraph()
+        {
+            _graphsCollection[_selectedTabId - 1] = _mainWindow.CurrentGraph;
         }
 
         private void SaveCanvasChildren()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GraphEditor.EdgesAndNodes;
 using GraphEditor.EdgesAndNodes.Edges;
 
@@ -114,6 +115,64 @@ namespace GraphEditor.GraphLogic
             }
 
             return null;
+        }
+
+        public Edge GetEdgeByTwoNodes(Node firstNode, Node secondNode)
+        {
+            foreach (Edge edge in Edges)
+            {
+                if (edge.GetFirstNode() == firstNode && edge.GetSecondNode() == secondNode || edge.GetFirstNode() == secondNode && edge.GetSecondNode() == firstNode)
+                {
+                    return edge;
+                }
+            }
+
+            return null;
+        }
+
+        public void HighlightEdges(List<List<Node>> nodes, Node selectedNode)
+        {
+            if (nodes == null) return;
+            List<Edge> edges = new List<Edge>();
+            foreach (List<Node> list in nodes)
+            {
+                if (list.Last() != selectedNode) continue;
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    edges.Add(GetEdgeByTwoNodes(list[i], list[i + 1]));
+                }
+            }
+            
+            foreach (Edge edge in edges)
+            { 
+                GraphLogicAnimator.AnimateEdgeHighlight(edge);
+            }
+        }
+
+        public void HighlightEdgesRemoval()
+        {
+            foreach (Edge edge in Edges)
+            {
+                GraphLogicAnimator.AnimateEdgeHighlightRemoval(edge);
+            }
+        }
+
+        public List<Node> GoNextNodes(Node node)
+        {
+            List<Node> nodes = new List<Node>();
+            foreach (Edge edge in Edges)
+            {
+                if (edge.GetSecondNode() == node)
+                {
+                    if (!nodes.Contains(edge.GetSecondNode())) nodes.Add(edge.GetFirstNode());
+                }
+                else if (edge is NonOrientedEdge && edge.GetFirstNode() == node)
+                {
+                    if (!nodes.Contains(edge.GetFirstNode())) nodes.Add(edge.GetSecondNode());   
+                }
+            }
+            
+            return nodes;
         }
 
         public void ClearGraph()

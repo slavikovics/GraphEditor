@@ -94,7 +94,7 @@ namespace GraphEditor
                 RemoveNode(nodeToRemove);
             }
 
-            if (!MainWindowStates.ShouldEdgeBeAdded) return;
+            //if (!MainWindowStates.ShouldEdgeBeAdded) return;
 
             Node node = sender as Node;
 
@@ -112,7 +112,8 @@ namespace GraphEditor
                         _secondSelected = null;
                         return;
                     }
-                    CreateEdge(_firstSelected, _secondSelected, _selectedEdgeType);
+                    if (MainWindowStates.ShouldEdgeBeAdded) CreateEdge(_firstSelected, _secondSelected, _selectedEdgeType);
+                    if (MainWindowStates.ShouldTaskBeDone) CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected), _secondSelected);
                 }
                 _firstSelected = null;
                 _secondSelected = null;
@@ -145,6 +146,7 @@ namespace GraphEditor
                 {
                     MainWindowStates.MoveToDraggingState();
                 }
+                
                 _pointerPosition = currentMousePosition;
             }    
         }
@@ -321,6 +323,8 @@ namespace GraphEditor
         private void OnButtonGraphClick(object sender, RoutedEventArgs e)
         {
             HidePopUpMenus();
+            MainWindowStates.MoveToTaskState();
+            // Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected);
             InformationWindow informationWindow = new InformationWindow();
             informationWindow.Show();
         }
@@ -385,7 +389,7 @@ namespace GraphEditor
 
             for (int i = 0; i < CurrentGraph.GetEdgesCount(); i++)
             {
-                if (CurrentGraph.Edges[i].GetFirstNodeId() == nodeToRemove.Id || CurrentGraph.Edges[i].GetSecondNodeId() == nodeToRemove.Id)
+                if (CurrentGraph.Edges[i].GetFirstNode() == nodeToRemove || CurrentGraph.Edges[i].GetSecondNode() == nodeToRemove)
                 {
                     RemoveEdge(CurrentGraph.Edges[i]);
                     i--;

@@ -238,6 +238,8 @@ namespace GraphEditor.GraphsSavingAndLoading
                 }
             }
         }
+        
+
 
         private async Task ParseHtmlString(string content)
         {
@@ -285,8 +287,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                 FindNextFirstNode(content, ref i1);
                 relationDataModel.FirstNodeId = FindNextId(content, ref i1);
                 relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
-                relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150), true, relationDataModel.FirstNodeName);
-                relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
+                await CreateLonelyNode(relationDataModel, random);
                 //relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
             }
 
@@ -299,6 +300,13 @@ namespace GraphEditor.GraphsSavingAndLoading
                 _mainWindow.OnButtonMagicWondClick(null, null);
                 await Task.Delay(200); 
             }
+        }
+
+        private async Task CreateLonelyNode(RelationDataModel relationDataModel, Random random)
+        {
+            relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150), true, relationDataModel.FirstNodeName);
+            relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
+            await Task.Delay(200);
         }
     }
 }

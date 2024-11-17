@@ -98,6 +98,8 @@
     <Compile Include="EdgesAndNodes\Nodes\NodeConfiguration.cs" />
     <Compile Include="EdgesAndNodes\Nodes\NodeSettings.cs" />
     <Compile Include="GraphLogic\Graph.cs" />
+    <Compile Include="GraphLogic\GraphLogicAnimator.cs" />
+    <Compile Include="GraphLogic\Pathfinder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
     <Compile Include="GraphsManagerControls\GraphManager.cs" />
