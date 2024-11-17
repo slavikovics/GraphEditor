@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GraphEditor.EdgesAndNodes;
 using GraphEditor.EdgesAndNodes.Edges;
 
@@ -76,6 +77,14 @@ namespace GraphEditor.GraphLogic
             }
 
             return null;
+        }
+
+        public void PrintAllNodes()
+        {
+            foreach (Node node in Nodes)
+            {
+                Console.WriteLine("Name: " + node.Name + " Id: " + node.Id);
+            }
         }
 
         public bool IsNodeIdUnique(string id)

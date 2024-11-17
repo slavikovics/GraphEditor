@@ -139,7 +139,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             }
             
             _mainWindow.SetSelectedEdgeType(relationDataModel.RelationType);
-            _mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType);
+            _mainWindow.CreateImportedEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType);
 
             await Task.Delay(150);
         }

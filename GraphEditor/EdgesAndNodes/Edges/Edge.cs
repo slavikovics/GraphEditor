@@ -144,6 +144,16 @@ namespace GraphEditor.EdgesAndNodes.Edges
             return dependencies;
         }
 
+        public Node GetFirstNode()
+        {
+            return FirstNode;
+        }
+
+        public Node GetSecondNode()
+        {
+            return SecondNode;
+        }
+
         public Rectangle GetEdgeVisualRepresentation()
         {
             return EdgeVisualRepresentation;

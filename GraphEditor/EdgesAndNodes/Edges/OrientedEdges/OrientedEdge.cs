@@ -163,13 +163,22 @@ namespace GraphEditor
             EdgeVisualRepresentation.BeginAnimation(Rectangle.WidthProperty, edgeWidthAnimation);
         }
 
+        // public override string ToString()
+        // {
+        //     if (_isPencil)
+        //     {
+        //         return "Edge " + SecondNode.Id + " => " + FirstNode.Id;
+        //     }
+        //     return  "Edge " + SecondNode.Id + " -> " + FirstNode.Id;
+        // }
+        
         public override string ToString()
         {
             if (_isPencil)
             {
-                return "Edge " + SecondNode.Id + " => " + FirstNode.Id;
+                return "Edge " + SecondNode.Name + " => " + FirstNode.Name;
             }
-            return  "Edge " + SecondNode.Id + " -> " + FirstNode.Id;
+            return  "Edge " + SecondNode.Name + " -> " + FirstNode.Name;
         }
 
         public override void Rename(string newName)

@@ -16,6 +16,10 @@ namespace GraphEditor.EdgesAndNodes
         string GetFirstNodeId();
 
         string GetSecondNodeId();
+        
+        Node GetFirstNode();
+        
+        Node GetSecondNode();
 
         void Remove();
 
