@@ -13,6 +13,8 @@ namespace GraphEditor.GraphsSavingAndLoading
     {
         private readonly MainWindow _mainWindow;
         
+        private List<RelationDataModel> _relationDataModels = new List<RelationDataModel>();
+        
         public event EventHandler<ImportEventArgs> OnImportStarting;
 
         public HtmlImport(MainWindow mainWindow)
@@ -28,7 +30,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             
             if (dialogResult != DialogResult.OK) return;
             string content = File.ReadAllText(openFileDialog.FileName);
-            OnImportStarting?.Invoke(this, new ImportEventArgs(content));
+            OnImportStarting?.Invoke(this, new ImportEventArgs(FindGraphName(content)));
             _mainWindow.MainCanvas.Children.Clear();
             _mainWindow.CurrentGraph.ClearGraph();
             await ParseHtmlString(content);
@@ -101,17 +103,22 @@ namespace GraphEditor.GraphsSavingAndLoading
         {
             foreach (Node node in _mainWindow.CurrentGraph.Nodes)
             {
-                if (relationDataModel.FirstNode == null && node.Id == relationDataModel.FirstNodeId)
+                if (relationDataModel.FirstNode == null && node.Id == relationDataModel.FirstNodeName)
                 {
                     relationDataModel.ShouldFirstNodeBeCreated = false;
                     relationDataModel.FirstNode = node;
                 }
-                if (relationDataModel.SecondNode == null && node.Id == relationDataModel.SecondNodeId)
+                if (relationDataModel.SecondNode == null && node.Id == relationDataModel.SecondNodeName)
                 { 
                     relationDataModel.ShouldSecondNodeBeCreated = false;
                     relationDataModel.SecondNode = node;
                 }
             }
+        }
+
+        private void CheckPlannedNodesExistence(RelationDataModel relationDataModel)
+        {
+            
         }
 
         private static Point GetRandomPoint()
@@ -127,19 +134,19 @@ namespace GraphEditor.GraphsSavingAndLoading
             {
                 relationDataModel.FirstNode = _mainWindow.CreateNode(GetRandomPoint(), true, relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
-                relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
+                //relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
                 await Task.Delay(150);
             }
             if (relationDataModel.ShouldSecondNodeBeCreated)
             {
                 relationDataModel.SecondNode = _mainWindow.CreateNode(GetRandomPoint(), true, relationDataModel.SecondNodeName);
                 relationDataModel.SecondNode.Rename(relationDataModel.SecondNodeName);
-                relationDataModel.SecondNode.Id = relationDataModel.SecondNodeId;
+                //relationDataModel.SecondNode.Id = relationDataModel.SecondNodeId;
                 await Task.Delay(150);
             }
             
             _mainWindow.SetSelectedEdgeType(relationDataModel.RelationType);
-            _mainWindow.CreateImportedEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType);
+            relationDataModel.CenterNode = (_mainWindow.CreateEdge(relationDataModel.FirstNode, relationDataModel.SecondNode, relationDataModel.RelationType) as Edge).GetCenterNode();
 
             await Task.Delay(150);
         }
@@ -159,7 +166,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private void FindExistingNodes(RelationDataModel relationDataModel)
         {
-            foreach (Edge edge in _mainWindow.CurrentGraph.Edges)
+            /*foreach (Edge edge in _mainWindow.CurrentGraph.Edges)
             {
                 if (relationDataModel.FirstNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.FirstNodeId.Contains(edge.GetSecondNodeId()))
                 {
@@ -171,6 +178,63 @@ namespace GraphEditor.GraphsSavingAndLoading
                 {
                     relationDataModel.ShouldSecondNodeBeCreated = false;
                     relationDataModel.SecondNode = edge.GetEdgeCenterNode();
+                }
+            }*/
+
+            foreach (RelationDataModel createdRelation in _relationDataModels)
+            {
+                int len = relationDataModel.FirstNodeId.IndexOf('-') - 3;
+                string centerNodeFirstNodeId;
+                string centerNodeSecondNodeId;
+
+                if (len >= 0)
+                {
+                    centerNodeFirstNodeId = relationDataModel.FirstNodeId.Substring(3, len);
+                    len++;
+                    centerNodeSecondNodeId = relationDataModel.FirstNodeId.Substring(len + 3);
+                }
+                else
+                {
+                    centerNodeFirstNodeId = null;
+                    centerNodeSecondNodeId = null;
+                }
+                
+                if (centerNodeFirstNodeId != null)
+                {
+                    if ((centerNodeFirstNodeId == createdRelation.FirstNodeId &&
+                         centerNodeSecondNodeId == createdRelation.SecondNodeId) ||
+                        (centerNodeFirstNodeId == createdRelation.SecondNodeId &&
+                         centerNodeSecondNodeId == createdRelation.FirstNodeId))
+                    {
+                        relationDataModel.ShouldFirstNodeBeCreated = false;
+                        relationDataModel.FirstNode = createdRelation.CenterNode;
+                    }
+                }
+
+                len = relationDataModel.SecondNodeId.IndexOf('-') - 3;
+                
+                if (len >= 0)
+                {
+                    centerNodeFirstNodeId = relationDataModel.SecondNodeId.Substring(3, len);
+                    len++;
+                    centerNodeSecondNodeId = relationDataModel.SecondNodeId.Substring(len + 3);
+                }
+                else
+                {
+                    centerNodeFirstNodeId = null;
+                    centerNodeSecondNodeId = null;
+                }
+
+                if (centerNodeFirstNodeId != null)
+                {
+                    if ((centerNodeFirstNodeId == createdRelation.FirstNodeId &&
+                         centerNodeSecondNodeId == createdRelation.SecondNodeId) ||
+                        (centerNodeFirstNodeId == createdRelation.SecondNodeId &&
+                         centerNodeSecondNodeId == createdRelation.FirstNodeId))
+                    {
+                        relationDataModel.ShouldSecondNodeBeCreated = false;
+                        relationDataModel.SecondNode = createdRelation.CenterNode;
+                    }
                 }
             }
         }
@@ -184,6 +248,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             while (true)
             {
                 RelationDataModel relationDataModel = new RelationDataModel();
+                _relationDataModels.Add(relationDataModel);
 
                 FillRelationDataModel(relationDataModel, content, ref i1);
                 CheckNodesExistence(relationDataModel);
@@ -222,11 +287,12 @@ namespace GraphEditor.GraphsSavingAndLoading
                 relationDataModel.FirstNodeName = FindNextFirstNodeName(content, ref i1);
                 relationDataModel.FirstNode = _mainWindow.CreateNode(new System.Windows.Point(random.Next(600) + 200, random.Next(400) + 150), true, relationDataModel.FirstNodeName);
                 relationDataModel.FirstNode.Rename(relationDataModel.FirstNodeName);
-                relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
+                //relationDataModel.FirstNode.Id = relationDataModel.FirstNodeId;
             }
 
             foreach (RelationDataModel relationDataModel in plannedRelations)
             {
+                _relationDataModels.Add(relationDataModel);
                 FindExistingNodes(relationDataModel);
                 CheckNodesExistence(relationDataModel);
                 await AddRelation(relationDataModel);

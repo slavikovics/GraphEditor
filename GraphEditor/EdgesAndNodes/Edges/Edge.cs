@@ -144,6 +144,12 @@ namespace GraphEditor.EdgesAndNodes.Edges
             return dependencies;
         }
 
+        public void EndMovementAnimations()
+        {
+            EdgeVisualRepresentation.BeginAnimation(Canvas.TopProperty, null);
+            EdgeVisualRepresentation.BeginAnimation(Canvas.LeftProperty, null);
+        }
+
         public Node GetFirstNode()
         {
             return FirstNode;

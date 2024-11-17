@@ -187,18 +187,6 @@ namespace GraphEditor
             return edge;
         }
 
-        public IEdge CreateImportedEdge(Node firstSelected, Node secondSelected, EdgeTypes edgeTypes)
-        {
-            IEdge edge = CreateEdge(firstSelected, secondSelected, edgeTypes);   
-            
-            BordersInserter.InsertImportedEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);
-            _graphsManager.AnimateGraphsManagerGridExpansion(GraphVisualTreeStackPanel, GraphsManagerGrid);
-            _edgeAnimationController.AddEdge(edge);
-            CurrentGraph.AddEdge(edge);
-            
-            return edge;
-        }
-
         private void RegisterEdge(IEdge edge)
         {           
             BordersInserter.InsertEdgeBorder(edge, _graphsManager, _selectedEdgeType, GraphVisualTreeStackPanel);

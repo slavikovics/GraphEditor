@@ -42,8 +42,8 @@ namespace GraphEditor
         public Node(double canvasLeft, double canvasTop, Canvas parent, MainWindow window, int id): 
             this(canvasLeft, canvasTop, parent, window)
         {            
-            Id = BuildIdString(id.ToString());
-            Name = ToString();
+            Id = "n" + id;
+            Name = Id;
             TextBlock = new TextBlock();
             NodeSettings.SetUpTextBlock(TextBlock, Id);
             MoveTextBlock();
@@ -222,12 +222,12 @@ namespace GraphEditor
 
         public override string ToString()
         {
-            return "Node " + Id;
+            return Id;
         }
 
         protected virtual string BuildIdString(string id)
         {
-            return "n" + id;
+            return Id;
         }
 
         public void Rename(string newName)

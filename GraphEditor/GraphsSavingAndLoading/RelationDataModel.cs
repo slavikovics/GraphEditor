@@ -25,5 +25,7 @@ namespace GraphEditor.GraphsSavingAndLoading
         public Node FirstNode { get; set; }
 
         public Node SecondNode { get; set; }
+        
+        public Node CenterNode { get; set; }
     }
 }

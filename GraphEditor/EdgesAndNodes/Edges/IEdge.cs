@@ -23,6 +23,8 @@ namespace GraphEditor.EdgesAndNodes
 
         void Remove();
 
+        void EndMovementAnimations();
+
         List<string> GetNodesDependencies();
 
         Rectangle GetEdgeVisualRepresentation();

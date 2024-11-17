@@ -1,4 +1,5 @@
-﻿using GraphEditor.EdgesAndNodes;
+﻿using System;
+using GraphEditor.EdgesAndNodes;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Xml.Linq;
@@ -36,13 +37,23 @@ namespace GraphEditor
         {
             _edges.Remove(edge);
         }
+        
+        public void EndMovementAnimations()
+        {
+            foreach (IEdge edge in _edges)
+            {
+                edge.EndMovementAnimations();
+            }
+        }
 
         public void EdgesDragged(double dragDeltaX, double dragDeltaY)
         {
+            EndMovementAnimations();
             foreach (IEdge edge in _edges)
             {
                 if (!_canvas.Children.Contains(edge.GetEdgeVisualRepresentation())) continue;
                 edge.EdgeDragged(dragDeltaX, dragDeltaY);
+                //edge.OnNodePositionChanged(null, new EventArgs());
             }
         }
     }
