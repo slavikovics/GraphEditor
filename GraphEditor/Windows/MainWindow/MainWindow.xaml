@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:GraphEditor"
         mc:Ignorable="d"
         Background="#FF221B2F"
-        MinHeight="700"
-        MinWidth="1280" 
+        MinHeight="702"
+        MinWidth="1282" 
         Title="Graph editor" 
         Height="700" 
         Width="800" 
@@ -49,8 +49,8 @@
     <Window.Style>
         <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
-
-    <Grid>
+<Border BorderThickness="1" CornerRadius="5" BorderBrush="#3E3E3E">
+    <Grid Margin="2">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -389,5 +389,7 @@
         </Grid>
         
     </Grid>
+</Border>
+    
     
 </Window>
