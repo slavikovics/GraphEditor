@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GraphEditor"
         mc:Ignorable="d"
         Background="#FF221B2F"
-        Title="Graph Editor Information" Height="300" Width="500"
+        Title="Graph Editor Information" Height="500" Width="500"
         ResizeMode="NoResize"
         MouseDown="OnGridMouseDown" Loaded="OnWindowLoaded">
 
@@ -27,7 +27,9 @@
         <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
 
-    <Grid>
+    
+    <Border BorderThickness="1" CornerRadius="5" BorderBrush="#3E3E3E">
+        <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -118,7 +120,9 @@
                      Margin="10 10 10 10" 
                      Opacity="0" 
                      LayoutUpdated="OnHiddenTextBoxLayoutUpdated"/>
-
+            <Border CornerRadius="5" BorderBrush="#B4A6D9" BorderThickness="2" Background="MediumPurple" Margin="5">
+                <RichTextBox Foreground="#B4A6D9" FontSize="20" BorderThickness="2" Height="150" BorderBrush="MediumPurple" Margin="10" Background="MediumPurple"></RichTextBox>
+            </Border>
         </StackPanel>
 
         <StackPanel Height="90" 
@@ -150,5 +154,5 @@
         </StackPanel>
 
     </Grid>
-
+    </Border>
 </Window>

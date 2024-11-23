@@ -457,5 +457,10 @@ namespace GraphEditor
             GraphVisualTreeStackPanel.Children.Clear();
             GraphVisualTreeStackPanel.Children.Add(_graphsManager.GraphName);
         }
+
+        private void ButtonLightBulbOnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

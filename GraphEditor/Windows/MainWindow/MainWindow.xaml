@@ -42,6 +42,8 @@
                 <ResourceDictionary Source="\XamlMarcup\Images\SaveButtonImage.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\SettingsButtonImage.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\ButtonFolder.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\ButtonLightBulbOn.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\ButtonLightBulbOff.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -259,7 +261,8 @@
                         Click="OnButtonGraphClick"/>
 
                 <Button Template="{StaticResource ButtonTemplate}" 
-                        Content="{StaticResource ButtonConsoleImage}"
+                        Content="{StaticResource ButtonLightBulbOn}"
+                        Click="ButtonLightBulbOnClick"
                         x:Name="ButtonConsole"
                         BorderThickness="0" 
                         Background="Purple" 

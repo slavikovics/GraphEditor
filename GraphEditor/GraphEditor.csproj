@@ -149,6 +149,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\ButtonLightBulbOff.xaml" />
+    <Page Include="XamlMarcup\Images\ButtonLightBulbOn.xaml" />
     <Page Include="XamlMarcup\Images\ButtonMagicWandImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
