@@ -262,5 +262,8 @@
     <Resource Include="Graph editor outputput file example\graph.png" />
     <Content Include="Graph editor outputput file example\index.html" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
