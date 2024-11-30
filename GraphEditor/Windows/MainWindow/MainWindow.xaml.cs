@@ -325,8 +325,8 @@ namespace GraphEditor
             HidePopUpMenus();
             MainWindowStates.MoveToTaskState();
             // Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected);
-            InformationWindow informationWindow = new InformationWindow();
-            informationWindow.Show();
+            //InformationWindow informationWindow = new InformationWindow();
+            //informationWindow.Show();
         }
 
         private void OmWindowMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

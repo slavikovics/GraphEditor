@@ -137,7 +137,6 @@
                         MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
                         MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
                         Click="OnNonOrientedPopUpClick"/>
-
             </Canvas>
 
             <Grid Height="630">
