@@ -39,7 +39,9 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Node.cs" />
+        <Compile Include="Dot.cs" />
+        <Compile Include="PlannarGraph.cs" />
+        <Compile Include="Line.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
