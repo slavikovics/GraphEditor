@@ -1,4 +1,4 @@
-﻿namespace PlannarGraph
+﻿namespace PlanarGraph
 {
     public class Dot
     {

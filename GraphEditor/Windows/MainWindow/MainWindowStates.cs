@@ -1,4 +1,6 @@
-﻿namespace GraphEditor.Windows.MainWindow
+﻿using System;
+
+namespace GraphEditor.Windows.MainWindow
 {
     public class MainWindowStates
     {

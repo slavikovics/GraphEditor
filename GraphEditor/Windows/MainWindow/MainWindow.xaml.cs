@@ -20,6 +20,8 @@ namespace GraphEditor
         public MainWindowStates MainWindowStates;
 
         private int _nodeId = 1;
+        
+        public SelectedAction CurrentSelectedAction { get; set; }
 
         public event Action OnKillAllSelections;
         public event Action OnMagicWandOrder;
@@ -71,6 +73,7 @@ namespace GraphEditor
         private void OnButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             VisualStateManager.GoToState(sender as Button, "Pressed", true);
+            MainWindowAnimator.AnimateButtonRotationAnimation((sender as Button).Content as Image);
         }
 
         private void OnButtonMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -113,10 +116,31 @@ namespace GraphEditor
                         return;
                     }
                     if (MainWindowStates.ShouldEdgeBeAdded) CreateEdge(_firstSelected, _secondSelected, _selectedEdgeType);
-                    if (MainWindowStates.ShouldTaskBeDone) CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected), _secondSelected);
+                    if (MainWindowStates.ShouldTaskBeDone) PerformPathfinderGraphAction();
                 }
                 _firstSelected = null;
                 _secondSelected = null;
+            }
+        }
+
+        private void PerformPathfinderGraphAction()
+        {
+            if (CurrentSelectedAction is SelectedAction.Pathfinder)
+            {
+                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected), _secondSelected);
+            }
+        }
+
+        private void PerformIndependentGraphAction()
+        {
+            switch (CurrentSelectedAction)
+            {
+                case SelectedAction.EulerCycle:
+                    List<List<Node>> results = Pathfinder.FindFirstEulerCycle(CurrentGraph);
+                    if (results != null) CurrentGraph.HighlightEdges(results, results[0][0]); 
+                    break;
+                
+                case SelectedAction.PlanarGraph: break;
             }
         }
 
@@ -209,39 +233,69 @@ namespace GraphEditor
             MainWindowStates.MoveToEdgeAddingState();
             _firstSelected = null;
             _secondSelected = null;
-            ShowAddEdgePopUpMenu();
+            ShowPopUpMenu(ButtonAddEdge.TranslatePoint(new Point(0, 0), mainGrid), true);
         }
 
-        private void ShowAddEdgePopUpMenu()
+        private void ShowPopUpMenu(Point buttonPoint, bool isForEdge)
         {
-            Point ButtonAddPosition = ButtonAddEdge.TranslatePoint(new Point(0, 0), mainGrid);
-
-            OrientedSimplePopUp.Visibility = Visibility.Visible;
-            NonOrientedPopUp.Visibility = Visibility.Visible;
-            OrientedPencilPopUp.Visibility = Visibility.Visible;
-
-            DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(ButtonAddPosition);
-            DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(ButtonAddPosition);
-            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(ButtonAddPosition);
+            HidePopUpMenus();
+            if (isForEdge)
+            {
+                OrientedSimplePopUp.Visibility = Visibility.Visible;
+                NonOrientedPopUp.Visibility = Visibility.Visible;
+                OrientedPencilPopUp.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PathfinderPopUp.Visibility = Visibility.Visible;
+                EulerCyclePopUp.Visibility = Visibility.Visible;
+                PlanarGraphPopUp.Visibility = Visibility.Visible;
+            }
+            
+            DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(buttonPoint);
+            DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(buttonPoint);
+            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(buttonPoint);
             DoubleAnimation EdgePopUpLeftAnimation = MainWindowAnimator.BuildEdgePopUpLeftAnimation();
             DoubleAnimation arrowTypesWidthAnimation = MainWindowAnimator.BuildArrowTypesWidthAnimation();
 
-            OrientedSimplePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
-            OrientedSimplePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+            if (isForEdge)
+            {
+                OrientedSimplePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                OrientedSimplePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
 
-            NonOrientedPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
-            NonOrientedPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+                NonOrientedPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                NonOrientedPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
 
-            OrientedPencilPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
-            OrientedPencilPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+                OrientedPencilPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                OrientedPencilPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
 
-            OrientedSimplePopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
-            NonOrientedPopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
-            OrientedPencilPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
+                OrientedSimplePopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
+                NonOrientedPopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
+                OrientedPencilPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
 
-            OrientedSimplePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
-            NonOrientedPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
-            OrientedPencilPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+                OrientedSimplePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+                NonOrientedPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+                OrientedPencilPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+            }
+            else
+            {
+                PathfinderPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                PathfinderPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+
+                EulerCyclePopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                EulerCyclePopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+
+                PlanarGraphPopUp.BeginAnimation(Button.WidthProperty, arrowTypesWidthAnimation);
+                PlanarGraphPopUp.BeginAnimation(Button.HeightProperty, arrowTypesWidthAnimation);
+                
+                PathfinderPopUp.BeginAnimation(Canvas.TopProperty, OrientedSimplePopUpTopAnimation);
+                EulerCyclePopUp.BeginAnimation(Canvas.TopProperty, NonOrientedPopUpTopAnimation);
+                PlanarGraphPopUp.BeginAnimation(Canvas.TopProperty, OrientedPencilePopUpTopAnimation);
+
+                PathfinderPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+                EulerCyclePopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+                PlanarGraphPopUp.BeginAnimation(Canvas.LeftProperty, EdgePopUpLeftAnimation);
+            }
         }
 
         private void OnButtonSelectClick(object sender, RoutedEventArgs e)
@@ -324,6 +378,7 @@ namespace GraphEditor
         {
             HidePopUpMenus();
             MainWindowStates.MoveToTaskState();
+            ShowPopUpMenu(ButtonGraph.TranslatePoint(new Point(0, 0), mainGrid), false);
             // Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected);
             //InformationWindow informationWindow = new InformationWindow();
             //informationWindow.Show();
@@ -339,6 +394,9 @@ namespace GraphEditor
             OrientedSimplePopUp.Visibility = Visibility.Hidden;
             NonOrientedPopUp.Visibility = Visibility.Hidden;
             OrientedPencilPopUp.Visibility = Visibility.Hidden;
+            PathfinderPopUp.Visibility = Visibility.Hidden;
+            EulerCyclePopUp.Visibility = Visibility.Hidden;
+            PlanarGraphPopUp.Visibility = Visibility.Hidden;
         }
 
         private void OnGraphsManagerGridMouseDown(object sender, MouseButtonEventArgs e)
@@ -461,6 +519,29 @@ namespace GraphEditor
         private void ButtonLightBulbOnClick(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void OnPathfinderPopUpClick(object sender, RoutedEventArgs e)
+        {
+            ((Image)ButtonGraph.Content).Source = (PathfinderPopUp.Content as Image)?.Source;
+            CurrentSelectedAction = SelectedAction.Pathfinder;
+            HidePopUpMenus();
+        }
+
+        private void OnEulerCyclePopUpClick(object sender, RoutedEventArgs e)
+        {
+            ((Image)ButtonGraph.Content).Source = (EulerCyclePopUp.Content as Image)?.Source;
+            CurrentSelectedAction = SelectedAction.EulerCycle;
+            HidePopUpMenus();
+            PerformIndependentGraphAction();
+        }
+
+        private void OnPlanarGraphPopUpClick(object sender, RoutedEventArgs e)
+        {
+            ((Image)ButtonGraph.Content).Source = (PlanarGraphPopUp.Content as Image)?.Source;
+            CurrentSelectedAction = SelectedAction.PlanarGraph;
+            HidePopUpMenus();
+            PerformIndependentGraphAction();
         }
     }
 }

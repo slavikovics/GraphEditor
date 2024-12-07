@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace GraphEditor.Windows.MainWindow
@@ -62,6 +63,19 @@ namespace GraphEditor.Windows.MainWindow
             gridAnimation.To = 50 + targetCount * 38;
             gridAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(100));
             return gridAnimation;
+        }
+
+        public static void AnimateButtonRotationAnimation(Image buttonImage)
+        {
+            RotateTransform rotateTransform = new RotateTransform(); 
+            buttonImage.RenderTransform = rotateTransform;
+            buttonImage.RenderTransformOrigin = new Point(0.5, 0.5);
+            
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 0;
+            animation.To = 360;
+            animation.Duration = new Duration(TimeSpan.FromMilliseconds(400));
+            rotateTransform.BeginAnimation(RotateTransform.AngleProperty, animation);
         }
     }
 }

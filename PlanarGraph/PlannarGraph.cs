@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlannarGraph
+namespace PlanarGraph
 {
     public class PlannarGraph
     {

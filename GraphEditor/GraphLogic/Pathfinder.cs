@@ -17,6 +17,17 @@ namespace GraphEditor.GraphLogic
 
             return result;
         }
+
+        public static List<List<Node>> FindFirstEulerCycle(Graph graph)
+        {
+            foreach (Node node in graph.Nodes)
+            {
+                List<List<Node>> result = FindPaths(graph, node, node);
+                if (result != null) return result;
+            }
+
+            return null;
+        }
         
         public static List<List<Node>> FindPaths(Graph graph, Node startNode, Node endNode)
         {

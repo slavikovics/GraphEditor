@@ -44,6 +44,8 @@
                 <ResourceDictionary Source="\XamlMarcup\Images\ButtonFolder.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\ButtonLightBulbOn.xaml"/>
                 <ResourceDictionary Source="\XamlMarcup\Images\ButtonLightBulbOff.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\ButtonEulerCycleImage.xaml"/>
+                <ResourceDictionary Source="\XamlMarcup\Images\ButtonPlanarGraphImage.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -137,6 +139,60 @@
                         MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
                         MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
                         Click="OnNonOrientedPopUpClick"/>
+                
+                <Button Canvas.Top="300" 
+                        x:Name="PathfinderPopUp" 
+                        Template="{StaticResource ButtonTemplate}" 
+                        Content="{StaticResource ButtonGraphImagePopUp}"
+                        BorderThickness="0"
+                        Background="Purple"
+                        Grid.Row="2" 
+                        Visibility="Hidden"
+                        Margin="5" 
+                        Padding="0" 
+                        Height="10" 
+                        Width="10" 
+                        MouseEnter="OnButtonMouseEnter" 
+                        MouseLeave="OnButtonMouseLeave" 
+                        MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                        Click="OnPathfinderPopUpClick"/>
+                
+                <Button Canvas.Top="400" 
+                        x:Name="EulerCyclePopUp" 
+                        Template="{StaticResource ButtonTemplate}" 
+                        Content="{StaticResource ButtonEulerCycleImage}"
+                        BorderThickness="0"
+                        Background="Purple"
+                        Grid.Row="2" 
+                        Visibility="Hidden"
+                        Margin="5" 
+                        Padding="0" 
+                        Height="10" 
+                        Width="10" 
+                        MouseEnter="OnButtonMouseEnter" 
+                        MouseLeave="OnButtonMouseLeave" 
+                        MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                        Click="OnEulerCyclePopUpClick"/>
+                
+                <Button Canvas.Top="500" 
+                        x:Name="PlanarGraphPopUp" 
+                        Template="{StaticResource ButtonTemplate}" 
+                        Content="{StaticResource ButtonPlanarGraphImage}"
+                        BorderThickness="0"
+                        Background="Purple"
+                        Grid.Row="2" 
+                        Visibility="Hidden"
+                        Margin="5" 
+                        Padding="0" 
+                        Height="10" 
+                        Width="10" 
+                        MouseEnter="OnButtonMouseEnter" 
+                        MouseLeave="OnButtonMouseLeave" 
+                        MouseLeftButtonDown="OnButtonMouseLeftButtonDown" 
+                        MouseLeftButtonUp="OnButtonMouseLeftButtonUp"
+                        Click="OnPlanarGraphPopUpClick"/>
             </Canvas>
 
             <Grid Height="630">

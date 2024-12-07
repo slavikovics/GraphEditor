@@ -118,6 +118,7 @@
     <Compile Include="Windows\MainWindow\BordersRemover.cs" />
     <Compile Include="Windows\MainWindow\MainWindowAnimator.cs" />
     <Compile Include="Windows\MainWindow\MainWindowStates.cs" />
+    <Compile Include="Windows\MainWindow\SelectedAction.cs" />
     <Compile Include="Windows\RenamingWindow.xaml.cs">
       <DependentUpon>RenamingWindow.xaml</DependentUpon>
     </Compile>
@@ -144,6 +145,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\ButtonEulerCycleImage.xaml" />
     <Page Include="XamlMarcup\Images\ButtonFolder.xaml" />
     <Page Include="XamlMarcup\Images\ButtonGraphImage.xaml">
       <SubType>Designer</SubType>
@@ -155,6 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\ButtonPlanarGraphImage.xaml" />
     <Page Include="XamlMarcup\Images\ButtonSelectImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

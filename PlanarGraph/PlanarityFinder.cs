@@ -2,17 +2,17 @@
 using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphLogic;
 
-namespace PlannarGraph
+namespace PlanarGraph
 {
-    public class PlannarityFinder
+    public class PlanarityFinder
     {
         private Graph _usedGraph;
-        private PlannarGraph _plannarGraph;
+        private PlannarGraph _planarGraph;
             
-        public PlannarityFinder(Graph graph)
+        public PlanarityFinder(Graph graph)
         {
             _usedGraph = graph;
-            _plannarGraph = new PlannarGraph();
+            _planarGraph = new PlannarGraph();
         }
 
         private List<Dot> BuildDotsList()
@@ -35,16 +35,16 @@ namespace PlannarGraph
             List<Dot> dots = BuildDotsList();
             List<Line> lines = BuildLinesList();
             
-            _plannarGraph.Lines = lines;
-            _plannarGraph.Dots = dots;
-            _plannarGraph.UpdateDotsInformation();
+            _planarGraph.Lines = lines;
+            _planarGraph.Dots = dots;
+            _planarGraph.UpdateDotsInformation();
         }
 
         private List<Line> FindRemovedLines()
         {
             SetPlannarGraphLinesAndDots();
-            _plannarGraph.MakePlannar();
-            return _plannarGraph.RemovedLines;
+            _planarGraph.MakePlannar();
+            return _planarGraph.RemovedLines;
         }
 
         private List<Line> BuildLinesList()
