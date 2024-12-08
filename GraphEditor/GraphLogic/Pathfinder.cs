@@ -85,7 +85,7 @@ namespace GraphEditor.GraphLogic
 
         private static bool CheckResult(List<Node> onePath, Node startNode, Node endNode, Graph graph)
         {
-            if (onePath.Count - 1 < graph.Edges.Count) return false;
+            if (startNode == endNode && onePath.Count - 1 < graph.Edges.Count) return false;
             return true;
         }
 
