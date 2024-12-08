@@ -6,6 +6,7 @@ using GraphEditor.GraphTabs;
 using GraphEditor.Windows.MainWindow;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -127,17 +128,20 @@ namespace GraphEditor
         {
             if (CurrentSelectedAction is SelectedAction.Pathfinder)
             {
-                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected), _secondSelected);
+                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected).Result, _secondSelected);
             }
         }
 
-        private void PerformIndependentGraphAction()
+        private async Task PerformIndependentGraphAction()
         {
             switch (CurrentSelectedAction)
             {
                 case SelectedAction.EulerCycle:
-                    List<List<Node>> results = Pathfinder.FindFirstEulerCycle(CurrentGraph);
-                    if (results != null) CurrentGraph.HighlightEdges(results, results[0][0]); 
+                    List<List<Node>> results = await Pathfinder.FindFirstEulerCycle(CurrentGraph);
+                    if (results != null)
+                    {
+                        await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightEdges(results, results[0][0]));
+                    } 
                     break;
                 
                 case SelectedAction.PlanarGraph: break;
@@ -379,6 +383,8 @@ namespace GraphEditor
             HidePopUpMenus();
             MainWindowStates.MoveToTaskState();
             ShowPopUpMenu(ButtonGraph.TranslatePoint(new Point(0, 0), mainGrid), false);
+            Task.Run(() => PerformIndependentGraphAction());
+            
             // Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected);
             //InformationWindow informationWindow = new InformationWindow();
             //informationWindow.Show();
@@ -533,7 +539,6 @@ namespace GraphEditor
             ((Image)ButtonGraph.Content).Source = (EulerCyclePopUp.Content as Image)?.Source;
             CurrentSelectedAction = SelectedAction.EulerCycle;
             HidePopUpMenus();
-            PerformIndependentGraphAction();
         }
 
         private void OnPlanarGraphPopUpClick(object sender, RoutedEventArgs e)
@@ -541,7 +546,6 @@ namespace GraphEditor
             ((Image)ButtonGraph.Content).Source = (PlanarGraphPopUp.Content as Image)?.Source;
             CurrentSelectedAction = SelectedAction.PlanarGraph;
             HidePopUpMenus();
-            PerformIndependentGraphAction();
         }
     }
 }
