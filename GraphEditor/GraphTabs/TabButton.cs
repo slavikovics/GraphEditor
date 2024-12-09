@@ -15,6 +15,7 @@ namespace GraphEditor.GraphTabs
             Height = 35;
             SetTabButtonWidth();
             Margin = new Thickness(0, 15, 0, 0);
+            FontWeight = FontWeights.Bold;
         }
 
         private void SetTabButtonWidth()
