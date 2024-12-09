@@ -8,13 +8,16 @@ namespace PlanarGraph
         public List<Dot> Dots { get; set; }
 
         public List<Line> Lines { get; set; }
+        
+        public List<Line> PreservedLines { get; set; }
 
         public List<Line> RemovedLines { get; set; }
 
-        public PlannarGraph(List<Dot> _dots, List<Line> _lines)
+        public PlannarGraph(List<Dot> dots, List<Line> lines)
         {
-            Dots = _dots;
-            Lines = _lines;
+            Dots = dots;
+            Lines = lines;
+            PreservedLines = lines;
             RemovedLines = new List<Line>();
         }
 

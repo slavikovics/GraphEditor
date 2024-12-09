@@ -133,7 +133,7 @@ namespace GraphEditor.GraphLogic
             return null;
         }
 
-        public void HighlightEdges(List<List<Node>> nodes, Node selectedNode)
+        public void HighlightEdges(List<List<Node>> nodes, Node selectedNode, HighlightTargetColor targetColor)
         {
             if (nodes == null) return;
             List<Edge> edges = new List<Edge>();
@@ -150,7 +150,15 @@ namespace GraphEditor.GraphLogic
             
             foreach (Edge edge in edges)
             { 
-                GraphLogicAnimator.AnimateEdgeHighlight(edge);
+                GraphLogicAnimator.AnimateEdgeHighlight(edge, targetColor);
+            }
+        }
+
+        public void HighlightIEdges(List<IEdge> edges)
+        {
+            foreach (IEdge edge in edges)
+            {
+                GraphLogicAnimator.AnimateEdgeHighlight(edge as Edge, HighlightTargetColor.Red);
             }
         }
 

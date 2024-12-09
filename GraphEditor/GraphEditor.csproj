@@ -99,7 +99,9 @@
     <Compile Include="EdgesAndNodes\Nodes\NodeSettings.cs" />
     <Compile Include="GraphLogic\Graph.cs" />
     <Compile Include="GraphLogic\GraphLogicAnimator.cs" />
+    <Compile Include="GraphLogic\HighlightTargetColor.cs" />
     <Compile Include="GraphLogic\Pathfinder.cs" />
+    <Compile Include="GraphLogic\PlanarityFinder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemBorder.cs" />
     <Compile Include="GraphsManagerControls\GraphItemNameLabel.cs" />
     <Compile Include="GraphsManagerControls\GraphManager.cs" />
@@ -281,6 +283,11 @@
     <Resource Include="Graph editor outputput file example\graph.png" />
     <Content Include="Graph editor outputput file example\index.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PlanarGraph\PlanarGraph.csproj">
+      <Project>{29b46c95-2dac-44a0-8cab-c4470e5c3700}</Project>
+      <Name>PlanarGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

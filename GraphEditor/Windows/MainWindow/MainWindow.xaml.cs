@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using GraphEditor.GraphLogic;
+using PlanarGraph;
 using Button = System.Windows.Controls.Button;
 
 namespace GraphEditor
@@ -128,7 +129,7 @@ namespace GraphEditor
         {
             if (CurrentSelectedAction is SelectedAction.Pathfinder)
             {
-                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected).Result, _secondSelected);
+                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected).Result, _secondSelected, HighlightTargetColor.Green);
             }
         }
 
@@ -140,12 +141,21 @@ namespace GraphEditor
                     List<List<Node>> results = await Pathfinder.FindFirstEulerCycle(CurrentGraph);
                     if (results != null)
                     {
-                        await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightEdges(results, results[0][0]));
+                        await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightEdges(results, results[0][0], HighlightTargetColor.Blue));
                     } 
                     break;
                 
-                case SelectedAction.PlanarGraph: break;
+                case SelectedAction.PlanarGraph:
+                    List<IEdge> result = await FindPlanarCheckResult();
+                    await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightIEdges(result));
+                    break;
             }
+        }
+
+        private async Task<List<IEdge>> FindPlanarCheckResult()
+        {
+            PlanarityFinder planarityFinder = new PlanarityFinder(CurrentGraph);
+            return planarityFinder.FindIEdgesToRemoveInMainWindow();
         }
 
         private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)

@@ -7,12 +7,14 @@ namespace PlanarGraph
     public class PlanarityFinder
     {
         private Graph _usedGraph;
+        
         private PlannarGraph _planarGraph;
             
         public PlanarityFinder(Graph graph)
         {
             _usedGraph = graph;
-            _planarGraph = new PlannarGraph();
+            SetPlanarGraphLinesAndDots();
+            _planarGraph.SimplifyGraph();
         }
 
         private List<Dot> BuildDotsList()
@@ -30,19 +32,18 @@ namespace PlanarGraph
             return dots;
         }
 
-        private void SetPlannarGraphLinesAndDots()
+        private void SetPlanarGraphLinesAndDots()
         {
             List<Dot> dots = BuildDotsList();
             List<Line> lines = BuildLinesList();
             
-            _planarGraph.Lines = lines;
-            _planarGraph.Dots = dots;
+            _planarGraph = new PlannarGraph(dots, lines);
             _planarGraph.UpdateDotsInformation();
+            string s = _planarGraph.ToString();
         }
 
         private List<Line> FindRemovedLines()
         {
-            SetPlannarGraphLinesAndDots();
             _planarGraph.MakePlannar();
             return _planarGraph.RemovedLines;
         }
@@ -61,8 +62,13 @@ namespace PlanarGraph
                     foreach (IEdge edge in _usedGraph.Edges)
                     {
                         if (edge.GetFirstNode() == outerNode && edge.GetSecondNode() == innerNode)
+                        {
                             lines.Add(new Line(new Dot(outerNodeId), new Dot(innerNodeId), 1));
+                            break;
+                        }
                     }
+                    
+                    innerNodeId++;
                 }
 
                 outerNodeId++;
@@ -71,10 +77,17 @@ namespace PlanarGraph
             return lines;
         }
 
-        private List<IEdge> FindIEdgesToRemoveInMainWindow(List<Line> linesToRemove)
+        public List<IEdge> FindIEdgesToRemoveInMainWindow()
         {
-            //
-            return new List<IEdge>();
+            List<IEdge> edges = new List<IEdge>();
+            List<Line> linesToRemove = FindRemovedLines();
+            
+            foreach (Line line in linesToRemove)
+            {
+                edges.Add(_usedGraph.GetEdgeByTwoNodes(_usedGraph.Nodes[line.dot1.index - 1], _usedGraph.Nodes[line.dot2.index - 1])); 
+            }
+            
+            return edges;
         }
     }
 }

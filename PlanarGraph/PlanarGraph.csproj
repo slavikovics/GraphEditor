@@ -42,14 +42,7 @@
         <Compile Include="Dot.cs" />
         <Compile Include="PlannarGraph.cs" />
         <Compile Include="Line.cs" />
-        <Compile Include="PlanarityFinder.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\GraphEditor\GraphEditor.csproj">
-        <Project>{1df31b99-05f6-410a-9472-99e876e0f7cb}</Project>
-        <Name>GraphEditor</Name>
-      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

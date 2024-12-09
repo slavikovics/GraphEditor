@@ -5,16 +5,27 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using GraphEditor.EdgesAndNodes.Edges;
 using GraphEditor.EdgesAndNodes.Edges.EdgesOriented;
+using Color = System.Windows.Media.Color;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace GraphEditor.GraphLogic
 {
     public static class GraphLogicAnimator
     {
-        private static ColorAnimation BuildPathfinderHighlightAnimation()
+        private static ColorAnimation BuildPathfinderHighlightAnimation(HighlightTargetColor highlightTarget)
         {
+            Color targetColor = new Color();
+            
+            switch (highlightTarget)
+            {
+                case HighlightTargetColor.Green: targetColor = Colors.SeaGreen; break;
+                case HighlightTargetColor.Red: targetColor = Colors.Crimson; break;
+                case HighlightTargetColor.Yellow: targetColor = Colors.Orange; break;
+                case HighlightTargetColor.Blue: targetColor = Colors.CornflowerBlue; break;
+            }
+            
             ColorAnimation highlightAnimation = new ColorAnimation();
-            highlightAnimation.To = Colors.SeaGreen;
+            highlightAnimation.To = targetColor;
             highlightAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
             return highlightAnimation;
         }
@@ -27,11 +38,11 @@ namespace GraphEditor.GraphLogic
             return removeHighlightAnimation;
         }
 
-        public static void AnimateEdgeHighlight(Edge edge)
+        public static void AnimateEdgeHighlight(Edge edge, HighlightTargetColor highlightTarget)
         {
             if (edge is NonOrientedEdge nonOrientedEdge)
             {
-                nonOrientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation());
+                nonOrientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation(highlightTarget));
                 return;
             }
 
@@ -39,11 +50,11 @@ namespace GraphEditor.GraphLogic
             {
                 if (orientedEdge._isPencil == true)
                 {
-                    orientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation());
+                    orientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation(highlightTarget));
                 }
                 else
                 {
-                    orientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation());
+                    orientedEdge.EdgeVisualRepresentation.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, BuildPathfinderHighlightAnimation(highlightTarget));
                 }
             }
         }
