@@ -258,7 +258,7 @@ namespace GraphEditor
             
             DoubleAnimation OrientedSimplePopUpTopAnimation = MainWindowAnimator.BuildOrientedSimplePopUpTopAnimation(buttonPoint);
             DoubleAnimation NonOrientedPopUpTopAnimation = MainWindowAnimator.BuildNonOrientedPopUpTopAnimation(buttonPoint);
-            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilePopUpTopAnimation(buttonPoint);
+            DoubleAnimation OrientedPencilePopUpTopAnimation = MainWindowAnimator.BuildOrientedPencilPopUpTopAnimation(buttonPoint);
             DoubleAnimation EdgePopUpLeftAnimation = MainWindowAnimator.BuildEdgePopUpLeftAnimation();
             DoubleAnimation arrowTypesWidthAnimation = MainWindowAnimator.BuildArrowTypesWidthAnimation();
 
@@ -524,7 +524,7 @@ namespace GraphEditor
 
         private void ButtonLightBulbOnClick(object sender, RoutedEventArgs e)
         {
-            
+            CurrentGraph.HighlightEdgesRemoval();
         }
 
         private void OnPathfinderPopUpClick(object sender, RoutedEventArgs e)

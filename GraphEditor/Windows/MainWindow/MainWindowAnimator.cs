@@ -26,7 +26,7 @@ namespace GraphEditor.Windows.MainWindow
             return nonOrientedPopUpTopAnimation;
         }
 
-        public static DoubleAnimation BuildOrientedPencilePopUpTopAnimation(Point buttonAddPosition)
+        public static DoubleAnimation BuildOrientedPencilPopUpTopAnimation(Point buttonAddPosition)
         {
             DoubleAnimation orientedPencilPopUpTopAnimation = new DoubleAnimation();
             orientedPencilPopUpTopAnimation.From = buttonAddPosition.Y;
