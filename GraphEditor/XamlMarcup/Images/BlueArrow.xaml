@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <DrawingImage x:Name="EdgeArrow" x:Key="EdgeOrientedArrow">
+    <DrawingImage x:Name="EdgeArrow" x:Key="BlueArrow">
         <DrawingImage.Drawing>
             <DrawingGroup>
                 <DrawingGroup>
@@ -11,7 +10,7 @@
                     <DrawingGroup.Transform>
                         <TranslateTransform X="0.002500295639038086" Y="0.0010714156087487936" />
                     </DrawingGroup.Transform>
-                    <GeometryDrawing x:Name="arrowBrush" Brush="#FF9370DB">
+                    <GeometryDrawing x:Name="arrowBrush" Brush="RoyalBlue">
                         <GeometryDrawing.Geometry>
                             <PathGeometry FillRule="Nonzero" Figures="M396.96,490.07L39.14,312.07C-13.05,286.11,-13.05,211.65,39.14,185.68L396.96,7.68C457.26,-22.32,521.31,41.13,491.89,101.71L435.39,218.04C425.93,237.51,425.93,260.24,435.39,279.71L491.89,396.04C521.31,456.62,457.26,520.07,396.96,490.07z" />
                         </GeometryDrawing.Geometry>

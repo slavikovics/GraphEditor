@@ -129,7 +129,7 @@ namespace GraphEditor
         {
             if (CurrentSelectedAction is SelectedAction.Pathfinder)
             {
-                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected).Result, _secondSelected, HighlightTargetColor.Green);
+                CurrentGraph.HighlightEdges(Pathfinder.FindPaths(CurrentGraph, _firstSelected, _secondSelected).Result, _secondSelected, HighlightTargetColor.Green, GreenArrow);
             }
         }
 
@@ -141,13 +141,13 @@ namespace GraphEditor
                     List<List<Node>> results = await Pathfinder.FindFirstEulerCycle(CurrentGraph);
                     if (results != null)
                     {
-                        await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightEdges(results, results[0][0], HighlightTargetColor.Blue));
+                        await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightEdges(results, results[0][0], HighlightTargetColor.Blue, BlueArrow));
                     } 
                     break;
                 
                 case SelectedAction.PlanarGraph:
                     List<IEdge> result = await FindPlanarCheckResult();
-                    await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightIEdges(result));
+                    await Application.Current.Dispatcher.InvokeAsync(() => CurrentGraph.HighlightIEdges(result, RedArrow));
                     break;
             }
         }
@@ -534,7 +534,7 @@ namespace GraphEditor
 
         private void ButtonLightBulbOnClick(object sender, RoutedEventArgs e)
         {
-            CurrentGraph.HighlightEdgesRemoval();
+            CurrentGraph.HighlightEdgesRemoval(EdgeOrientedArrow);
         }
 
         private void OnPathfinderPopUpClick(object sender, RoutedEventArgs e)

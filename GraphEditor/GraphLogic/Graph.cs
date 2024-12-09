@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
+using System.Windows.Controls;
 using GraphEditor.EdgesAndNodes;
 using GraphEditor.EdgesAndNodes.Edges;
 
@@ -133,7 +135,7 @@ namespace GraphEditor.GraphLogic
             return null;
         }
 
-        public void HighlightEdges(List<List<Node>> nodes, Node selectedNode, HighlightTargetColor targetColor)
+        public void HighlightEdges(List<List<Node>> nodes, Node selectedNode, HighlightTargetColor targetColor, Image highlightImage)
         {
             if (nodes == null) return;
             List<Edge> edges = new List<Edge>();
@@ -150,23 +152,23 @@ namespace GraphEditor.GraphLogic
             
             foreach (Edge edge in edges)
             { 
-                GraphLogicAnimator.AnimateEdgeHighlight(edge, targetColor);
+                GraphLogicAnimator.AnimateEdgeHighlight(edge, targetColor, highlightImage);
             }
         }
 
-        public void HighlightIEdges(List<IEdge> edges)
+        public void HighlightIEdges(List<IEdge> edges, Image highlightImage)
         {
             foreach (IEdge edge in edges)
             {
-                GraphLogicAnimator.AnimateEdgeHighlight(edge as Edge, HighlightTargetColor.Red);
+                GraphLogicAnimator.AnimateEdgeHighlight(edge as Edge, HighlightTargetColor.Red, highlightImage);
             }
         }
 
-        public void HighlightEdgesRemoval()
+        public void HighlightEdgesRemoval(Image normalArrow)
         {
             foreach (Edge edge in Edges)
             {
-                GraphLogicAnimator.AnimateEdgeHighlightRemoval(edge);
+                GraphLogicAnimator.AnimateEdgeHighlightRemoval(edge, normalArrow);
             }
         }
 

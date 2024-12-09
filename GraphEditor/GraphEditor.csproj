@@ -131,6 +131,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="XamlMarcup\Images\BlueArrow.xaml" />
     <Page Include="XamlMarcup\Images\ButtonAddEdgeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +181,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\GreenArrow.xaml" />
     <Page Include="XamlMarcup\Images\MaximizeWindowButtonImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,6 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamlMarcup\Images\RedArrow.xaml" />
     <Page Include="XamlMarcup\Images\SaveButtonImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
