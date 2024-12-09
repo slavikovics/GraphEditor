@@ -116,11 +116,6 @@ namespace GraphEditor.GraphsSavingAndLoading
             }
         }
 
-        private void CheckPlannedNodesExistence(RelationDataModel relationDataModel)
-        {
-            
-        }
-
         private static Point GetRandomPoint()
         {
             Random random = new Random();
@@ -166,21 +161,6 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private void FindExistingNodes(RelationDataModel relationDataModel)
         {
-            /*foreach (Edge edge in _mainWindow.CurrentGraph.Edges)
-            {
-                if (relationDataModel.FirstNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.FirstNodeId.Contains(edge.GetSecondNodeId()))
-                {
-                    relationDataModel.ShouldFirstNodeBeCreated = false;
-                    relationDataModel.FirstNode = edge.GetEdgeCenterNode();
-                }
-
-                if (relationDataModel.SecondNodeId.Contains(edge.GetFirstNodeId()) && relationDataModel.SecondNodeId.Contains(edge.GetSecondNodeId()))
-                {
-                    relationDataModel.ShouldSecondNodeBeCreated = false;
-                    relationDataModel.SecondNode = edge.GetEdgeCenterNode();
-                }
-            }*/
-
             foreach (RelationDataModel createdRelation in _relationDataModels)
             {
                 int len = relationDataModel.FirstNodeId.IndexOf('-') - 3;
@@ -238,8 +218,6 @@ namespace GraphEditor.GraphsSavingAndLoading
                 }
             }
         }
-        
-
 
         private async Task ParseHtmlString(string content)
         {
@@ -247,34 +225,41 @@ namespace GraphEditor.GraphsSavingAndLoading
             List<RelationDataModel> plannedRelations = new List<RelationDataModel>();
             int animationIndex = 0;
 
-            while (true)
+            try
             {
-                RelationDataModel relationDataModel = new RelationDataModel();
-                _relationDataModels.Add(relationDataModel);
-
-                FillRelationDataModel(relationDataModel, content, ref i1);
-                CheckNodesExistence(relationDataModel);
-
-                if (relationDataModel.FirstNodeId.Contains("hn:") || relationDataModel.SecondNodeId.Contains("hn:"))
+                while (true)
                 {
-                    plannedRelations.Add(relationDataModel);
-                    if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
-                    continue;
-                }
+                    RelationDataModel relationDataModel = new RelationDataModel();
+                    _relationDataModels.Add(relationDataModel);
 
-                await AddRelation(relationDataModel);
+                    FillRelationDataModel(relationDataModel, content, ref i1);
+                    CheckNodesExistence(relationDataModel);
+
+                    if (relationDataModel.FirstNodeId.Contains("hn:") || relationDataModel.SecondNodeId.Contains("hn:"))
+                    {
+                        plannedRelations.Add(relationDataModel);
+                        if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
+                        continue;
+                    }
+
+                    await AddRelation(relationDataModel);
                 
-                if (animationIndex == 3)
-                {
-                    animationIndex = 0;
-                }       
-                if (animationIndex == 0)
-                {
-                    _mainWindow.OnButtonMagicWondClick(null, null);
+                    if (animationIndex == 3)
+                    {
+                        animationIndex = 0;
+                    }       
+                    if (animationIndex == 0)
+                    {
+                        _mainWindow.OnButtonMagicWondClick(null, null);
+                    }
+                    await Task.Delay(150);                
+                    if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
+                    animationIndex++;
                 }
-                await Task.Delay(150);                
-                if (content.IndexOf("relationName", i1, StringComparison.Ordinal) == -1) break;
-                animationIndex++;
+            }
+            catch (Exception e)
+            {
+                i1 = 0;
             }
 
             Random random = new Random();
