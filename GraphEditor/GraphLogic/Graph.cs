@@ -38,26 +38,29 @@ namespace GraphEditor.GraphLogic
             Edges.Remove(edge as Edge);
         }
 
-        /*public void RemoveAllEdgesConnectedToNode(string id)
-        {
-            List<Edge> edgesToRemove = new List<Edge>();
-            foreach (Edge edge in Edges)
-            {
-                if (edge.GetFirstNodeId() == id || edge.GetSecondNodeId() == id)
-                {
-                    edgesToRemove.Add(edge);
-                }
-            }
-
-            foreach (Edge edge in edgesToRemove)
-            {
-                RemoveEdge(edge);
-            }
-        }*/
-
         public int GetEdgesCount()
         {
             return Edges.Count;
+        }
+
+        public int GetNodePower(Node node)
+        {
+            int power = 0;
+            
+            foreach (IEdge edge in Edges)
+            {
+                if (edge.GetFirstNode() == node || edge.GetSecondNode() == node)
+                {
+                    power++;
+                }
+            }
+            
+            return power;
+        }
+
+        public bool CheckPowerIsEven(Node node)
+        {
+            return GetNodePower(node) % 2 == 0;
         }
 
         public void AddNode(Node node)

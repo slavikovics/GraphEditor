@@ -23,13 +23,33 @@ namespace GraphEditor.GraphLogic
 
         public static async Task<List<List<Node>>> FindFirstEulerCycle(Graph graph)
         {
+            if (!CheckHasEulerCycle(graph)) return null;
+            if (!CheckAllNecessaryPathsExist(graph)) return null;
+            if (graph.Nodes.Count <= 0) return null;
+
             foreach (Node node in graph.Nodes)
             {
                 List<List<Node>> result = FindPaths(graph, node, node).Result;
                 if (result != null) return result;
             }
-
+            
             return null;
+        }
+
+        private static bool CheckAllNecessaryPathsExist(Graph graph)
+        {
+            foreach (Node outerNode in graph.Nodes)
+            {
+                if (graph.GetNodePower(outerNode) == 0) continue;
+                foreach (Node innerNode in graph.Nodes)
+                {
+                    if (outerNode == innerNode) continue;
+                    if (graph.GetNodePower(innerNode) == 0) continue;
+                    if (FindPaths(graph, outerNode, innerNode).Result == null) return false;
+                }
+            }
+
+            return true;
         }
 
         public static async  Task<List<List<Node>>> FindPaths(Graph graph, Node startNode, Node endNode)
@@ -155,6 +175,16 @@ namespace GraphEditor.GraphLogic
             return true;
         }
 
+        private static bool CheckHasEulerCycle(Graph graph)
+        {
+            foreach (Node node in graph.Nodes)
+            {
+                if (!graph.CheckPowerIsEven(node)) return false;
+            }
+
+            return true;
+        }
+        
         private static void PrintPaths(List<List<Node>> paths)
         {
             foreach (List<Node> onePath in paths)
