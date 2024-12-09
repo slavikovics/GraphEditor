@@ -167,7 +167,46 @@ table
     width: 100%; 
     border-collapse: collapse; 
     text-align: center; 
-} 
+}
+        
+                .matrix-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .matrixTd {
+            padding: 10px;
+            border: 2px solid #ccc;
+        }
+
+        .left-top-corner-element {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-top-left-radius: 10px;
+        }
+
+        .right-top-corner-element {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-top-right-radius: 10px;
+        }
+
+        .left-bottom-corner-element {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-bottom-left-radius: 10px;
+        }
+
+        .right-bottom-corner-element {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-bottom-right-radius: 10px;
+        }
+        
 td 
 { 
     height: fit-content;
