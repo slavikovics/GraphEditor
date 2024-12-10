@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using GraphEditor.EdgesAndNodes;
 using GraphEditor.GraphLogic;
 
@@ -81,6 +82,8 @@ namespace PlanarGraph
         {
             List<IEdge> edges = new List<IEdge>();
             List<Line> linesToRemove = FindRemovedLines();
+            
+            if (linesToRemove.Count == 0) Debug.WriteLine("This graph is already planar, no edges to remove");
             
             foreach (Line line in linesToRemove)
             {

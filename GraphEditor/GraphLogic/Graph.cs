@@ -161,8 +161,6 @@ namespace GraphEditor.GraphLogic
                 {
                     edges.Add(GetEdgeByTwoNodes(list[i], list[i + 1]));
                 }
-
-                break;
             }
             
             foreach (Edge edge in edges)

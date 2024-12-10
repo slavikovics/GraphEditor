@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -149,52 +150,42 @@ namespace GraphEditor.GraphLogic
                     onePath[i] == nextNode && onePath[i + 1] == onePath[onePath.Count - 1]) return false;
             }
             
-            /*foreach (IEdge edge in graph.Edges)
-            {
-                bool hasEdge = false;
-                for (int i = 0; i < onePath.Count - 1; i++)
-                {
-                    if (edge.GetFirstNode() == onePath[i] && edge.GetSecondNode() == onePath[i + 1] ||
-                        edge.GetFirstNode() == onePath[i + 1] && edge.GetSecondNode() == onePath[i])
-                    {
-                        hasEdge = true;
-                        break;
-                    }
-
-                    if (edge.GetFirstNode() == onePath[onePath.Count - 1] && edge.GetSecondNode() == nextNode ||
-                        edge.GetFirstNode() == nextNode && edge.GetSecondNode() == onePath[onePath.Count - 1])
-                    {
-                        hasEdge = true;
-                        break;
-                    }
-                }
-
-                if (!hasEdge) return false;
-            }*/
-            
             return true;
+        }
+
+        private static void LogNodesPower(Graph graph)
+        {
+            Debug.WriteLine("Nodes power information:");
+            foreach (Node node in graph.Nodes)
+            {
+                Debug.WriteLine($"{node.Name} power is {graph.GetNodePower(node)}");
+            }
         }
 
         private static bool CheckHasEulerCycle(Graph graph)
         {
+            LogNodesPower(graph);
+            
             foreach (Node node in graph.Nodes)
             {
                 if (!graph.CheckPowerIsEven(node)) return false;
             }
-
+            
             return true;
         }
         
         private static void PrintPaths(List<List<Node>> paths)
         {
+            Debug.WriteLine("Path finder logs:");
             foreach (List<Node> onePath in paths)
             {
-                foreach (Node oneNode in onePath)
+                for (int i = 0; i < onePath.Count - 1; i++)
                 {
-                    Console.Write(oneNode.ToString() + " -> ");
+                    Debug.Write(onePath[i].ToString() + " -> ");
                 }
 
-                Console.WriteLine();
+                Debug.Write($"{onePath.Last().ToString() } (length is {onePath.Count - 1})");
+                Debug.WriteLine("");
             }
         }
     }
