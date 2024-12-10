@@ -112,6 +112,7 @@
     <Compile Include="GraphsSavingAndLoading\HtmlExport.cs" />
     <Compile Include="GraphsSavingAndLoading\HtmlImport.cs" />
     <Compile Include="GraphsSavingAndLoading\ImportEventArgs.cs" />
+    <Compile Include="GraphsSavingAndLoading\MatrixBuilder.cs" />
     <Compile Include="GraphsSavingAndLoading\RelationDataModel.cs" />
     <Compile Include="GraphTabs\Tab.cs" />
     <Compile Include="GraphTabs\TabButton.cs" />

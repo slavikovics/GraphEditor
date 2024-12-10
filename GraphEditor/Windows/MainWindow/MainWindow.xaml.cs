@@ -516,7 +516,7 @@ namespace GraphEditor
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)
         {
-            HtmlExport fileInput = new HtmlExport(MainCanvas, CurrentGraph.Nodes, CurrentGraph.Edges);
+            HtmlExport fileInput = new HtmlExport(MainCanvas, CurrentGraph);
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)

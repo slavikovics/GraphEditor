@@ -135,6 +135,21 @@ namespace GraphEditor.GraphLogic
             return null;
         }
 
+        public bool HasEdgeByTwoNodesOrientationSpecific(Node firstNode, Node secondNode)
+        {
+            Edge edge = GetEdgeByTwoNodes(firstNode, secondNode);
+            
+            if (edge == null) return false;
+            if (edge is NonOrientedEdge) return true;
+
+            foreach (IEdge innerEdge in Edges)
+            {
+                if (edge.GetFirstNode() == secondNode && edge.GetSecondNode() == firstNode) return true;
+            }
+
+            return false;
+        }
+
         public void HighlightEdges(List<List<Node>> nodes, Node selectedNode, HighlightTargetColor targetColor, Image highlightImage)
         {
             if (nodes == null) return;

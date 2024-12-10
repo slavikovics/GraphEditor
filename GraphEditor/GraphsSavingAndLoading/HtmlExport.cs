@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GraphEditor.GraphLogic;
 using GraphEditor.Properties;
 
 namespace GraphEditor.GraphsSavingAndLoading
@@ -21,10 +22,13 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private List<IEdge> Edges { get; set; }
 
-        public HtmlExport(Canvas canvas, List<Node> nodes, List<IEdge> edges)
+        private Graph _graph;
+
+        public HtmlExport(Canvas canvas, Graph graph)
         {
-            Nodes = nodes;
-            Edges = edges;
+            Nodes = graph.Nodes;
+            Edges = graph.Edges;
+            _graph = graph;
 
             foreach (var child in canvas.Children)
             {
@@ -105,6 +109,9 @@ namespace GraphEditor.GraphsSavingAndLoading
             }
 
             body += BuildLonelyNodesContent();
+
+            MatrixBuilder matrixBuilder = new MatrixBuilder(_graph);
+            body += matrixBuilder.Result;
             return body;
         }
 

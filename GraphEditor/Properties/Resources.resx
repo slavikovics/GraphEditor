@@ -170,9 +170,11 @@ table
 }
         
                 .matrix-table {
+            margin-left: 5%;
+            margin-right: 5%;
             border-collapse: separate;
             border-spacing: 0;
-            width: 100%;
+            width: 90%;
             font-family: 'Montserrat', sans-serif;
             text-align: center;
             font-weight: bold;
@@ -180,30 +182,35 @@ table
 
         .matrixTd {
             padding: 10px;
-            border: 2px solid #ccc;
+            color: #AEA3D8;
+            border: 2px solid #2e2a33;
         }
 
         .left-top-corner-element {
             padding: 10px;
-            border: 2px solid #ccc;
+            border: 2px solid #2e2a33;
+            color: #AEA3D8;
             border-top-left-radius: 10px;
         }
 
         .right-top-corner-element {
             padding: 10px;
-            border: 2px solid #ccc;
+            color: #AEA3D8;
+            border: 2px solid #2e2a33;
             border-top-right-radius: 10px;
         }
 
         .left-bottom-corner-element {
             padding: 10px;
-            border: 2px solid #ccc;
+            color: #AEA3D8;
+            border: 2px solid #2e2a33;
             border-bottom-left-radius: 10px;
         }
 
         .right-bottom-corner-element {
             padding: 10px;
-            border: 2px solid #ccc;
+            color: #AEA3D8;
+            border: 2px solid #2e2a33;
             border-bottom-right-radius: 10px;
         }
         
