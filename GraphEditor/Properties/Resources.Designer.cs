@@ -172,6 +172,91 @@ namespace GraphEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to           &lt;tr&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateEndPart {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateEndPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             &lt;/tr&gt;
+        ///        &lt;/tbody&gt;
+        ///    &lt;/table&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateEndPart_TanleEnd {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateEndPart_TanleEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         &lt;thead&gt;
+        ///            &lt;tr&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateHead_ {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateHead_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             &lt;/tr&gt;
+        ///        &lt;/thead&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateHead_End {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateHead_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         &lt;tbody&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateMiddlePart {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateMiddlePart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             &lt;tr&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateMiddlePartCenter {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateMiddlePartCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             &lt;tr&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateMiddleParTrEnd {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateMiddleParTrEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             &lt;tr&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateMiddlePartTrEnd {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateMiddlePartTrEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div style=&quot;height: 100px;&quot;&gt;&lt;/div&gt;    &lt;table class=&quot;matrix-table&quot;&gt;.
+        /// </summary>
+        internal static string MatrixBuilder_GenerateStart_ {
+            get {
+                return ResourceManager.GetString("MatrixBuilder_GenerateStart_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot; id=&quot;.
         /// </summary>
         internal static string NodeItemGroupIdTag {

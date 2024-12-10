@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using GraphEditor.GraphLogic;
+using GraphEditor.Properties;
 
 namespace GraphEditor.GraphsSavingAndLoading
 {
@@ -29,7 +30,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private string GenerateStart()
         {
-            return "<div style=\"height: 100px;\"></div>    <table class=\"matrix-table\">";
+            return Resources.MatrixBuilder_GenerateStart_;
         }
 
         private string GenerateTableHeaderItem(string className, string content)
@@ -44,7 +45,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private string GenerateHead()
         {
-            string head = "        <thead>\n            <tr>";
+            string head = Resources.MatrixBuilder_GenerateHead_;
             head += GenerateTableHeaderItem("left-top-corner-element", "");
             foreach (Node node in _graph.Nodes)
             {
@@ -53,7 +54,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             
             head += GenerateTableHeaderItem("right-top-corner-element", _graph.Nodes.Last().Name);
 
-            head += "            </tr>\n        </thead>";
+            head += Resources.MatrixBuilder_GenerateHead_End;
             return head;
         }
 
@@ -65,11 +66,12 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private string GenerateMiddlePart()
         {
-            string result = "        <tbody>";
+            string result = Resources.MatrixBuilder_GenerateMiddlePart;
+            string trEnd = Resources.MatrixBuilder_GenerateMiddleParTrEnd;
             
             for (int i = 0; i < _graph.Nodes.Count - 1; i++)
             {
-                result += "            <tr>";
+                result += trEnd;
                 
                 result += GenerateTableMiddleItem("matrixTd", _graph.Nodes[i].Name);
                 for (int j = 0; j < _graph.Nodes.Count; j++)
@@ -77,7 +79,7 @@ namespace GraphEditor.GraphsSavingAndLoading
                     result += GenerateTableMiddleItem("matrixTd", FindSignForTableItem(_graph.Nodes[i], _graph.Nodes[j]));
                 }
                 
-                result += "            </tr>";
+                result += trEnd;
             }
             
             return result;
@@ -85,7 +87,7 @@ namespace GraphEditor.GraphsSavingAndLoading
 
         private string GenerateEndPart()
         {
-            string result = "            <tr>";
+            string result = Resources.MatrixBuilder_GenerateEndPart;
             result += GenerateTableMiddleItem("left-bottom-corner-element", _graph.Nodes.Last().Name);
             
             for (int j = 0; j < _graph.Nodes.Count - 1; j++)
@@ -94,7 +96,7 @@ namespace GraphEditor.GraphsSavingAndLoading
             }
             
             result += GenerateTableMiddleItem("right-bottom-corner-element", FindSignForTableItem(_graph.Nodes.Last(), _graph.Nodes.Last()));
-            result += "            </tr>\n        </tbody>\n    </table>";
+            result += Resources.MatrixBuilder_GenerateEndPart_TanleEnd;
             return result;
         }
     }

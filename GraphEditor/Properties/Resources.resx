@@ -437,4 +437,35 @@ footer
   <data name="nonOriented" xml:space="preserve">
     <value>nonOriented</value>
   </data>
+  <data name="MatrixBuilder_GenerateStart_" xml:space="preserve">
+    <value>&lt;div style="height: 100px;"&gt;&lt;/div&gt;    &lt;table class="matrix-table"&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateHead_" xml:space="preserve">
+    <value>        &lt;thead&gt;
+            &lt;tr&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateHead_End" xml:space="preserve">
+    <value>            &lt;/tr&gt;
+        &lt;/thead&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateMiddlePart" xml:space="preserve">
+    <value>        &lt;tbody&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateMiddlePartCenter" xml:space="preserve">
+    <value>            &lt;tr&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateMiddlePartTrEnd" xml:space="preserve">
+    <value>            &lt;tr&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateMiddleParTrEnd" xml:space="preserve">
+    <value>            &lt;tr&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateEndPart" xml:space="preserve">
+    <value>          &lt;tr&gt;</value>
+  </data>
+  <data name="MatrixBuilder_GenerateEndPart_TanleEnd" xml:space="preserve">
+    <value>            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;</value>
+  </data>
 </root>
