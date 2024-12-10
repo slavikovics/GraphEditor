@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphEditor", "GraphEditor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanarGraph", "PlanarGraph\PlanarGraph.csproj", "{29B46C95-2DAC-44A0-8CAB-C4470E5C3700}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GraphEditorSetup", "GraphEditorSetup\GraphEditorSetup.vdproj", "{7ECE7313-87C3-4F54-8270-429E56FA9E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{29B46C95-2DAC-44A0-8CAB-C4470E5C3700}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B46C95-2DAC-44A0-8CAB-C4470E5C3700}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29B46C95-2DAC-44A0-8CAB-C4470E5C3700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ECE7313-87C3-4F54-8270-429E56FA9E34}.Debug|Any CPU.ActiveCfg = Debug
+		{7ECE7313-87C3-4F54-8270-429E56FA9E34}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
